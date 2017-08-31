@@ -1,9 +1,9 @@
-package com.less.tplayer.utils;
+package com.less.tplayer.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.less.tplayer.App;
+import com.less.tplayer.TpApplication;
 
 /**
  * Author： yolanda
@@ -15,12 +15,11 @@ import com.less.tplayer.App;
 
 
 public class SharedPreferenceUtils {
-    static Context context;
     private static final String FILENAME = "config";
     private static SharedPreferences.Editor editor;
 
     public static Context getContext() {
-        return App.getContext();
+        return TpApplication.getContext();
     }
 
     public static SharedPreferences getSharedPreferences() {

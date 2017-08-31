@@ -6,16 +6,17 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
-        tools:replace="android:icon, android:theme"
-        android:name=".App"
+        android:name=".TpApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/NoActionBar">
+        android:theme="@style/NoActionBar"
+        tools:replace="android:icon, android:theme">
         <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +25,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.GuideActivity"></activity>
+        <activity android:name=".ui.GuideActivity" />
+
+        <service
+            android:name=".service.CoreService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
+
 </manifest>
