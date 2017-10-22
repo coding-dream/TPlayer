@@ -312,6 +312,4 @@ public class ValidateUtils {
                 return true;
         }
     }
-
-
 }

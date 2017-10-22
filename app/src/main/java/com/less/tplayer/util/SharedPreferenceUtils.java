@@ -13,7 +13,6 @@ import com.less.tplayer.TpApplication;
  * description：SP工具类
  */
 
-
 public class SharedPreferenceUtils {
     private static final String FILENAME = "config";
     private static SharedPreferences.Editor editor;

@@ -16,7 +16,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         initView();
-//        StatusBarUtil.setColor(SplashActivity.this, getResources().getColor(R.color.colorPrimary));
+        // StatusBarUtil.setColor(SplashActivity.this, getResources().getColor(R.color.colorPrimary));
         StatusBarUtil.setTranslucent(this,50); // StatusBarUtil.setTranslucent 半透明  StatusBarUtil.setTransparent(this);全透明
         // 这步取值操作不能放在run中，否则会执行两次导致页面跳转出错
         final boolean isFirst = SharedPreferenceUtils.getBooleanData("isFirst", true);
