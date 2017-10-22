@@ -1,3 +1,3 @@
 [submodule "widgets"]
 	path = widgets
-	url = https://github.com/wangli0/widgets
+	url = git@github.com:wangli0/widgets.git
