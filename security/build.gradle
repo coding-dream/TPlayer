@@ -10,23 +10,33 @@ android {
         targetSdkVersion 14
         versionCode 1
         versionName "1.0"
-
-        ndk{
-            moduleName "security"
-            abiFilters "armeabi", "armeabi-v7a", "x86"
-            ldLibs "log", "z", "m"
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+                //生成.so库的目标平台
+                abiFilters 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            }
         }
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
 }
 
-task copyJniLibs(type: Copy) { // 将新生成的so拷贝到jniLibs目录
+task copyJniLibs(type: Copy) { // 将新生成的so拷贝到jniLibs目录 (cmake和ndk-build方式其实不需要拷贝就自动打包到Apk了)
     from fileTree(dir: file(buildDir.absolutePath + '/intermediates/ndk/libs'), include: '**/*.so')
     into file('src/main/jniLibs')
 }

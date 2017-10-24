@@ -1,4 +1,4 @@
-package com.less.security;
+package com.less.auto_update;
 
 import org.junit.Test;
 

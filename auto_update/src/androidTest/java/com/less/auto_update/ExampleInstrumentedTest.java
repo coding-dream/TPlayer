@@ -1,4 +1,4 @@
-package com.less.security;
+package com.less.auto_update;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.less.security.test", appContext.getPackageName());
+        assertEquals("com.less.auto_update.test", appContext.getPackageName());
     }
 }

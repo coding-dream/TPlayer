@@ -90,23 +90,23 @@ public abstract class BaseActivity extends AppCompatActivity{
 
     public abstract int getContentView();
 
-    private void initView() {
+    protected void initView() {
 
     }
 
-    private void initData() {
+    protected void initData() {
 
     }
 
-    private void initWidget() {
+    protected void initWidget() {
 
     }
 
-    private void initWindow() {
+    protected void initWindow() {
 
     }
 
-    private boolean initBundle(Bundle extras) {
+    protected boolean initBundle(Bundle extras) {
         return true;
     }
 
@@ -115,8 +115,9 @@ public abstract class BaseActivity extends AppCompatActivity{
     }
 
     public synchronized RequestManager getImageLoader() {
-        if (mImageLoader == null)
+        if (mImageLoader == null) {
             mImageLoader = Glide.with(this);
+        }
         return mImageLoader;
     }
 

@@ -4,9 +4,8 @@ import com.less.tplayer.util.ReadState;
 import com.less.tplayer.util.ReadStateHelper;
 
 /**
- * Created by Administrator on 2017/8/7.
+ * @author Administrator
  */
-
 public class TpApplication extends Application {
     public static final int PAGE_SIZE = 20;// 默认分页大小
     private static final String CONFIG_READ_STATE_PRE = "CONFIG_READ_STATE_PRE_";

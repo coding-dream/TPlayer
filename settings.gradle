@@ -1,1 +1,3 @@
-include ':app', ':security'
+include ':app', ':auto_update'
+include 'library_security'
+project(':library_security').projectDir = new File('./security')

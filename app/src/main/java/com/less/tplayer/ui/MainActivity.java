@@ -1,21 +1,26 @@
 package com.less.tplayer.ui;
 
-import android.os.Bundle;
+import android.widget.Toast;
 
+import com.less.security.Security;
 import com.less.tplayer.R;
 import com.less.tplayer.base.BaseActivity;
 
+/**
+ * @author Administrator
+ */
 public class MainActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+    public int getContentView() {
+        return R.layout.activity_main;
     }
 
     @Override
-    public int getContentView() {
-        return 0;
+    protected void initData() {
+        super.initData();
+        Security security = new Security();
+        String jniStr = security.stringFromJNI();
+        Toast.makeText(this, jniStr, Toast.LENGTH_LONG).show();
     }
 }
