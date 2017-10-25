@@ -1,5 +1,6 @@
 package com.less.tplayer;
 import android.app.Application;
+
 import com.less.tplayer.util.ReadState;
 import com.less.tplayer.util.ReadStateHelper;
 

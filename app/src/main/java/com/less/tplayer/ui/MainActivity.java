@@ -1,7 +1,5 @@
 package com.less.tplayer.ui;
 
-import android.widget.Toast;
-
 import com.less.security.Security;
 import com.less.tplayer.R;
 import com.less.tplayer.base.BaseActivity;
@@ -21,6 +19,7 @@ public class MainActivity extends BaseActivity {
         super.initData();
         Security security = new Security();
         String jniStr = security.stringFromJNI();
-        Toast.makeText(this, jniStr, Toast.LENGTH_LONG).show();
+
+
     }
 }
