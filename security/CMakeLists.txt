@@ -8,7 +8,6 @@ add_library( # Sets the name of the library.
 
              # Provides a relative path to your source file(s).
              src/main/cpp/native-lib.c
-             src/main/cpp/util.c
              )
 
 find_library( # Sets the name of the path variable.
