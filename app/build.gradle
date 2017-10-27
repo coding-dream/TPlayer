@@ -56,4 +56,7 @@ dependencies {
 
     debugCompile project(path: ':widgets_smart_progressbar', configuration: 'debug')
     releaseCompile project(path: ':widgets_smart_progressbar', configuration: 'release')
+
+    debugCompile project(path: ':widgets_viewpager_ex', configuration: 'debug')
+    releaseCompile project(path: ':widgets_viewpager_ex', configuration: 'release')
 }

@@ -4,3 +4,6 @@ project(':library_security').projectDir = new File('./security')
 
 include 'widgets_smart_progressbar'
 project(':widgets_smart_progressbar').projectDir = new File('./widgets/smart_progressbar')
+
+include 'widgets_viewpager_ex'
+project(':widgets_viewpager_ex').projectDir = new File('./widgets/viewpager_ex')
