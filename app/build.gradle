@@ -54,6 +54,9 @@ dependencies {
     // debugCompile project(path: ':library_security', configuration: 'debug')
     // releaseCompile project(path: ':library_security', configuration: 'release')
 
+    debugCompile project(path: ':library_ffmpeg', configuration: 'debug')
+    releaseCompile project(path: ':library_ffmpeg', configuration: 'release')
+
     debugCompile project(path: ':widgets_smart_progressbar', configuration: 'debug')
     releaseCompile project(path: ':widgets_smart_progressbar', configuration: 'release')
 

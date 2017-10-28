@@ -2,6 +2,9 @@ include ':app', ':auto_update'
 include 'library_security'
 project(':library_security').projectDir = new File('./security')
 
+include 'library_ffmpeg'
+project(':library_ffmpeg').projectDir = new File('./ffmpeg')
+
 include 'widgets_smart_progressbar'
 project(':widgets_smart_progressbar').projectDir = new File('./widgets/smart_progressbar')
 

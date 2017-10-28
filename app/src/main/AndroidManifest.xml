@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar"
         tools:replace="android:icon, android:theme">
-        <activity android:name=".ui.SplashActivity">
+        <activity android:name="com.less.ffmpeg.FFmpegActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
