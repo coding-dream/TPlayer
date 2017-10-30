@@ -6,10 +6,7 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file(RELEASE_STORE_FILE)
-            storePassword RELEASE_STORE_PASSWORD
-            keyAlias RELEASE_KEY_ALIAS
-            keyPassword RELEASE_KEY_PASSWORD
+
         }
         release {
             storeFile file(RELEASE_STORE_FILE)
@@ -30,10 +27,37 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            manifestPlaceholders = [UMENG_KEY_VALUE: "222222222222222222"]
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [UMENG_KEY_VALUE: "222222222222222222"]
+        }
+    }
+    productFlavors {
+        dev {
+            applicationId "com.less.tplayer"
+        }
+        baidu {
+            applicationId "com.less.tplayer.baidu"
+            // proguardFile 'src/baidu/proguard-rules.pro'
+        }
+        xiaomi {
+            applicationId "com.less.tplayer.xiaomi"
+        }
+    }
+
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def flavor_app = "Tplayer";
+            def flavor_channel = variant.productFlavors.get(0);
+            def finalName = flavor_app + "_" + flavor_channel.name + "_" + variant.versionCode  /*+ "_" + flavor_abi.name*/ + ".apk";
+            output.outputFile = new File(output.outputFile.parent, finalName)
         }
     }
 }
@@ -43,23 +67,23 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.jaeger.statusbarutil:library:1.4.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'de.hdodenhof:circleimageview:2.0.0'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'pub.devrel:easypermissions:0.3.0'
 
     // debugCompile project(path: ':library_security', configuration: 'debug')
     // releaseCompile project(path: ':library_security', configuration: 'release')
 
-    debugCompile project(path: ':library_ffmpeg', configuration: 'debug')
-    releaseCompile project(path: ':library_ffmpeg', configuration: 'release')
+    // debugCompile project(path: ':library_ffmpeg', configuration: 'debug')
+    // releaseCompile project(path: ':library_ffmpeg', configuration: 'release')
 
     debugCompile project(path: ':widgets_smart_progressbar', configuration: 'debug')
     releaseCompile project(path: ':widgets_smart_progressbar', configuration: 'release')
 
     debugCompile project(path: ':widgets_viewpager_ex', configuration: 'debug')
     releaseCompile project(path: ':widgets_viewpager_ex', configuration: 'release')
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.jaeger.statusbarutil:library:1.4.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'pub.devrel:easypermissions:0.3.0'
+    testCompile 'junit:junit:4.12'
 }

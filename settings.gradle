@@ -1,6 +1,13 @@
-include ':app', ':auto_update'
+include ':app'
+
+include 'library_auto_update'
+project(':library_auto_update').projectDir = new File('./auto_update')
+
 include 'library_security'
 project(':library_security').projectDir = new File('./security')
+
+include 'library_plugin'
+project(':library_plugin').projectDir = new File('./plugin')
 
 include 'library_ffmpeg'
 project(':library_ffmpeg').projectDir = new File('./ffmpeg')
