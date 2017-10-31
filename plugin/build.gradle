@@ -19,17 +19,62 @@ android {
     }
 }
 
-task buildJar(type: Jar, dependsOn: ['compileReleaseJavaWithJavac']) {
-    archiveName = "plugin-1.0.jar"
-    from('build/intermediates/classes/release')
-    destinationDir = file('../libs')
-    exclude "com/less/tplayer/BuildConfig.class"
-    exclude('android/**')
-    exclude('**/R.class')
-    exclude('**/R\$*.class')
-    include "com/plugin/*.*"
+task abuildJar(type: Jar, dependsOn: ['compileReleaseJavaWithJavac']) {
+    try {
+        println("======> build jar <======")
+        archiveName = "plugin-1.0.jar"
+        from('build/intermediates/classes/release')
+        // destinationDir = file('../libs')
+        destinationDir = file('../app/src/main/assets')
+        exclude('android/**')
+        exclude('com/less/plugin/BuildConfig.class')
+        // 一定要去除接口
+        exclude('com/less/plugin/Animal.class')
+        exclude('com/less/plugin/R.class')
+        exclude('**/R.class')
+        exclude('**/R\$*.class')
+        include "com/less/plugin/*.*"
+        println("======> build jar end <======")
+    } catch (Exception e) {
+        e.printStackTrace()
+    }
+}
+task abuildCMD {
+    // 方式一
+    // String cmd = 'ls -a' // 即可以用java的String，又可以用def声明。
+    // def cmdResult = cmd.execute().text.trim()
+    // println cmdResult
 }
 
+task abuildDex(type:Exec) {
+    try {
+        String rootPath = rootDir.getAbsolutePath()
+        println(rootPath)
+
+        String outputPath = rootPath + File.separator + "app/src/main/assets/dynamic.jar-1.0.jar";
+        String sourcePath = rootPath + File.separator + "app/src/main/assets/plugin-1.0.jar";
+        // 这里在windows下一定要加/c参数 ,否则会报错,/c是 执行字符串指定的命令然后终止
+        commandLine 'cmd', '/c', 'dx --dex --output=' + outputPath + " " + sourcePath;
+        println("end")
+    } catch (Exception e) {
+        e.printStackTrace()
+    }
+}
+
+task adeleteImpl {
+    doLast{
+        // 删除本地实现类文件
+        String rootPath = rootDir.getAbsolutePath()
+        File file = new File(rootPath + File.separator + "plugin/src/main/java/com/less/plugin/Dog.java");
+        if (file.exists()) {
+            println("delete " + file.getAbsolutePath())
+            file.delete();
+        }else{
+            println("文件不存在")
+        }
+    }
+}
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
 }

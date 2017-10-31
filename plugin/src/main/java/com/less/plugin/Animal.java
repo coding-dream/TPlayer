@@ -1,5 +1,8 @@
 package com.less.plugin;
 
 public interface Animal {
-	void say();
+	public interface Callback {
+		void done(String message);
+	}
+	void say(Callback callback);
 }
