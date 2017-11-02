@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.less.tplayer.R;
 
+/**
+ * @author Administrator
+ */
 public class GuideActivity extends AppCompatActivity {
 
     @Override

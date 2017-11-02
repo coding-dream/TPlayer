@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">TPlayer</string>
+    <string name="ok">确认</string>
+    <string name="cancel">取消</string>
+    <string name="about">关于</string>
+    <string name="exit">退出</string>
+    <string name="wechat">我的公众号：xxx</string>
+
+    <string name="loading">加载中…</string>
+    <string name="loading_no_more">已加载全部</string>
 </resources>

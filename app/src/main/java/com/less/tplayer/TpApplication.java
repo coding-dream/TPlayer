@@ -1,8 +1,15 @@
 package com.less.tplayer;
+
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
+import android.os.Process;
 
 import com.less.tplayer.util.ReadState;
 import com.less.tplayer.util.ReadStateHelper;
+import com.umeng.analytics.MobclickAgent;
+
+import java.util.List;
 
 /**
  * @author Administrator
@@ -15,9 +22,15 @@ public class TpApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
 
-        TpCrashHandler.init();
+        if (isCurrentProcess()) {
+            instance = this;
+            TpCrashHandler.init();
+            MobclickAgent.setScenarioType(getApplicationContext(), MobclickAgent.EScenarioType.E_UM_NORMAL);
+            // 禁止默认的页面统计方式，这样将不会再自动统计Activity.
+            MobclickAgent.openActivityDurationTrack(false);
+        }
+
     }
 
     /**
@@ -39,5 +52,26 @@ public class TpApplication extends Application {
         ReadStateHelper helper = ReadStateHelper.create(getContext(),
                 CONFIG_READ_STATE_PRE + mark, 100);
         return new ReadState(helper);
+    }
+
+    private boolean isCurrentProcess() {
+        String processName = getProcessName(this, Process.myPid());
+        if (processName == null || !processName.equals(BuildConfig.APPLICATION_ID)) {
+            return false;
+        }
+        return true;
+    }
+
+    private String getProcessName(Context cxt, int pid) {
+        List<ActivityManager.RunningAppProcessInfo> runningApps = ((ActivityManager) cxt.getSystemService(ACTIVITY_SERVICE)).getRunningAppProcesses();
+        if (runningApps == null) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo procInfo : runningApps) {
+            if (procInfo.pid == pid) {
+                return procInfo.processName;
+            }
+        }
+        return null;
     }
 }

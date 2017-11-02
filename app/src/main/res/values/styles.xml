@@ -5,13 +5,20 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/color_accent</item>
     </style>
 
     <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="android:windowBackground">@color/bg</item>
+    </style>
+
+    <!--activity_about.xml-->
+    <style name="CollapsingToolbarTitleStyle"
+        parent="@android:style/TextAppearance">
+        <item name="android:textColor">@android:color/transparent</item>
     </style>
 </resources>

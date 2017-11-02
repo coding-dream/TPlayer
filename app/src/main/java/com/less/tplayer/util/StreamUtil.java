@@ -22,8 +22,9 @@ public final class StreamUtil {
      */
     @SuppressWarnings("WeakerAccess")
     public static void close(Closeable... closeables) {
-        if (closeables == null || closeables.length == 0)
+        if (closeables == null || closeables.length == 0) {
             return;
+        }
         for (Closeable closeable : closeables) {
             if (closeable != null) {
                 try {

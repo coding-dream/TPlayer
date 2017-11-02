@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
@@ -15,6 +19,8 @@ import com.umeng.analytics.MobclickAgent;
  */
 
 public abstract class BaseActivity extends AppCompatActivity{
+    protected LayoutInflater mInflater;
+    public boolean visible ;
     protected RequestManager mImageLoader;
     private boolean mIsDestroy;
     private final String mPackageNameUmeng = this.getClass().getName();
@@ -24,19 +30,12 @@ public abstract class BaseActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (initBundle(getIntent().getExtras())) {
-            setContentView(getContentView());
-            initWindow();
-            initView();
-            initWidget();
-            initData();
-        } else {
-            finish();
+        mInflater = getLayoutInflater();
+        if (getLayoutId() != 0) {
+            setContentView(getLayoutId());
         }
-        //umeng analytics
-        MobclickAgent.setDebugMode(false);
-        MobclickAgent.openActivityDurationTrack(false);
-        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
+        initView();
+        initData();
     }
 
     /**
@@ -77,6 +76,7 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
+        visible = true;
         MobclickAgent.onPageStart(this.mPackageNameUmeng);
         MobclickAgent.onResume(this);
     }
@@ -84,11 +84,17 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     protected void onPause() {
         super.onPause();
+        visible = false;
         MobclickAgent.onPageEnd(this.mPackageNameUmeng);
         MobclickAgent.onPause(this);
     }
 
-    public abstract int getContentView();
+    /**
+     * get setContentView()'s layoutId
+     *
+     * @return int
+     */
+    protected abstract int getLayoutId();
 
     protected void initView() {
 
@@ -98,20 +104,35 @@ public abstract class BaseActivity extends AppCompatActivity{
 
     }
 
-    protected void initWidget() {
-
-    }
-
-    protected void initWindow() {
-
-    }
-
-    protected boolean initBundle(Bundle extras) {
-        return true;
-    }
-
     public <T> T $(int id){
         return (T) findViewById(id);
+    }
+
+    public void initToolBar(Toolbar toolbar, boolean homeAsUpEnabled, int resTitle) {
+        initToolBar(toolbar, homeAsUpEnabled, getString(resTitle));
+    }
+
+    public void initToolBar(Toolbar toolbar, boolean homeAsUpEnabled, String title) {
+        toolbar.setTitle(title);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(homeAsUpEnabled);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // 令子Activity initToolbar()之后，点击左上方按钮有效返回
+                onBackPressed();
+                break;
+
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public synchronized RequestManager getImageLoader() {

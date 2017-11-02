@@ -46,6 +46,12 @@ android {
         xiaomi {
             applicationId "com.less.tplayer.xiaomi"
         }
+        _360 {
+            applicationId "com.less.tplayer._360"
+        }
+        tencent{
+            applicationId "com.less.tplayer.tencent"
+        }
     }
 
     productFlavors.all { flavor ->
@@ -59,6 +65,15 @@ android {
             def finalName = flavor_app + "_" + flavor_channel.name + "_" + variant.versionCode  /*+ "_" + flavor_abi.name*/ + ".apk";
             output.outputFile = new File(output.outputFile.parent, finalName)
         }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
     }
 }
 
