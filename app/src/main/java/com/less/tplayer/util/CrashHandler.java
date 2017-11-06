@@ -22,6 +22,7 @@ public abstract class CrashHandler implements UncaughtExceptionHandler {
     /**
      * bug捕获
      */
+    @Override
     public void uncaughtException(Thread thread, Throwable ex) {
 
         if (!handleException(ex) && mDefaultHandler != null) {

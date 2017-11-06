@@ -12,6 +12,7 @@ import android.view.MenuItem;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.less.tplayer.BuildConfig;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -36,6 +37,12 @@ public abstract class BaseActivity extends AppCompatActivity{
         }
         initView();
         initData();
+        //umeng analytics
+        if (BuildConfig.DEBUG) {
+            MobclickAgent.setDebugMode(true);
+        }
+        MobclickAgent.openActivityDurationTrack(false);
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
     }
 
     /**

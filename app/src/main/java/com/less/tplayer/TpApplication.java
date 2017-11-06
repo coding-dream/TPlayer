@@ -7,7 +7,6 @@ import android.os.Process;
 
 import com.less.tplayer.util.ReadState;
 import com.less.tplayer.util.ReadStateHelper;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -26,9 +25,6 @@ public class TpApplication extends Application {
         if (isCurrentProcess()) {
             instance = this;
             TpCrashHandler.init();
-            MobclickAgent.setScenarioType(getApplicationContext(), MobclickAgent.EScenarioType.E_UM_NORMAL);
-            // 禁止默认的页面统计方式，这样将不会再自动统计Activity.
-            MobclickAgent.openActivityDurationTrack(false);
         }
 
     }

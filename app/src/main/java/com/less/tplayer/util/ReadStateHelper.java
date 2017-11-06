@@ -47,8 +47,9 @@ public class ReadStateHelper {
                 throw new RuntimeException("can't mkdirs by:" + parent.toString());
             }
             try {
-                if (!file.createNewFile())
+                if (!file.createNewFile()) {
                     throw new IOException("can't createNewFile by:" + file.toString());
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -64,8 +65,9 @@ public class ReadStateHelper {
      * @param key 一般为资讯等Id
      */
     public void put(String key) {
-        if (TextUtils.isEmpty(key) || cache.containsKey(key))
+        if (TextUtils.isEmpty(key) || cache.containsKey(key)) {
             return;
+        }
         if (cache.size() >= maxPoolSize) {
             clearCache();// 清除一部分旧数据
         }
@@ -87,8 +89,9 @@ public class ReadStateHelper {
      * 清理一次当前缓存
      */
     public void clearCache() {
-        if (cache.size() == 0)
+        if (cache.size() == 0) {
             return;
+        }
         List<Map.Entry<String, Long>> info = new ArrayList<>(cache.entrySet());
         // 把cache中的key按照value(currentTimeMillis)排序
         Collections.sort(info, new Comparator<Map.Entry<String, Long>>() {
@@ -101,13 +104,15 @@ public class ReadStateHelper {
 
         // 默认清除 70% 的旧 数据
         int deleteSize = (int) (info.size() * 0.7f);
-        if (deleteSize <= 0)
+        if (deleteSize <= 0) {
             return;
+        }
         for (Map.Entry<String, Long> stringLongEntry : info) {
             // Remove
             cache.remove(stringLongEntry.getKey());
-            if (--deleteSize <= 0)
+            if (--deleteSize <= 0) {
                 break;
+            }
         }
     }
     // 文件读操作(读取json文件到 当前cache中)
@@ -117,8 +122,9 @@ public class ReadStateHelper {
             Map<String, Long> data = new Gson().fromJson(reader = new FileReader(file),
                     new TypeToken<Map<String, Long>>() {
                     }.getType());
-            if (data != null && data.size() > 0)
+            if (data != null && data.size() > 0) {
                 cache.putAll(data);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } finally {

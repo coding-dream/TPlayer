@@ -89,6 +89,9 @@ dependencies {
     // debugCompile project(path: ':library_ffmpeg', configuration: 'debug')
     // releaseCompile project(path: ':library_ffmpeg', configuration: 'release')
 
+     debugCompile project(path: ':library_hook', configuration: 'debug')
+     releaseCompile project(path: ':library_hook', configuration: 'release')
+
     debugCompile project(path: ':library_plugin', configuration: 'debug')
     releaseCompile project(path: ':library_plugin', configuration: 'release')
 
@@ -105,3 +108,4 @@ dependencies {
     compile 'pub.devrel:easypermissions:0.3.0'
     testCompile 'junit:junit:4.12'
 }
+apply plugin: 'com.getkeepsafe.dexcount'
