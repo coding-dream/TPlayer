@@ -26,7 +26,6 @@ public class TpApplication extends Application {
             instance = this;
             TpCrashHandler.init();
         }
-
     }
 
     /**

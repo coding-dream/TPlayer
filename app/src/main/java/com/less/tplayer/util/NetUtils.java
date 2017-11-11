@@ -4,16 +4,17 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-public class NetUtils {
+import com.less.tplayer.TpApplication;
 
-    public static boolean isConnect(Context context){
-        boolean connected = false;
-        ConnectivityManager conManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo network = conManager.getActiveNetworkInfo();
-        if(null != network){
-            connected = conManager.getActiveNetworkInfo().isAvailable();
-        }
-        return connected;
+public class NetUtils {
+    /**
+     * 判断是否有网络连接
+     * @return
+     */
+    public static boolean hasInternet() {
+        ConnectivityManager cm = (ConnectivityManager) TpApplication.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        return info != null && info.isAvailable() && info.isConnected();
     }
 
     @Deprecated

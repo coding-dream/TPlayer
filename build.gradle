@@ -12,6 +12,17 @@ buildscript {
     }
 }
 
+ext {
+    compileSdkVersion = 26
+    buildToolsVersion = "26.0.0"
+    applicationId = "com.less.tplayer"
+    minSdkVersion = 14
+    targetSdkVersion = 14
+    versionCode = 1
+    versionName = "v1.0"
+    supportVersion = '26.0.0-alpha1'
+}
+
 allprojects {
     repositories {
         jcenter()

@@ -83,14 +83,20 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    // debugCompile project(path: ':library_security', configuration: 'debug')
-    // releaseCompile project(path: ':library_security', configuration: 'release')
+     debugCompile project(path: ':library_security', configuration: 'debug')
+     releaseCompile project(path: ':library_security', configuration: 'release')
 
     // debugCompile project(path: ':library_ffmpeg', configuration: 'debug')
     // releaseCompile project(path: ':library_ffmpeg', configuration: 'release')
 
-     debugCompile project(path: ':library_hook', configuration: 'debug')
-     releaseCompile project(path: ':library_hook', configuration: 'release')
+    debugCompile project(path: ':widgets_bzrefreshbtn', configuration: 'debug')
+    releaseCompile project(path: ':widgets_bzrefreshbtn', configuration: 'release')
+
+    debugCompile project(path: ':widgets_uis', configuration: 'debug')
+    releaseCompile project(path: ':widgets_uis', configuration: 'release')
+
+    debugCompile project(path: ':library_hook', configuration: 'debug')
+    releaseCompile project(path: ':library_hook', configuration: 'release')
 
     debugCompile project(path: ':library_plugin', configuration: 'debug')
     releaseCompile project(path: ':library_plugin', configuration: 'release')

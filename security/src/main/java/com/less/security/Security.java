@@ -5,8 +5,6 @@ package com.less.security;
  */
 
 public class Security {
-    static {
-        System.loadLibrary("native-lib");
-    }
+
     public native String stringFromJNI();
 }

@@ -20,3 +20,12 @@ project(':widgets_smart_progressbar').projectDir = new File('./widgets/smart_pro
 
 include 'widgets_viewpager_ex'
 project(':widgets_viewpager_ex').projectDir = new File('./widgets/viewpager_ex')
+
+include 'widgets_bzrefreshbtn'
+project(':widgets_bzrefreshbtn').projectDir = new File('./widgets/bzrefreshbtn')
+
+include 'widgets_uis'
+project(':widgets_uis').projectDir = new File('./widgets/uis')
+
+include 'widgets_swipebacklayout'
+project(':widgets_swipebacklayout').projectDir = new File('./widgets/swipebacklayout')
