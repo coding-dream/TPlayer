@@ -1,12 +1,12 @@
 package com.less.tplayer.ui;
 
 import com.less.tplayer.R;
-import com.less.tplayer.base.activity.BaseActivity;
+import com.less.tplayer.base.activity.BaseBackActivity;
 
 /**
  * @author Administrator
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseBackActivity {
 
     @Override
     public int getLayoutId() {

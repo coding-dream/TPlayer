@@ -92,6 +92,9 @@ dependencies {
     debugCompile project(path: ':widgets_bzrefreshbtn', configuration: 'debug')
     releaseCompile project(path: ':widgets_bzrefreshbtn', configuration: 'release')
 
+    debugCompile project(path: ':widgets_swipebacklayout', configuration: 'debug')
+    releaseCompile project(path: ':widgets_swipebacklayout', configuration: 'release')
+
     debugCompile project(path: ':widgets_uis', configuration: 'debug')
     releaseCompile project(path: ':widgets_uis', configuration: 'release')
 
