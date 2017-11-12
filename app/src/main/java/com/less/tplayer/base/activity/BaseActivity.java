@@ -1,4 +1,4 @@
-package com.less.tplayer.base;
+package com.less.tplayer.base.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

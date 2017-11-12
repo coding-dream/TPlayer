@@ -1,4 +1,4 @@
-package com.less.tplayer.base;
+package com.less.tplayer.base.fragment;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -15,7 +15,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.less.tplayer.R;
-import com.less.tplayer.base.BaseActivity;
+import com.less.tplayer.base.activity.BaseActivity;
 
 /**
  * @author Administrator

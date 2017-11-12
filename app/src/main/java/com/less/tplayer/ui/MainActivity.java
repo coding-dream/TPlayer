@@ -1,7 +1,7 @@
 package com.less.tplayer.ui;
 
 import com.less.tplayer.R;
-import com.less.tplayer.base.BaseActivity;
+import com.less.tplayer.base.activity.BaseActivity;
 
 /**
  * @author Administrator
