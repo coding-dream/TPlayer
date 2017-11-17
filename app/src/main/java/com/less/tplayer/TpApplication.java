@@ -7,6 +7,8 @@ import android.os.Process;
 
 import com.less.tplayer.util.ReadState;
 import com.less.tplayer.util.ReadStateHelper;
+import com.lody.virtual.client.core.VirtualCore;
+import com.lody.virtual.client.stub.VASettings;
 
 import java.util.List;
 
@@ -68,5 +70,15 @@ public class TpApplication extends Application {
             }
         }
         return null;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        try {
+            VirtualCore.get().startup(base);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
 }

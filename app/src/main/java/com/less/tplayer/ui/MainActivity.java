@@ -21,6 +21,5 @@ public class MainActivity extends BaseBackActivity {
     @Override
     protected void initView() {
         super.initView();
-
     }
 }
