@@ -1,5 +1,8 @@
 include ':app'
 
+include 'library_va'
+project(':library_va').projectDir = new File('./valib')
+
 include 'library_hook'
 project(':library_hook').projectDir = new File('./hook')
 

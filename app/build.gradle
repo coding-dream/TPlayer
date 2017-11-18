@@ -85,7 +85,6 @@ repositories {
 }
 
 dependencies {
-    compile(name:'lib-release', ext:'aar')
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -117,6 +116,10 @@ dependencies {
 
     debugCompile project(path: ':widgets_viewpager_ex', configuration: 'debug')
     releaseCompile project(path: ':widgets_viewpager_ex', configuration: 'release')
+
+    debugCompile project(path: ':library_va', configuration: 'debug')
+    releaseCompile project(path: ':library_va', configuration: 'release')
+
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.jaeger.statusbarutil:library:1.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'

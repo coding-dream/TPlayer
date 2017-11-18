@@ -30,6 +30,11 @@ public class AboutActivity extends BaseActivity {
     private WebSettings settings;
 
     @Override
+    protected void initToolBar() {
+
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_about;
     }
@@ -42,8 +47,6 @@ public class AboutActivity extends BaseActivity {
         webView = (WebView) findViewById(R.id.webView);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-
-        initToolBar(toolbar, true, "");
         collapsingToolbar.setTitle(getString(R.string.about));
 
         settings = webView.getSettings();
