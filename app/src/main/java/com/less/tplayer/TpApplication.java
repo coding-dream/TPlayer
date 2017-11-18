@@ -1,10 +1,10 @@
 package com.less.tplayer;
 
 import android.app.ActivityManager;
+import android.app.Application;
 import android.content.Context;
 import android.os.Process;
 
-import com.less.tplayer.va.VApplication;
 import com.less.tplayer.util.ReadState;
 import com.less.tplayer.util.ReadStateHelper;
 
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Administrator
  */
-public class TpApplication extends VApplication {
+public class TpApplication extends Application {
     public static final int PAGE_SIZE = 20;// 默认分页大小
     private static final String CONFIG_READ_STATE_PRE = "CONFIG_READ_STATE_PRE_";
     private static TpApplication instance;

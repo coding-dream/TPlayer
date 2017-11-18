@@ -19,7 +19,7 @@ public class VApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        // io重定向
+        // io重定向,lody 注释的很清楚 !
         VASettings.ENABLE_IO_REDIRECT = true;
         // 允许app发送快捷方式
         VASettings.ENABLE_INNER_SHORTCUT = false;
@@ -45,7 +45,8 @@ public class VApplication extends Application {
             public void onVirtualProcess() {
                 // activity生命周期监听
                 virtualCore.setComponentDelegate(new MyComponentDelegate());
-                // 信息伪造
+                // 信息伪造 fake phone imei,macAddress,BluetoothAddress
+                virtualCore.setPhoneInfoDelegate(new MyPhoneInfoDelegate());
                 // 任务历史显示,activity启动的intent处理（不显示任务）
                 virtualCore.setTaskDescriptionDelegate(new MyTaskDescriptionDelegate());
             }
@@ -56,7 +57,8 @@ public class VApplication extends Application {
                 virtualCore.registerObserver(new MyPackageObserver(VApplication.this));
                 // 通过intent 安装/卸载 的监听器
                 virtualCore.setAppRequestListener(new MyAppRequestListener(VApplication.this));
-                //允许内部app调用外部的app名单
+                // 允许内部app调用外部的app名单issue223
+                // 这里指的是如: VirtualApp中安装了一个应用支持微信登录，方法1: 需要在环境中也安装微信才能调起，方法2: addVisibleOutsidePackage 直接调起外部的微信来登录
                 virtualCore.addVisibleOutsidePackage("com.tencent.mobileqq");
                 virtualCore.addVisibleOutsidePackage("com.tencent.mobileqqi");
                 virtualCore.addVisibleOutsidePackage("com.tencent.minihd.qq");

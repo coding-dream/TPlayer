@@ -24,8 +24,7 @@ public class AppTarget {
         }
         return sAppTarget;
     }
-
-    private static final String PKG = "com.dbo.musicspy";
+    private static final String PKG = "com.syntc.apk360";
     private Context mContext;
     private final SharedPreferences mSharedPreferences;
     private String mApkFile,mUpdateFile;
