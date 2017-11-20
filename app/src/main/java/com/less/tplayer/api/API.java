@@ -4,7 +4,7 @@ package com.less.tplayer.api;
  * Created by deeper on 2017/11/9.
  */
 
-public class TPApi {
+public class API {
 
     public final static String HTTP = "http://";
     public final static String HOST = "xx.xx.net/";
