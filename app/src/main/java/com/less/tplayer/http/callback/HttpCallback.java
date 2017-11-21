@@ -1,6 +1,6 @@
-package com.less.tplayer.api.callback;
+package com.less.tplayer.http.callback;
 
-import com.less.tplayer.api.convert.Converter;
+import com.less.tplayer.http.convert.Converter;
 
 /**
  * Created by deeper on 2017/11/20.
@@ -9,6 +9,7 @@ import com.less.tplayer.api.convert.Converter;
 public interface HttpCallback<T> extends Converter<T> {
     void onStart();
     void onSuccess(T response);
+    void uploadProgress(float progress,long total);
     void onError(Exception e);
     void onFinish();
 }

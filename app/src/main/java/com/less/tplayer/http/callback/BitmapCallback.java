@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.less.tplayer.api.callback;
+package com.less.tplayer.http.callback;
 
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
-import com.less.tplayer.api.convert.BitmapConvert;
+import com.less.tplayer.http.convert.BitmapConvert;
 
 import okhttp3.Response;
 

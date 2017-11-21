@@ -1,4 +1,4 @@
-package com.less.tplayer.api.cookie;
+package com.less.tplayer.http.cookie;
 
 import java.util.ArrayList;
 import java.util.List;

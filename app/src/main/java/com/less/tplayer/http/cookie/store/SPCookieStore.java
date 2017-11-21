@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.less.tplayer.api.cookie.store;
+package com.less.tplayer.http.cookie.store;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.less.tplayer.api.cookie.SerializableCookie;
+import com.less.tplayer.http.cookie.SerializableCookie;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package com.less.tplayer.api;
+package com.less.tplayer.http;
 
 /**
  * Created by deeper on 2017/11/20.

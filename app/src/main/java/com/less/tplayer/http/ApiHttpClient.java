@@ -1,4 +1,4 @@
-package com.less.tplayer.api;
+package com.less.tplayer.http;
 
 import android.net.Uri;
 import android.os.Build;
@@ -7,9 +7,10 @@ import android.os.Looper;
 import android.text.TextUtils;
 
 import com.less.tplayer.TpApplication;
-import com.less.tplayer.api.callback.HttpCallback;
-import com.less.tplayer.api.cookie.CookieJarImpl;
-import com.less.tplayer.api.cookie.store.MemoryCookieStore;
+import com.less.tplayer.http.bean.FileInput;
+import com.less.tplayer.http.callback.HttpCallback;
+import com.less.tplayer.http.cookie.CookieJarImpl;
+import com.less.tplayer.http.cookie.store.MemoryCookieStore;
 import com.less.tplayer.util.SharedPreferenceUtils;
 import com.less.tplayer.util.Singleton;
 import com.less.tplayer.util.TDevice;
@@ -18,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -30,6 +32,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -38,10 +41,12 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
- * Created by deeper on 2017/11/20.
+ *
+ * @author deeper
+ * @date 2017/11/20
  */
 
-public class ApiHttpClient {
+public class ApiHttpClient implements IHttpMethod {
     private static final String TAG = ApiHttpClient.class.getSimpleName();
     private static final int TIMEOUT = 20;
     private static final String KEY_APP_UNIQUE_ID = "appUniqueID";
@@ -98,76 +103,140 @@ public class ApiHttpClient {
         return headers;
     }
 
-    public void get(String url, Map<String,String> params, final HttpCallback httpCallback){
+    @Override
+    public void get(String url, Map<String,String> params,HttpCallback httpCallback){
         Uri.Builder builder = Uri.parse(url).buildUpon();
         Set<String> keys = params.keySet();
         Iterator<String> iterator = keys.iterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             String key = iterator.next();
             builder.appendQueryParameter(key, params.get(key));
         }
         url = builder.build().toString();
-
         Request request = new Request.Builder()
                 .get()
                 .url(url)
                 .build();
-        Call call = getOkHttp().newCall(request);
-        call.enqueue(new Callback() {
+        Call call = okHttp.newCall(request);
+        enqueueCall(httpCallback,call);
+    }
+
+    @Override
+    public void postForm(String url,Map<String,String> params,HttpCallback httpCallback) {
+        FormBody.Builder builder = new FormBody.Builder();
+        if (params != null) {
+            for (String key : params.keySet()) {
+                builder.add(key, params.get(key));
+            }
+        }
+        Request request = new Request.Builder()
+                .post(builder.build())
+                .url(url)
+                .build();
+        Call call = okHttp.newCall(request);
+        enqueueCall(httpCallback, call);
+    }
+
+    @Override
+    public void postOnlyFile(File file, HttpCallback httpCallback) {
+        MediaType mediaType = MediaType.parse("application/octet-stream");
+        Request request = new Request.Builder()
+                .post(RequestBody.create(mediaType, file))
+                .build();
+        Call call = okHttp.newCall(request);
+        enqueueCall(httpCallback,call);
+    }
+
+    @Override
+    public void postJsonNoFile(String url,String json, HttpCallback httpCallback ) {
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(mediaType, json);
+        Request request = new Request.Builder()
+                .post(requestBody)
+                .build();
+        Call call = okHttp.newCall(request);
+        enqueueCall(httpCallback,call);
+    }
+
+    @Override
+    public void postMultiForm(String url, Map<String,String> params, List<FileInput> fileInputs, final HttpCallback httpCallback) {
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        // 表单参数区域
+        if (params != null) {
+            for (String key : params.keySet()) {
+                builder.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + key + "\""), RequestBody.create(null, params.get(key)));
+            }
+        }
+        // 文件上传区域
+        if (fileInputs != null) {
+            for (int i = 0; i < fileInputs.size(); i++){
+                FileInput fileInput = fileInputs.get(i);
+                RequestBody fileBody = RequestBody.create(MediaType.parse(MimeTypeHelper.guessMimeType(fileInput.filename)), fileInput.file);
+                builder.addFormDataPart(fileInput.key, fileInput.filename, fileBody);
+            }
+        }
+        RequestBody requestBody = builder.build();
+        // wrapper,装饰器,通常多文件上传我们希望能够加一个上传进度的监听器.当然CountingRequestBody在get,postJson,postFile等请求中都可以设置此listener.
+        CountingRequestBody progressRequestBody = new CountingRequestBody(requestBody, new CountingRequestBody.Listener() {
             @Override
-            public void onFailure(Call call, final IOException e) {
+            public void onRequestProgress(final long bytesWritten, final long contentLength) {
                 mDelivery.post(new Runnable() {
                     @Override
                     public void run() {
-                        httpCallback.onError(e);
+                        httpCallback.uploadProgress(bytesWritten * 1.0f / contentLength,contentLength);
                     }
                 });
+            }
+        });
+        Request request = new Request.Builder()
+                .post(progressRequestBody)
+                .build();
+        Call call = okHttp.newCall(request);
+        enqueueCall(httpCallback,call);
+    }
+
+    private void enqueueCall(final HttpCallback httpCallback, Call call) {
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, final IOException e) {
+                sendMsgError(httpCallback,e);
             }
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                try {
-                    final Object t = httpCallback.convertResponse(response);
-
-                    mDelivery.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            httpCallback.onSuccess(t);
-                        }
-                    });
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
-                    mDelivery.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            httpCallback.onError(new IOException("convertResponse IO Error"));
-                        }
-                    });
-                }
+                sendMsgSuccess(httpCallback,response);
             }
         });
-
     }
 
-    public void post(){
-        if (files == null || files.isEmpty())
-        {
-            FormBody.Builder builder = new FormBody.Builder();
-            addParams(builder);
-            FormBody formBody = builder.build();
-        } else {
-            MultipartBody.Builder builder = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM);
-            addParams(builder);
+    private void sendMsgSuccess(final HttpCallback httpCallback, Response response) {
+        try {
+            final Object t = httpCallback.convertResponse(response);
 
-            for (int i = 0; i < files.size(); i++) {
-                PostFormBuilder.FileInput fileInput = files.get(i);
-                RequestBody fileBody = RequestBody.create(MediaType.parse(guessMimeType(fileInput.filename)), fileInput.file);
-                builder.addFormDataPart(fileInput.key, fileInput.filename, fileBody);
-            }
-            return builder.build();
+            mDelivery.post(new Runnable() {
+                @Override
+                public void run() {
+                    httpCallback.onSuccess(t);
+                }
+            });
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+            mDelivery.post(new Runnable() {
+                @Override
+                public void run() {
+                    httpCallback.onError(new IOException("convertResponse IO Error"));
+                }
+            });
         }
+    }
+
+    private void sendMsgError(final HttpCallback httpCallback, final IOException e) {
+        mDelivery.post(new Runnable() {
+            @Override
+            public void run() {
+                httpCallback.onError(e);
+            }
+        });
     }
 
     private static String getUserAgent() {

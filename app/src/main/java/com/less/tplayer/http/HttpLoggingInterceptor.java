@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.less.tplayer.api;
+package com.less.tplayer.http;
 
 import com.less.tplayer.util.IOUtils;
 import com.less.tplayer.util.LogUtils;

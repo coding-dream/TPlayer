@@ -1,6 +1,6 @@
-package com.less.tplayer.api.callback;
+package com.less.tplayer.http.callback;
 
-import com.less.tplayer.api.convert.StringConvert;
+import com.less.tplayer.http.convert.StringConvert;
 
 import okhttp3.Response;
 

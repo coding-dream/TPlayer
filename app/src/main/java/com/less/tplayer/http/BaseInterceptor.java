@@ -1,4 +1,4 @@
-package com.less.tplayer.api;
+package com.less.tplayer.http;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
