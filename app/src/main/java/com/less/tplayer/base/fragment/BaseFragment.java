@@ -201,5 +201,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 网络请求
      */
-    protected abstract void requestData();
+    protected void requestData(){
+        throw new RuntimeException("not implement");
+    }
 }
