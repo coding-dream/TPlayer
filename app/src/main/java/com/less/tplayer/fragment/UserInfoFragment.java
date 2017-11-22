@@ -13,7 +13,7 @@ public class UserInfoFragment extends BaseTitleFragment {
 
     @Override
     protected int getToolBarIconRes() {
-        return R.mipmap.actionbar_search_icon;
+        return R.mipmap.btn_search_normal;
     }
 
     @Override

@@ -106,7 +106,7 @@ public class MainActivity extends BaseBackActivity {
             finish();
         }
     }
-    
+
     public void toggleNavFragment(boolean show) {
         final View view = mNavBar.getView();
         if (view == null) {
