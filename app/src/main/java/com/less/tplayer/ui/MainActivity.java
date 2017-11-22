@@ -1,10 +1,13 @@
 package com.less.tplayer.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.Toast;
 
 import com.less.tplayer.AppConfig;
@@ -101,6 +104,42 @@ public class MainActivity extends BaseBackActivity {
             }
         } else {
             finish();
+        }
+    }
+    
+    public void toggleNavFragment(boolean show) {
+        final View view = mNavBar.getView();
+        if (view == null) {
+            return;
+        }
+        // hide
+        view.setVisibility(View.VISIBLE);
+        if (!show) {
+            view.animate()
+                    .translationY(view.getHeight())
+                    .setDuration(180)
+                    .setInterpolator(new LinearInterpolator())
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            view.setVisibility(View.GONE);
+                        }
+                    });
+        } else {
+            view.animate()
+                    .translationY(0)
+                    .setDuration(180)
+                    .setInterpolator(new LinearInterpolator())
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            // fix:bug > 点击隐藏的同时，快速点击显示
+                            view.setVisibility(View.VISIBLE);
+                            view.setTranslationY(0);
+                        }
+                    });
         }
     }
 }
