@@ -36,6 +36,9 @@ public class NavFragment extends BaseFragment implements View.OnClickListener {
     private NavButton mCurrentNavButton;
     private OnNavReselectListener mOnNavReselectListener;
 
+    public NavFragment() {
+        // Required empty public constructor
+    }
     public interface OnNavReselectListener {
         /**
          * navButton被重复选中时触发

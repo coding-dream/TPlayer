@@ -21,6 +21,7 @@
 
         <fragment
             android:id="@+id/fragment_nav"
+            android:name="com.less.tplayer.fragment.NavFragment"
             android:layout_width="match_parent"
             android:layout_height="48dp"/>
     </LinearLayout>

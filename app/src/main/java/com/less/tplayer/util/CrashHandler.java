@@ -31,8 +31,10 @@ public abstract class CrashHandler implements UncaughtExceptionHandler {
     }
 
     public boolean handleException(Throwable ex) {
-        if (ex == null)
+        if (ex == null) {
             return false;
+        }
+        ex.printStackTrace();
         String crashReport = getCrashReport(ex);
         Log.e("ex",crashReport);
 

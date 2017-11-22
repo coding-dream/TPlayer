@@ -1,6 +1,7 @@
 package com.less.tplayer.ui;
 
 import android.os.SystemClock;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import com.less.tplayer.AppConfig;
 import com.less.tplayer.R;
 import com.less.tplayer.base.activity.BaseBackActivity;
 import com.less.tplayer.fragment.NavFragment;
+import com.less.tplayer.interfaces.OnFragReSelListener;
 import com.less.tplayer.util.SharedPreferenceUtils;
 import com.less.tplayer.widget.NavButton;
 
@@ -44,11 +46,16 @@ public class MainActivity extends BaseBackActivity {
     protected void initView() {
         super.initView();
         FragmentManager manager = getSupportFragmentManager();
-        mNavBar = ((NavFragment) manager.findFragmentById(R.id.fragment_nav));
+        mNavBar = (NavFragment) manager.findFragmentById(R.id.fragment_nav);
         mNavBar.setup(manager, R.id.main_container, new NavFragment.OnNavReselectListener() {
             @Override
             public void onReselect(NavButton navButton) {
-
+                Fragment fragment = navButton.getFragment();
+                if (fragment != null
+                        && fragment instanceof OnFragReSelListener) {
+                    OnFragReSelListener listener = (OnFragReSelListener) fragment;
+                    listener.onFragReSelect();
+                }
             }
         });
 
@@ -67,6 +74,11 @@ public class MainActivity extends BaseBackActivity {
         }
     }
 
+    /**
+     * 该监听器在MainActivity的fragment中设置,如: Xfragment.attach(Context context){ activity = (MainActivity) context; activity.addOnTurnBackListener(listener); }
+     *
+     * @param turnBackListener
+     */
     public void addOnTurnBackListener(TurnBackListener turnBackListener) {
         this.mTurnBackListeners.add(turnBackListener);
     }

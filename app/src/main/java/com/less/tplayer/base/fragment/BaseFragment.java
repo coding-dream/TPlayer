@@ -73,17 +73,17 @@ public abstract class BaseFragment extends Fragment {
             ViewGroup parent = (ViewGroup) mRoot.getParent();
             if (parent != null) {
                 parent.removeView(mRoot);
-            } else {
-                mRoot = inflater.inflate(getLayoutId(), container, false);
-                mInflater = inflater;
-
-                if (savedInstanceState != null) {
-                    onRestartInstance(savedInstanceState);
-                }
-                initView(mRoot);
-                inflateViewStubInCreateView(mRoot);
-                initData();
             }
+        } else {
+            mRoot = inflater.inflate(getLayoutId(), container, false);
+            mInflater = inflater;
+
+            if (savedInstanceState != null) {
+                onRestartInstance(savedInstanceState);
+            }
+            initView(mRoot);
+            inflateViewStubInCreateView(mRoot);
+            initData();
         }
         return mRoot;
     }
