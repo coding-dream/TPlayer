@@ -165,7 +165,9 @@ public abstract class BaseFragment extends Fragment {
      *
      * @param savedInstanceState
      */
-    protected abstract void onRestartInstance(Bundle savedInstanceState);
+    protected void onRestartInstance(Bundle savedInstanceState){
+
+    }
 
     /**
      * initView
