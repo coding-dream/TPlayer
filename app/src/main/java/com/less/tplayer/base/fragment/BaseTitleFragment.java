@@ -26,8 +26,12 @@ public abstract class BaseTitleFragment extends BaseFragment {
     @Override
     protected void initView(View mRoot) {
         titleBar = mRoot.findViewById(R.id.nav_title_bar);
-        titleBar.setTitle(getToolBarTitleRes());
-        titleBar.setIcon(getToolBarIconRes());
+        if (getToolBarTitleRes() != 0) {
+            titleBar.setTitle(getToolBarTitleRes());
+        }
+        if (getToolBarIconRes() != 0) {
+            titleBar.setIcon(getToolBarIconRes());
+        }
         titleBar.setIconOnClickListener(getToolbarClickListener());
     }
     @Override
