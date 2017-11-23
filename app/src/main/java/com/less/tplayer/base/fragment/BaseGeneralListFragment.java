@@ -1,12 +1,12 @@
 package com.less.tplayer.base.fragment;
 
-import com.less.tplayer.interfaces.FragmentReSelected;
+import com.less.tplayer.interfaces.IFragmentReSelected;
 
 /**
  * Created by deeper on 2017/11/23.
  */
 
-public class BaseGeneralListFragment implements FragmentReSelected {
+public class BaseGeneralListFragment<T> extends BaseListFragment<T> implements IFragmentReSelected {
 
     @Override
     public void callReSelect() {

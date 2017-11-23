@@ -14,7 +14,7 @@ import com.less.tplayer.AppConfig;
 import com.less.tplayer.R;
 import com.less.tplayer.base.activity.BaseBackActivity;
 import com.less.tplayer.fragment.NavFragment;
-import com.less.tplayer.interfaces.FragmentReSelected;
+import com.less.tplayer.interfaces.IFragmentReSelected;
 import com.less.tplayer.util.SharedPreferenceUtils;
 import com.less.tplayer.widget.NavButton;
 
@@ -54,8 +54,8 @@ public class MainActivity extends BaseBackActivity {
             @Override
             public void onReselect(NavButton navButton) {
                 Fragment fragment = navButton.getFragment();
-                if (fragment != null && fragment instanceof FragmentReSelected) {
-                    FragmentReSelected listener = (FragmentReSelected) fragment;
+                if (fragment != null && fragment instanceof IFragmentReSelected) {
+                    IFragmentReSelected listener = (IFragmentReSelected) fragment;
                     listener.callReSelect();
                 }
             }

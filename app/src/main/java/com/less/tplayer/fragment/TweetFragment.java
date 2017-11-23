@@ -3,13 +3,13 @@ package com.less.tplayer.fragment;
 import android.os.Bundle;
 
 import com.less.tplayer.base.fragment.BaseTitleFragment;
-import com.less.tplayer.interfaces.FragmentReSelected;
+import com.less.tplayer.interfaces.IFragmentReSelected;
 
 /**
  * Created by deeper on 2017/11/23.
  */
 
-public class TweetFragment extends BaseTitleFragment implements FragmentReSelected {
+public class TweetFragment extends BaseTitleFragment implements IFragmentReSelected {
 
     public static final String CATALOG_KEY = "key";
     public static final int CATALOG_NEW = 1;

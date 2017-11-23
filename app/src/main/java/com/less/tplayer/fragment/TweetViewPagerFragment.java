@@ -8,9 +8,10 @@ import android.widget.Toast;
 import com.less.tplayer.R;
 import com.less.tplayer.base.adapter.BaseViewPagerAdapter;
 import com.less.tplayer.base.fragment.BaseGeneralListFragment;
+import com.less.tplayer.base.fragment.BaseGeneralRecyclerFragment;
 import com.less.tplayer.base.fragment.BaseViewPagerFragment;
 import com.less.tplayer.bean.PagerInfo;
-import com.less.tplayer.interfaces.FragmentReSelected;
+import com.less.tplayer.interfaces.IFragmentReSelected;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
  * @date 2017/11/22
  */
 
-public class TweetViewPagerFragment extends BaseViewPagerFragment implements FragmentReSelected {
+public class TweetViewPagerFragment extends BaseViewPagerFragment implements IFragmentReSelected {
 
     @Override
     protected int getToolBarIconRes() {
@@ -80,9 +81,10 @@ public class TweetViewPagerFragment extends BaseViewPagerFragment implements Fra
             Fragment fragment = pagerAdapter.getCurrentFrag();
             if (fragment != null) {
                 if (fragment instanceof BaseGeneralListFragment) {
-                    ((BaseGeneralListFragment) fragment).onTabReselect();
-                } else if (fragment instanceof BaseGeneralRecyclerFragment)
-                    ((BaseGeneralRecyclerFragment) fragment).onTabReselect();
+                    ((BaseGeneralListFragment) fragment).callReSelect();
+                } else if (fragment instanceof BaseGeneralRecyclerFragment) {
+                    ((BaseGeneralRecyclerFragment) fragment).callReSelect();
+                }
             }
         }
     }
