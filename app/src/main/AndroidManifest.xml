@@ -42,7 +42,8 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".va.VaActivity"></activity>
+        <activity android:name=".va.VaActivity" />
+        <activity android:name=".mvp.feature.FeatureActivity"></activity>
     </application>
 
 </manifest>

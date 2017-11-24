@@ -13,4 +13,12 @@
     <string name="main_tab_name_explore">发现</string>
     <string name="main_tab_name_my">我的</string>
     <string name="tip_double_click_exit">再次点击退出应用</string>
+
+    <string name="state_network_error">网络错误</string>
+    <string name="state_loading">正在加载…</string>
+    <string name="state_not_more">没有更多数据</string>
+    <string name="state_load_error">加载失败</string>
+    <string name="state_refreshing">正在刷新</string>
+    <string name="state_loading_error">数据加载中&#8230;</string>
+    <string name="feature_tab_name">TP推荐</string>
 </resources>

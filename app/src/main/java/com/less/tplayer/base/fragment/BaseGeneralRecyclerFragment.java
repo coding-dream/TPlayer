@@ -10,6 +10,5 @@ public class BaseGeneralRecyclerFragment<T> extends BaseRecyclerViewFragment<T> 
 
     @Override
     public void callReSelect() {
-
     }
 }

@@ -122,6 +122,9 @@ dependencies {
     debugCompile project(path: ':library_va', configuration: 'debug')
     releaseCompile project(path: ':library_va', configuration: 'release')
 
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // compile "org.jetbrains.anko:anko-common:$anko_version"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.jaeger.statusbarutil:library:1.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
@@ -129,8 +132,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'pub.devrel:easypermissions:0.3.0'
     testCompile 'junit:junit:4.12'
-
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    // compile "org.jetbrains.anko:anko-common:$anko_version"
 }
 apply plugin: 'com.getkeepsafe.dexcount'
