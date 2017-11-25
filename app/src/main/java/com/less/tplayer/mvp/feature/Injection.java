@@ -1,4 +1,4 @@
-package com.less.tplayer.mvp.common;
+package com.less.tplayer.mvp.feature;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

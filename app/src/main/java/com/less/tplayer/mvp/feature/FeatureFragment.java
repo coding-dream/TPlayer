@@ -10,7 +10,7 @@ import com.less.tplayer.base.fragment.BaseFragment;
  * Created by deeper on 2017/11/24.
  */
 
-public class FeatureFragment extends BaseFragment {
+public class FeatureFragment extends BaseFragment implements FeatureContract.View{
 
     public static FeatureFragment newInstance() {
         return new FeatureFragment();
@@ -33,6 +33,11 @@ public class FeatureFragment extends BaseFragment {
 
     @Override
     protected void initBundle(Bundle bundle) {
+
+    }
+
+    @Override
+    public void setPresenter(FeatureContract.Presenter presenter) {
 
     }
 }
