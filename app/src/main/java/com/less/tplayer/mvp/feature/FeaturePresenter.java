@@ -13,6 +13,7 @@ public class FeaturePresenter implements FeatureContract.Presenter {
     public FeaturePresenter(FeatureRepository featureRepository, FeatureFragment fragment) {
         mFeatureRepository = featureRepository;
         view = fragment;
+        view.setPresenter(this);
     }
 
     @Override

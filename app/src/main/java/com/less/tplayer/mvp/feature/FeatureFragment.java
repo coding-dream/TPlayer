@@ -10,10 +10,17 @@ import com.less.tplayer.base.fragment.BaseFragment;
  * Created by deeper on 2017/11/24.
  */
 
-public class FeatureFragment extends BaseFragment implements FeatureContract.View{
+public class FeatureFragment extends BaseFragment implements FeatureContract.View {
+    private FeatureContract.Presenter mPresenter;
 
     public static FeatureFragment newInstance() {
         return new FeatureFragment();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();;
     }
 
     @Override
@@ -38,6 +45,6 @@ public class FeatureFragment extends BaseFragment implements FeatureContract.Vie
 
     @Override
     public void setPresenter(FeatureContract.Presenter presenter) {
-
+        mPresenter = presenter;
     }
 }

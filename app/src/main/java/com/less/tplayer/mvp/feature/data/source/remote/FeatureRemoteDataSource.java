@@ -1,27 +1,15 @@
-package com.less.tplayer.mvp.feature.data.source;
+package com.less.tplayer.mvp.feature.data.source.remote;
 
 import android.support.annotation.NonNull;
 
 import com.less.tplayer.mvp.feature.data.Feature;
-import com.less.tplayer.mvp.feature.data.source.local.FeatureLocalDataSource;
-import com.less.tplayer.mvp.feature.data.source.remote.FeatureRemoteDataSource;
+import com.less.tplayer.mvp.feature.data.source.FeatureDataSource;
 
 /**
  * Created by deeper on 2017/11/25.
  */
 
-public class FeatureRepository implements FeatureDataSource {
-
-    private static FeatureRepository INSTANCE = null;
-
-    private final FeatureDataSource mRetemoDataSource;
-
-    private final FeatureDataSource mLocalDataSource;
-
-    public FeatureRepository() {
-        this.mLocalDataSource = new FeatureLocalDataSource();
-        this.mRetemoDataSource = new FeatureRemoteDataSource();
-    }
+public class FeatureRemoteDataSource implements FeatureDataSource {
 
     @Override
     public void getTasks(@NonNull LoadTasksCallback callback) {

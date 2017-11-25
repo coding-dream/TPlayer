@@ -4,6 +4,8 @@ import android.support.v7.app.ActionBar;
 
 import com.less.tplayer.R;
 import com.less.tplayer.base.activity.BaseActivity;
+import com.less.tplayer.mvp.common.Injection;
+import com.less.tplayer.mvp.feature.data.source.FeatureRepository;
 
 /**
  * @author Administrator
@@ -27,7 +29,7 @@ public class FeatureActivity extends BaseActivity {
 
         // todo 这个地方是模仿Google官方code,但是业务又稍有不同,Google可能改变此处代码为依赖注入方式,由于某原因暂无阅读某模块源码,待定为低耦合方式.
         // 有人可能会问为什么要在这里设置Presenter和View(fragment)的绑定,因为Activity某些情况要用到Presenter.
-        new FeaturePresenter(Injection.provideRepository(getApplicationContext()), fragment);
+        new FeaturePresenter(Injection.provideRepository(FeatureRepository.class), fragment);
     }
 
     @Override
