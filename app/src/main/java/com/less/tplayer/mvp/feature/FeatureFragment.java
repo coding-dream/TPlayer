@@ -62,13 +62,13 @@ public class FeatureFragment extends BaseFragment implements FeatureContract.Vie
             }
         });
         mRecyclerView = (RecyclerView) mRoot.findViewById(R.id.recyclerView);
-        mAdapter = new FeatureAdapter();
+        mAdapter = new FeatureAdapter(getContext(),FeatureAdapter.ONLY_FOOTER);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new FeatureAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, long itemId) {
-
+                // handle click
             }
         });
         mRefreshLayout.setColorSchemeResources(

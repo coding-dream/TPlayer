@@ -10,27 +10,23 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.RequestManager;
 import com.less.tplayer.R;
 import com.less.tplayer.mvp.feature.data.Feature;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
- * Created by deeper on 2017/11/25.
+ *
+ * @author deeper
+ * @date 2017/11/25
  */
 
 public class FeatureAdapter extends RecyclerView.Adapter {
-    protected Callback mCallBack;
-    private List<Feature> mPreItems;
 
     protected List<Feature> mItems;
     protected Context mContext;
     protected LayoutInflater mInflater;
-
-    protected String mSystemTime;
 
     protected int mSelectedPosition = -0;
     public static final int STATE_NO_MORE = 1;
@@ -41,7 +37,14 @@ public class FeatureAdapter extends RecyclerView.Adapter {
     public static final int STATE_LOAD_ERROR = 7;
     public static final int STATE_LOADING = 8;
 
+    /**
+     * 行为模式: NEITHER,ONLY_HEADER,ONLY_FOOTER,BOTH_HEADER_FOOTER
+     */
     private final int BEHAVIOR_MODE;
+
+    /**
+     * 状态: STATE_LOADING,STATE_HIDE,STATE_NO_MORE....
+     */
     protected int mState;
 
     public static final int NEITHER = 0;
@@ -64,51 +67,12 @@ public class FeatureAdapter extends RecyclerView.Adapter {
 
     private OnLoadingHeaderCallBack onLoadingHeaderCallBack;
 
-    public int addItems(List<Feature> items) {
-        int filterOut = 0;
-        if (items != null && !items.isEmpty()) {
-            List<Feature> date = new ArrayList<>();
-            if (mPreItems != null) {
-                for (Feature d : items) {
-                    if (!mPreItems.contains(d)) {
-                        date.add(d);
-                    } else {
-                        filterOut++;
-                    }
-                }
-            } else {
-                date = items;
-            }
-            mPreItems = items;
-            addAll(date);
-        }
-        return filterOut;
-    }
-
-    public void clearPreItems() {
-        mPreItems = null;
-    }
-
-    public interface Callback {
-        RequestManager getImgLoader();
-
-        Context getContext();
-
-        Date getSystemTime();
-    }
-
-    public FeatureAdapter(Callback callback, int mode) {
-        this(callback.getContext(), mode);
-        mCallBack = callback;
-        setState(STATE_LOADING, true);
-    }
-
     public FeatureAdapter(Context context, int mode) {
-        mItems = new ArrayList<>();
+        this.mItems = new ArrayList<>();
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
-        BEHAVIOR_MODE = mode;
-        mState = STATE_HIDE;
+        this.BEHAVIOR_MODE = mode;
+        this.mState = STATE_HIDE;
         initListener();
     }
 
@@ -135,10 +99,6 @@ public class FeatureAdapter extends RecyclerView.Adapter {
                 return false;
             }
         };
-    }
-
-    public void setSystemTime(String systemTime) {
-        this.mSystemTime = systemTime;
     }
 
     @Override
@@ -198,6 +158,8 @@ public class FeatureAdapter extends RecyclerView.Adapter {
                         break;
                     case STATE_HIDE:
                         fvh.itemView.setVisibility(View.GONE);
+                        break;
+                    default:
                         break;
                 }
                 break;
@@ -262,14 +224,12 @@ public class FeatureAdapter extends RecyclerView.Adapter {
         }
     }
 
-
     public Feature getSelectedItem() {
         if (mSelectedPosition < 0 || mSelectedPosition >= mItems.size()) {
             return null;
         }
         return mItems.get(mSelectedPosition);
     }
-
 
     /**
      * 单选
@@ -339,7 +299,6 @@ public class FeatureAdapter extends RecyclerView.Adapter {
             notifyItemChanged(mItems.size());
         }
     }
-
 
     public void addItem(int position, Feature item) {
         if (item != null) {
@@ -459,10 +418,6 @@ public class FeatureAdapter extends RecyclerView.Adapter {
         public abstract boolean onLongClick(int position, long itemId);
     }
 
-
-    /**
-     *
-     */
     public interface OnItemClickListener {
         void onItemClick(int position, long itemId);
     }
