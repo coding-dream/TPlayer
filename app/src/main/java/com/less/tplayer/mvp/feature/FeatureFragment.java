@@ -12,8 +12,6 @@ import com.less.tplayer.widget.RecyclerRefreshLayout;
 
 import java.util.List;
 
-import static android.R.attr.data;
-
 /**
  * Created by deeper on 2017/11/24.
  */
@@ -53,21 +51,26 @@ public class FeatureFragment extends BaseFragment implements FeatureContract.Vie
         mRefreshLayout.setSuperRefreshLayoutListener(new RecyclerRefreshLayout.SuperRefreshLayoutListener() {
             @Override
             public void onRefreshing() {
-                mAdapter.setState(BaseRecyclerAdapter.STATE_HIDE, true);
+                mAdapter.setState(FeatureAdapter.STATE_HIDE, true);
                 mPresenter.doRefresh();
             }
 
             @Override
             public void onLoadMore() {
                 mPresenter.doLoadMore();
-                mAdapter.setState(BaseRecyclerAdapter.STATE_LOADING, true);
+                mAdapter.setState(FeatureAdapter.STATE_LOADING, true);
             }
         });
         mRecyclerView = (RecyclerView) mRoot.findViewById(R.id.recyclerView);
         mAdapter = new FeatureAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(this);
+        mAdapter.setOnItemClickListener(new FeatureAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, long itemId) {
+
+            }
+        });
         mRefreshLayout.setColorSchemeResources(
                 R.color.swiperefresh_color1, R.color.swiperefresh_color2,
                 R.color.swiperefresh_color3, R.color.swiperefresh_color4);
@@ -90,12 +93,12 @@ public class FeatureFragment extends BaseFragment implements FeatureContract.Vie
 
     @Override
     public void showRefreshSuccess(List<Feature> datas) {
-        mAdapter.resetItem(data);
+        mAdapter.resetItem(datas);
     }
 
     @Override
     public void showLoadMoreSuccess(List<Feature> datas) {
-        mAdapter.addAll(data);
+        mAdapter.addAll(datas);
     }
 
     @Override
