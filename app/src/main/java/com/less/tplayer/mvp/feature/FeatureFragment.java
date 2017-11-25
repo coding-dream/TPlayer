@@ -5,6 +5,9 @@ import android.view.View;
 
 import com.less.tplayer.R;
 import com.less.tplayer.base.fragment.BaseFragment;
+import com.less.tplayer.mvp.feature.data.Feature;
+
+import java.util.List;
 
 /**
  * Created by deeper on 2017/11/24.
@@ -46,5 +49,30 @@ public class FeatureFragment extends BaseFragment implements FeatureContract.Vie
     @Override
     public void setPresenter(FeatureContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void showRefreshSuccess(List<Feature> datas) {
+
+    }
+
+    @Override
+    public void showLoadMoreSuccess(List<Feature> datas) {
+
+    }
+
+    @Override
+    public void showNoMore() {
+
+    }
+
+    @Override
+    public void showComplete() {
+
+    }
+
+    @Override
+    public void showNetworkError(int strId) {
+
     }
 }
