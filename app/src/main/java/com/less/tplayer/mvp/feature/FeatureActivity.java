@@ -24,6 +24,9 @@ public class FeatureActivity extends BaseActivity {
         super.initView();
         FeatureFragment fragment = FeatureFragment.newInstance();
         addFragment(R.id.fl_content, fragment);
+
+        // todo 这个地方是模仿Google官方code,但是业务又稍有不同,Google可能改变此处代码为依赖注入方式,由于某原因暂无阅读某模块源码,待定为低耦合方式.
+
     }
 
     @Override
