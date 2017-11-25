@@ -1,8 +1,5 @@
 package com.less.tplayer.mvp.feature.data.source.local;
 
-import android.support.annotation.NonNull;
-
-import com.less.tplayer.mvp.feature.data.Feature;
 import com.less.tplayer.mvp.feature.data.source.FeatureDataSource;
 
 /**
@@ -12,52 +9,7 @@ import com.less.tplayer.mvp.feature.data.source.FeatureDataSource;
 public class FeatureLocalDataSource implements FeatureDataSource {
 
     @Override
-    public void getTasks(@NonNull LoadTasksCallback callback) {
-
-    }
-
-    @Override
-    public void saveTask(@NonNull Feature task) {
-
-    }
-
-    @Override
-    public void completeTask(@NonNull Feature task) {
-
-    }
-
-    @Override
-    public void completeTask(@NonNull String taskId) {
-
-    }
-
-    @Override
-    public void activateTask(@NonNull Feature task) {
-
-    }
-
-    @Override
-    public void activateTask(@NonNull String taskId) {
-
-    }
-
-    @Override
-    public void clearCompletedTasks() {
-
-    }
-
-    @Override
-    public void refreshTasks() {
-
-    }
-
-    @Override
-    public void deleteAllTasks() {
-
-    }
-
-    @Override
-    public void deleteTask(@NonNull String taskId) {
+    public void getDatasByPage(int page, LoadCallback callback) {
 
     }
 }

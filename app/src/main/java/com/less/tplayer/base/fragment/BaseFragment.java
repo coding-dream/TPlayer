@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.less.tplayer.util.ImageLoader;
+import com.less.tplayer.util.LogUtils;
 
 import java.io.Serializable;
 
@@ -36,13 +37,11 @@ public abstract class BaseFragment extends Fragment {
      */
     private boolean init = false;
 
-    protected int mCurrentPage = 1;
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !init) {
-            requestData();
+            lazyLoadData();
             init = true;
         }
     }
@@ -203,7 +202,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 网络请求
      */
-    protected void requestData(){
-        throw new RuntimeException("not implement");
+    protected void lazyLoadData(){
+        LogUtils.d("====> lazy load <====");
     }
 }
