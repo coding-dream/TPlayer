@@ -7,8 +7,6 @@ import android.widget.Toast;
 
 import com.less.tplayer.R;
 import com.less.tplayer.base.adapter.BaseViewPagerAdapter;
-import com.less.tplayer.base.fragment.BaseGeneralListFragment;
-import com.less.tplayer.base.fragment.BaseGeneralRecyclerFragment;
 import com.less.tplayer.base.fragment.BaseViewPagerFragment;
 import com.less.tplayer.bean.PagerInfo;
 import com.less.tplayer.interfaces.IFragmentReSelected;
@@ -74,12 +72,8 @@ public class TweetViewPagerFragment extends BaseViewPagerFragment implements IFr
         if (mBaseViewPager != null) {
             BaseViewPagerAdapter pagerAdapter = (BaseViewPagerAdapter) mBaseViewPager.getAdapter();
             Fragment fragment = pagerAdapter.getCurrentFrag();
-            if (fragment != null) {
-                if (fragment instanceof BaseGeneralListFragment) {
-                    ((BaseGeneralListFragment) fragment).callReSelect();
-                } else if (fragment instanceof BaseGeneralRecyclerFragment) {
-                    ((BaseGeneralRecyclerFragment) fragment).callReSelect();
-                }
+            if (fragment != null && fragment instanceof IFragmentReSelected) {
+                ((IFragmentReSelected) fragment).callReSelect();
             }
         }
     }

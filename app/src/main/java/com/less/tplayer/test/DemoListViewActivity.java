@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.less.tplayer.Constants;
 import com.less.tplayer.R;
@@ -76,7 +77,7 @@ public class DemoListViewActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Toast.makeText(DemoListViewActivity.this, "click" + position, Toast.LENGTH_SHORT).show();
             }
         });
 
