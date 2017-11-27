@@ -35,11 +35,6 @@ public class TweetViewPagerFragment extends BaseViewPagerFragment implements IFr
     }
 
     @Override
-    protected int getContentLayoutId() {
-        return R.layout.fragment_tweet;
-    }
-
-    @Override
     protected List<PagerInfo> getPagers() {
         List<PagerInfo> list = new LinkedList<>();
         list.add(new PagerInfo("最新动弹",TweetFragment.class,createFragArgs(TweetFragment.CATALOG_NEW)));

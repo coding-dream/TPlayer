@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.less.tplayer.AppConfig;
 import com.less.tplayer.R;
-import com.less.tplayer.base.activity.BaseBackActivity;
+import com.less.tplayer.base.activity.BaseActivity;
 import com.less.tplayer.fragment.NavFragment;
 import com.less.tplayer.interfaces.IFragmentReSelected;
 import com.less.tplayer.util.SharedPreferenceUtils;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author Administrator
  */
-public class MainActivity extends BaseBackActivity {
+public class MainActivity extends BaseActivity {
     private NavFragment mNavBar;
     private long mBackPressedTime;
     private long timeout = 3 * 1000;
@@ -32,6 +32,11 @@ public class MainActivity extends BaseBackActivity {
 
     public interface TurnBackListener {
         boolean onTurnBack();
+    }
+
+    @Override
+    protected void initToolBar() {
+
     }
 
     @Override

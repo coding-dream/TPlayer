@@ -55,7 +55,6 @@ public class NavFragment extends BaseFragment implements View.OnClickListener {
         // do clear
         clearOldFragment();
         // do select first
-        mCurrentNavButton = navItemNews;
         doSelect(navItemNews);
     }
 
@@ -141,18 +140,20 @@ public class NavFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void doSelect(NavButton selectNav) {
-
-        NavButton oldNavButton = mCurrentNavButton;
-        if (oldNavButton == selectNav) {
-            if (mOnNavReselectListener != null) {
-                mOnNavReselectListener.onReselect(oldNavButton);
+        NavButton oldNavButton = null;
+        if (mCurrentNavButton != null) {
+            oldNavButton = mCurrentNavButton;
+            if (oldNavButton == selectNav) {
+                if (mOnNavReselectListener != null) {
+                    mOnNavReselectListener.onReselect(oldNavButton);
+                }
+                return;
             }
-        } else {
             oldNavButton.setSelected(false);
-            selectNav.setSelected(true);
-            switchFragment(oldNavButton, selectNav);
-            mCurrentNavButton = selectNav;
         }
+        selectNav.setSelected(true);
+        switchFragment(oldNavButton, selectNav);
+        mCurrentNavButton = selectNav;
     }
 
     private void switchFragment(NavButton oldNavButton, NavButton selectNav) {

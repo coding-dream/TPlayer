@@ -286,10 +286,10 @@ public class FeatureAdapter extends RecyclerView.Adapter {
     }
 
 
-    public void addAll(List<Feature> items) {
+    public void addAll(final List<Feature> items) {
         if (items != null) {
             this.mItems.addAll(items);
-            notifyItemRangeInserted(this.mItems.size(), items.size());
+            notifyItemRangeInserted(mItems.size(), items.size());
         }
     }
 

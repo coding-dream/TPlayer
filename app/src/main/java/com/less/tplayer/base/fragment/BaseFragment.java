@@ -37,6 +37,10 @@ public abstract class BaseFragment extends Fragment {
      */
     private boolean init = false;
 
+    /**
+     * 该方法只在ViewPager中有效
+     * @param isVisibleToUser
+     */
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -80,8 +84,8 @@ public abstract class BaseFragment extends Fragment {
             if (savedInstanceState != null) {
                 onRestartInstance(savedInstanceState);
             }
-            initView(mRoot);
             inflateViewStubInCreateView(mRoot);
+            initView(mRoot);
             initData();
         }
         return mRoot;

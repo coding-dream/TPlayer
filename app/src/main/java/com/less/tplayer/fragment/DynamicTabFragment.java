@@ -1,11 +1,13 @@
 package com.less.tplayer.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.less.tplayer.R;
 import com.less.tplayer.base.fragment.BaseTitleFragment;
+import com.less.tplayer.mvp.feature.FeatureActivity;
 
 /**
  * @author deeper
@@ -44,6 +46,9 @@ public class DynamicTabFragment extends BaseTitleFragment{
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), FeatureActivity.class);
+                startActivity(intent);
                 Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
             }
         };

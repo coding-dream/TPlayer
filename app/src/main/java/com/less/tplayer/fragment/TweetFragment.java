@@ -2,6 +2,7 @@ package com.less.tplayer.fragment;
 
 import android.os.Bundle;
 
+import com.less.tplayer.R;
 import com.less.tplayer.base.fragment.BaseTitleFragment;
 import com.less.tplayer.interfaces.IFragmentReSelected;
 
@@ -28,7 +29,7 @@ public class TweetFragment extends BaseTitleFragment implements IFragmentReSelec
 
     @Override
     protected int getContentLayoutId() {
-        return 0;
+        return R.layout.fragment_tweet;
     }
 
     @Override
