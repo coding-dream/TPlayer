@@ -28,9 +28,8 @@ public class FeatureFragment extends BaseFragment implements FeatureContract.Vie
     }
 
     @Override
-    protected void lazyLoadData() {
-        super.lazyLoadData();
-        // lazy load
+    public void onResume() {
+        super.onResume();
         mRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -51,16 +50,14 @@ public class FeatureFragment extends BaseFragment implements FeatureContract.Vie
         mRefreshLayout.setSuperRefreshLayoutListener(new RecyclerRefreshLayout.SuperRefreshLayoutListener() {
             @Override
             public void onRefreshing() {
-                // Cannot call this method in a scroll callback. Scroll callbacks mightbe run during a measure & layout pass where you cannot change theRecyclerView data. Any method call that might change the structureof the RecyclerView or the adapter contents should be postponed tothe next frame.
                 mAdapter.setState(FeatureAdapter.STATE_HIDE, true);
                 mPresenter.doRefresh();
             }
 
             @Override
             public void onLoadMore() {
-                // Cannot call this method in a scroll callback. Scroll callbacks mightbe run during a measure & layout pass where you cannot change theRecyclerView data. Any method call that might change the structureof the RecyclerView or the adapter contents should be postponed tothe next frame.
-                mAdapter.setState(FeatureAdapter.STATE_LOADING, true);
                 mPresenter.doLoadMore();
+                mAdapter.setState(FeatureAdapter.STATE_LOADING, true);
             }
         });
         mRecyclerView = (RecyclerView) mRoot.findViewById(R.id.recyclerView);

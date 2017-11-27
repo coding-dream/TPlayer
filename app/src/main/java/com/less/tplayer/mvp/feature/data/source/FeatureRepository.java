@@ -48,10 +48,10 @@ public class FeatureRepository implements FeatureDataSource {
                     if (page == 4) {
                         PAGE_SIZE = 10;
                     }
-                    if (page > 4) {
-                        return;
-                    }
 
+                    if(page > 4){
+                        PAGE_SIZE = 0;
+                    }
                     for(int i = 0;i < PAGE_SIZE;i++) {
                         Feature feature = new Feature();
                         feature.setName("====> page " + page + ":name: " + i);

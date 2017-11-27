@@ -33,7 +33,7 @@ public class FeaturePresenter implements FeatureContract.Presenter {
         mFeatureRepository.getDatasByPage(1, new FeatureDataSource.LoadCallback() {
             @Override
             public void onDataLoaded(List<Feature> datas) {
-                if(datas != null && datas.size() > 0){
+                if(datas != null){
                     mView.showRefreshSuccess(datas);
                     if (datas.size() < PAGE_SIZE) {
                         mView.showNoMore();
@@ -56,7 +56,7 @@ public class FeaturePresenter implements FeatureContract.Presenter {
         mFeatureRepository.getDatasByPage(mPage, new FeatureDataSource.LoadCallback() {
             @Override
             public void onDataLoaded(List<Feature> datas) {
-                if(datas != null && datas.size() > 0){
+                if(datas != null){
                     mView.showLoadMoreSuccess(datas);
                     if (datas.size() < PAGE_SIZE) {
                         mView.showNoMore();

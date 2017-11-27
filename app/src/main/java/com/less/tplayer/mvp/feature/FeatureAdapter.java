@@ -1,6 +1,7 @@
 package com.less.tplayer.mvp.feature;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -66,6 +67,8 @@ public class FeatureAdapter extends RecyclerView.Adapter {
     protected View mHeaderView;
 
     private OnLoadingHeaderCallBack onLoadingHeaderCallBack;
+
+    private Handler handler = new Handler();
 
     public FeatureAdapter(Context context, int mode) {
         this.mItems = new ArrayList<>();
@@ -314,9 +317,15 @@ public class FeatureAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void updateItem(int position) {
+    public void updateItem(final int position) {
         if (getItemCount() > position) {
-            notifyItemChanged(position);
+            // issue: Cannot call this method in a scroll callback. Scroll callbacks mightbe run during a measure & layout pass where you cannot change theRecyclerView data. Any method call that might change the structureof the RecyclerView or the adapter contents should be postponed tothe next frame.
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    notifyItemChanged(position);
+                }
+            });
         }
     }
 
