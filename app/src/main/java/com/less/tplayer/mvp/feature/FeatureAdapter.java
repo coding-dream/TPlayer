@@ -60,8 +60,8 @@ public class FeatureAdapter extends RecyclerView.Adapter {
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
 
-    private OnClickListener onClickListener;
-    private OnLongClickListener onLongClickListener;
+    private MyOnClickListener onClickListener;
+    private MyOnLongClickListener onLongClickListener;
 
 
     protected View mHeaderView;
@@ -83,7 +83,7 @@ public class FeatureAdapter extends RecyclerView.Adapter {
      * 初始化listener
      */
     private void initListener() {
-        onClickListener = new OnClickListener() {
+        onClickListener = new MyOnClickListener() {
             @Override
             public void onClick(int position, long itemId) {
                 if (onItemClickListener != null) {
@@ -92,7 +92,7 @@ public class FeatureAdapter extends RecyclerView.Adapter {
             }
         };
 
-        onLongClickListener = new OnLongClickListener() {
+        onLongClickListener = new MyOnLongClickListener() {
             @Override
             public boolean onLongClick(int position, long itemId) {
                 if (onItemLongClickListener != null) {
@@ -251,6 +251,11 @@ public class FeatureAdapter extends RecyclerView.Adapter {
         return BEHAVIOR_MODE == ONLY_HEADER || BEHAVIOR_MODE == BOTH_HEADER_FOOTER ? position - 1 : position;
     }
 
+    /**
+     * 获取ItemCount,包括headerView或footerView
+     *
+     * @return RecycleView的所有item_view 项数
+     */
     @Override
     public int getItemCount() {
         if (BEHAVIOR_MODE == ONLY_FOOTER || BEHAVIOR_MODE == ONLY_HEADER) {
@@ -260,10 +265,6 @@ public class FeatureAdapter extends RecyclerView.Adapter {
         } else {
             return mItems.size();
         }
-    }
-
-    public int getCount() {
-        return mItems.size();
     }
 
     protected RecyclerView.ViewHolder onCreateDefaultViewHolder(ViewGroup parent, int type){
@@ -284,6 +285,11 @@ public class FeatureAdapter extends RecyclerView.Adapter {
         this.mHeaderView = view;
     }
 
+    /**
+     * 获取List list 项数
+     *
+     * @return
+     */
     public final List<Feature> getItems() {
         return mItems;
     }
@@ -366,6 +372,12 @@ public class FeatureAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    /**
+     * 设置当前状态: 据此来处理onBindViewHolder中footer的显示.
+     *
+     * @param mState
+     * @param isUpdate
+     */
     public void setState(int mState, boolean isUpdate) {
         this.mState = mState;
         if (isUpdate) {
@@ -403,7 +415,7 @@ public class FeatureAdapter extends RecyclerView.Adapter {
     /**
      * 可以共用同一个listener，相对高效
      */
-    public static abstract class OnClickListener implements View.OnClickListener {
+    public static abstract class MyOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v.getTag();
@@ -417,7 +429,7 @@ public class FeatureAdapter extends RecyclerView.Adapter {
     /**
      * 可以共用同一个listener，相对高效
      */
-    public static abstract class OnLongClickListener implements View.OnLongClickListener {
+    public static abstract class MyOnLongClickListener implements View.OnLongClickListener {
         @Override
         public boolean onLongClick(View v) {
             RecyclerView.ViewHolder holder = (RecyclerView.ViewHolder) v.getTag();

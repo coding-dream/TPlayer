@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.less.tplayer.R;
 import com.less.tplayer.base.fragment.BaseFragment;
@@ -56,8 +57,8 @@ public class FeatureFragment extends BaseFragment implements FeatureContract.Vie
 
             @Override
             public void onLoadMore() {
-                mPresenter.doLoadMore();
                 mAdapter.setState(FeatureAdapter.STATE_LOADING, true);
+                mPresenter.doLoadMore();
             }
         });
         mRecyclerView = (RecyclerView) mRoot.findViewById(R.id.recyclerView);
@@ -68,6 +69,7 @@ public class FeatureFragment extends BaseFragment implements FeatureContract.Vie
             @Override
             public void onItemClick(int position, long itemId) {
                 // handle click
+                Toast.makeText(mContext, "position:" + position + " itemId: " + itemId, Toast.LENGTH_SHORT).show();
             }
         });
         mRefreshLayout.setColorSchemeResources(

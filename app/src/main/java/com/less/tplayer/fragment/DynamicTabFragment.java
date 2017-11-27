@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.less.tplayer.R;
 import com.less.tplayer.base.fragment.BaseTitleFragment;
-import com.less.tplayer.mvp.feature.FeatureActivity;
+import com.less.tplayer.test.DemoListViewActivity;
 
 /**
  * @author deeper
@@ -47,7 +47,7 @@ public class DynamicTabFragment extends BaseTitleFragment{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getContext(), FeatureActivity.class);
+                intent.setClass(getContext(), DemoListViewActivity.class);
                 startActivity(intent);
                 Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
             }
