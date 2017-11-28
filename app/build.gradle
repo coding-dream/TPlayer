@@ -122,7 +122,6 @@ dependencies {
     debugCompile project(path: ':library_va', configuration: 'debug')
     releaseCompile project(path: ':library_va', configuration: 'release')
 
-
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     // compile "org.jetbrains.anko:anko-common:$anko_version"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
