@@ -1,7 +1,7 @@
 include ':app'
 
-include 'library_aspidder'
-project(':library_aspidder').projectDir = new File('./ASpidder')
+include 'library_aspider'
+project(':library_aspider').projectDir = new File('./ASpidder')
 
 include 'library_va'
 project(':library_va').projectDir = new File('./valib')

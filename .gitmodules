@@ -3,4 +3,4 @@
 	url = git@github.com:wangli0/widgets.git
 [submodule "ASpidder"]
 	path = ASpidder
-	url = git@github.com:wangli0/ASpidder.git
+url=git@github.com:wangli0/ASpider.git
