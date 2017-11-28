@@ -1,6 +1,6 @@
 [submodule "widgets"]
 	path = widgets
 	url = git@github.com:wangli0/widgets.git
-[submodule "JSpidder"]
-	path = JSpidder
-	url = git@github.com:wangli0/JSpidder.git
+[submodule "ASpidder"]
+	path = ASpidder
+	url = git@github.com:wangli0/ASpidder.git
