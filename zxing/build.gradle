@@ -22,4 +22,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.google.zxing:core:3.3.0'
+    provided 'pub.devrel:easypermissions:0.3.0'
 }
