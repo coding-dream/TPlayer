@@ -1,7 +1,10 @@
-include ':app'
+include ':app', ':zxing'
 
 include 'library_aspider'
 project(':library_aspider').projectDir = new File('./ASpidder')
+
+include 'library_zxing'
+project(':library_zxing').projectDir = new File('./zxing')
 
 include 'library_va'
 project(':library_va').projectDir = new File('./valib')

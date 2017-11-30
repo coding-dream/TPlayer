@@ -95,6 +95,9 @@ dependencies {
     debugCompile project(path: ':library_security', configuration: 'debug')
     releaseCompile project(path: ':library_security', configuration: 'release')
 
+    debugCompile project(path: ':library_zxing', configuration: 'debug')
+    releaseCompile project(path: ':library_zxing', configuration: 'release')
+
     // debugCompile project(path: ':library_ffmpeg', configuration: 'debug')
     // releaseCompile project(path: ':library_ffmpeg', configuration: 'release')
 
