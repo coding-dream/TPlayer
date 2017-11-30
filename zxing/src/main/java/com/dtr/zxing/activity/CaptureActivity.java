@@ -50,9 +50,6 @@ public final class CaptureActivity extends AppCompatActivity implements
 
     private static final String TAG = CaptureActivity.class.getSimpleName();
     private boolean mIsLight;
-
-    private static final int RESTART_PREVIEW = 0x001;
-
     private CameraManager cameraManager;
     private CaptureActivityHandler handler;
     private InactivityTimer inactivityTimer;
@@ -209,6 +206,9 @@ public final class CaptureActivity extends AppCompatActivity implements
         // 移除指定的剪贴板数据改变监听器
         // cbm.removePrimaryClipChangedListener(listener);
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+
+        // 处理完之后, 要么finish Activity, 要么 handler.sendEmptyMessage(R.id.restart_preview);
+        restartPreviewAfterDelay(3000);
     }
 
     private void initCamera(SurfaceHolder surfaceHolder) {
@@ -246,7 +246,7 @@ public final class CaptureActivity extends AppCompatActivity implements
 
     public void restartPreviewAfterDelay(long delayMS) {
         if (handler != null) {
-            handler.sendEmptyMessageDelayed(RESTART_PREVIEW, delayMS);
+            handler.sendEmptyMessageDelayed(Constants.RESTART_PREVIEW, delayMS);
         }
     }
 

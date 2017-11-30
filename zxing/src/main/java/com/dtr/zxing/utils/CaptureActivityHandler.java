@@ -23,12 +23,10 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.dtr.zxing.activity.CaptureActivity;
+import com.dtr.zxing.activity.Constants;
 import com.dtr.zxing.camera.CameraManager;
 import com.dtr.zxing.decode.DecodeThread;
 import com.google.zxing.Result;
-
-import net.oschina.app.R;
-
 
 /**
  * This class handles all the messaging which comprises the state machine for
@@ -62,22 +60,22 @@ public class CaptureActivityHandler extends Handler {
     @Override
     public void handleMessage(Message message) {
         switch (message.what) {
-            case R.id.restart_preview:
+            case Constants.RESTART_PREVIEW:
                 restartPreviewAndDecode();
                 break;
-            case R.id.decode_succeeded:
+            case Constants.DECODE_SUCCESS:
                 state = State.SUCCESS;
                 Bundle bundle = message.getData();
 
                 activity.handleDecode((Result) message.obj, bundle);
                 break;
-            case R.id.decode_failed:
+            case Constants.DECODE_FAILED:
                 // We're decoding as fast as possible, so when one decode fails,
                 // start another.
                 state = State.PREVIEW;
-                cameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
+                cameraManager.requestPreviewFrame(decodeThread.getHandler(), Constants.DECODE);
                 break;
-            case R.id.return_scan_result:
+            case Constants.RETURN_SCAN_RESULT:
                 activity.setResult(Activity.RESULT_OK, (Intent) message.obj);
                 activity.finish();
                 break;
@@ -87,7 +85,7 @@ public class CaptureActivityHandler extends Handler {
     public void quitSynchronously() {
         state = State.DONE;
         cameraManager.stopPreview();
-        Message quit = Message.obtain(decodeThread.getHandler(), R.id.quit);
+        Message quit = Message.obtain(decodeThread.getHandler(), Constants.QUIT);
         quit.sendToTarget();
         try {
             // Wait at most half a second; should be enough time, and onPause()
@@ -98,14 +96,14 @@ public class CaptureActivityHandler extends Handler {
         }
 
         // Be absolutely sure we don't send any queued up messages
-        removeMessages(R.id.decode_succeeded);
-        removeMessages(R.id.decode_failed);
+        removeMessages(Constants.DECODE_SUCCESS);
+        removeMessages(Constants.DECODE_FAILED);
     }
 
     private void restartPreviewAndDecode() {
         if (state == State.SUCCESS) {
             state = State.PREVIEW;
-            cameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
+            cameraManager.requestPreviewFrame(decodeThread.getHandler(), Constants.DECODE);
         }
     }
 

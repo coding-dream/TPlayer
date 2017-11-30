@@ -25,6 +25,7 @@ import android.os.Looper;
 import android.os.Message;
 
 import com.dtr.zxing.activity.CaptureActivity;
+import com.dtr.zxing.activity.Constants;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.MultiFormatReader;
@@ -36,12 +37,9 @@ import com.google.zxing.common.HybridBinarizer;
 import java.io.ByteArrayOutputStream;
 import java.util.Map;
 
-public class DecodeHandler extends Handler {
+import static com.dtr.zxing.activity.Constants.DECODE_FAILED;
 
-    private static final int DECODE = 0x0;
-    private static final int DECODE_FAILED = 0x1;
-    private static final int DECODE_SUCCESS = 0x2;
-    private static final int QUIT = 0x3;
+public class DecodeHandler extends Handler {
 
     private final CaptureActivity activity;
     private final MultiFormatReader multiFormatReader;
@@ -59,10 +57,10 @@ public class DecodeHandler extends Handler {
             return;
         }
         switch (message.what) {
-            case DECODE:
+            case Constants.DECODE:
                 decode((byte[]) message.obj, message.arg1, message.arg2);
                 break;
-            case QUIT:
+            case Constants.QUIT:
                 running = false;
                 Looper.myLooper().quit();
                 break;
@@ -111,7 +109,7 @@ public class DecodeHandler extends Handler {
         if (rawResult != null) {
             // Don't log the barcode contents for security.
             if (handler != null) {
-                Message message = Message.obtain(handler, DECODE_SUCCESS, rawResult);
+                Message message = Message.obtain(handler, Constants.DECODE_SUCCESS, rawResult);
                 Bundle bundle = new Bundle();
                 bundleThumbnail(source, bundle);
                 message.setData(bundle);
@@ -119,7 +117,7 @@ public class DecodeHandler extends Handler {
             }
         } else {
             if (handler != null) {
-                Message message = Message.obtain(handler, DECODE_FAILED);
+                Message message = Message.obtain(handler, Constants.DECODE_FAILED);
                 message.sendToTarget();
             }
         }
