@@ -17,18 +17,21 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar"
         tools:replace="android:icon, android:theme">
-        <activity android:name=".ui.SplashActivity">
+        <activity android:name=".video.VideoPlayerActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.SplashActivity"/>
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.GuideActivity" />
         <activity android:name=".test.DemoListViewActivity"/>
         <activity android:name=".ui.OtherUserHomeActivity"/>
         <activity android:name=".test.TestActivity"/>
+
 
         <service
             android:name=".service.CoreService"

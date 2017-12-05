@@ -101,6 +101,9 @@ dependencies {
     // debugCompile project(path: ':library_ffmpeg', configuration: 'debug')
     // releaseCompile project(path: ':library_ffmpeg', configuration: 'release')
 
+    debugCompile project(path: ':library_vitamio', configuration: 'debug')
+    releaseCompile project(path: ':library_vitamio', configuration: 'release')
+
     debugCompile project(path: ':widgets_bzrefreshbtn', configuration: 'debug')
     releaseCompile project(path: ':widgets_bzrefreshbtn', configuration: 'release')
 

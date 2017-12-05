@@ -1,5 +1,8 @@
 include ':app'
 
+include 'library_vitamio'
+project(':library_vitamio').projectDir = new File('./vitamio')
+
 include 'library_aspider'
 project(':library_aspider').projectDir = new File('./ASpidder')
 
