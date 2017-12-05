@@ -28,6 +28,7 @@
         <activity android:name=".ui.GuideActivity" />
         <activity android:name=".test.DemoListViewActivity"/>
         <activity android:name=".ui.OtherUserHomeActivity"/>
+        <activity android:name=".test.TestActivity"/>
 
         <service
             android:name=".service.CoreService"

@@ -6,29 +6,56 @@
     android:layout_height="match_parent"
     tools:context="com.less.tplayer.test.TestActivity">
 
-    <Button
-        android:onClick="handle"
-        android:id="@+id/btn_open"
-        android:text="btn_open"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:onClick="handle"
-        android:id="@+id/btn_install"
-        android:text="btn_install"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:onClick="handle"
-        android:id="@+id/btn_delete"
-        android:text="btn_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:onClick="handle"
-        android:id="@+id/btn_update"
-        android:text="btn_update"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <com.less.uis.flowlayout.FlowLayout
+        android:id="@+id/flowLayout"
+        android:paddingLeft="16dp"
+        android:background="#ddd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <TextView
+            android:text="Hello World1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="Hello World2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="Hello World3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="Hello World4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="abcdfeagegegegeheaaaaaaaaaaagege"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="Hello World6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="fffffffffffffffffffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="eeeeeeeeeeeeeeeeeeeeeee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="Hello World11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </com.less.uis.flowlayout.FlowLayout>
 </LinearLayout>
