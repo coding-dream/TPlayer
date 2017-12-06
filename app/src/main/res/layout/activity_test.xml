@@ -6,10 +6,4 @@
     android:layout_height="match_parent"
     tools:context="com.less.tplayer.test.TestActivity">
 
-    <com.less.uis.flowlayout.FlowLayout
-        android:id="@+id/flowLayout"
-        app:mTvBackground="@drawable/flow_text_selector"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </com.less.uis.flowlayout.FlowLayout>
 </LinearLayout>

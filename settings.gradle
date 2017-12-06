@@ -1,4 +1,7 @@
-include ':app', ':tvplayer'
+include ':app'
+
+include 'library_tvplayer'
+project(':library_tvplayer').projectDir = new File('./tvplayer')
 
 include 'library_vitamio'
 project(':library_vitamio').projectDir = new File('./vitamio')
