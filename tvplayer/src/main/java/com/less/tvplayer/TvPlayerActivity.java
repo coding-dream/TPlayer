@@ -2,14 +2,15 @@ package com.less.tvplayer;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.util.Pair;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -25,6 +26,7 @@ import io.vov.vitamio.widget.VideoView;
  */
 
 public class TvPlayerActivity extends Activity {
+    private static final String TAG = TvPlayerActivity.class.getSimpleName();
     private VideoView mVideoView;
     private int mScreenWidth = 0;//屏幕宽度
 
@@ -56,15 +58,15 @@ public class TvPlayerActivity extends Activity {
     private void initView() {
         mVideoView = (VideoView) findViewById(R.id.videoView);
         mVideoView.setKeepScreenOn(true);
-        // String url = "";
-        String id = getIntent().getExtras().getString("Room_id");
+        // String id = getIntent().getExtras().getString("Room_id");
+        String id = "1";
         // okhttp get -> id { callback TvBean } 此处和下面的代码是异步执行的.
         API.getDataById(id, new API.LoadCallback() {
             @Override
             public void onDataLoaded(LiveInfo liveInfo) {
                 String url = liveInfo.getLive_url();
                 Uri uri = Uri.parse(url);
-                tvLiveNickname.setText(liveInfo.getRoom_name());
+//                tvLiveNickname.setText(liveInfo.getRoom_name());
                 mVideoView.setVideoURI(uri);
                 mVideoView.setBufferSize(1024 * 1024 * 2);
                 /*
@@ -77,10 +79,10 @@ public class TvPlayerActivity extends Activity {
                     @Override
                     public void onPrepared(MediaPlayer mediaPlayer) {
                         // optional need Vitamio 4.0
-                        mediaPlayer.setPlaybackSpeed(1.0f);
-                        flLoading.setVisibility(View.GONE);
-                        ivLivePlay.setImageResource(R.drawable.img_live_videopause);
-                        mHandler.sendEmptyMessageDelayed(HIDE_CONTROL_BAR, HIDE_TIME);
+//                        mediaPlayer.setPlaybackSpeed(1.0f);
+//                        flLoading.setVisibility(View.GONE);
+//                        ivLivePlay.setImageResource(R.drawable.img_live_videopause);
+//                        mHandler.sendEmptyMessageDelayed(HIDE_CONTROL_BAR, HIDE_TIME);
                     }
                 });
 
@@ -103,10 +105,12 @@ public class TvPlayerActivity extends Activity {
 
     private void initTouchListener() {
         mSimpleOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
-            //滑动操作
+            /**
+             * onScroll 由1个MotionEvent ACTION_DOWN, 多个MotionEvent ACTION_MOVE 触发
+             */
             @Override
-            public boolean onScroll(MotionEvent e1, MotionEvent e2,
-                                    float distanceX, float distanceY) {
+            public boolean onScroll(MotionEvent e1, MotionEvent e2,float distanceX, float distanceY) {
+                // e1为第一次按下的事件，和onDown事件里面的一样，e2为当前的事件，distanceX为本次onScroll移动的X轴距离，distanceY为移动的Y轴距离，移动的距离是相对于上一次onScroll事件的移动距离
                 float x1 = e1.getX();
 
                 float absDistanceX = Math.abs(distanceX);// distanceX < 0 从左到右
@@ -114,17 +118,21 @@ public class TvPlayerActivity extends Activity {
 
                 // Y方向的距离比X方向的大，即 上下 滑动
                 if (absDistanceX < absDistanceY) {
-                    if (distanceY > 0) {//向上滑动
+                    if (distanceY > 0) {// 向上滑动
                         if (x1 >= mScreenWidth * 0.65) {//右边调节声音
-                            changeVolume(ADD_FLAG);
-                        } else {//调节亮度
-                            changeLightness(ADD_FLAG);
+                            Log.e("wl", "=======> 右边调节声音 大");
+//                            changeVolume(ADD_FLAG);
+                        } else {// 调节亮度
+                            Log.e("wl", "=======> 左边调节亮度 大");
+//                            changeLightness(ADD_FLAG);
                         }
-                    } else {//向下滑动
+                    } else {// 向下滑动
                         if (x1 >= mScreenWidth * 0.65) {
-                            changeVolume(SUB_FLAG);
+                            Log.e("wl", "=======> 右边调节声音 小 ");
+//                            changeVolume(SUB_FLAG);
                         } else {
-                            changeLightness(SUB_FLAG);
+                            Log.e("wl", "=======> 左边调节亮度 小 ");
+//                            changeLightness(SUB_FLAG);
                         }
                     }
                 } else {
@@ -143,13 +151,13 @@ public class TvPlayerActivity extends Activity {
             //单击事件
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
-                if (controlBottom.getVisibility() == View.VISIBLE) {
-                    mHandler.removeMessages(HIDE_CONTROL_BAR);
-                    hideControlBar();
-                } else {
-                    showControlBar();
-                    mHandler.sendEmptyMessageDelayed(HIDE_CONTROL_BAR, HIDE_TIME);
-                }
+//                if (controlBottom.getVisibility() == View.VISIBLE) {
+//                    mHandler.removeMessages(HIDE_CONTROL_BAR);
+//                    hideControlBar();
+//                } else {
+//                    showControlBar();
+//                    mHandler.sendEmptyMessageDelayed(HIDE_CONTROL_BAR, HIDE_TIME);
+//                }
 
                 return true;
             }
@@ -181,8 +189,27 @@ public class TvPlayerActivity extends Activity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (mGestureDetector != null) {
-            return mGestureDetector.onTouchEvent(event);
+            mGestureDetector.onTouchEvent(event);
         }
         return super.onTouchEvent(event);
+    }
+
+    /**
+     * 该方法只有在Manifest设置后才会被系统回调,且Manifest没有设置情况下Activity会自动销毁.
+     * 当然也可以手动调用:
+     *      (1) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+     *      (2) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+     * @param newConfig
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Log.d(TAG, "横屏旋转");
+        }
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Log.d(TAG, "竖屏旋转");
+        }
     }
 }
