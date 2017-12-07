@@ -1,0 +1,103 @@
+<RelativeLayout android:id="@+id/control_bottom"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:layout_gravity="bottom"
+    android:background="@color/control_bar_bg"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/iv_live_play"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/img_live_videopause" />
+
+    <ImageView
+        android:id="@+id/iv_live_refresh"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/iv_live_play"
+        android:src="@drawable/img_live_refresh" />
+
+    <TextView
+        android:id="@+id/tv_live_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:text="直播列表"
+        android:textColor="#ffffff"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/im_danmu_control"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@id/tv_live_list"
+        android:src="@drawable/pad_play_opendanmu" />
+
+    <RelativeLayout
+        android:id="@+id/rl_danmu_send"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="7.0dip"
+        android:layout_toLeftOf="@id/im_danmu_control"
+        android:layout_toRightOf="@id/iv_live_refresh"
+        android:background="@drawable/bg_live_hor_et"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <ImageView
+            android:id="@+id/txt_btn_hot_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10.0dip"
+            android:padding="6.0dip"
+            android:src="@drawable/btn_live_hotword_selector" />
+
+        <View
+            android:layout_width="1.0dip"
+            android:layout_height="22.0dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5.0dip"
+            android:layout_toRightOf="@+id/txt_btn_hot_word"
+            android:background="#23ffffff" />
+
+        <EditText
+            android:id="@+id/ediit_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="30.0dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15.0dip"
+            android:layout_toLeftOf="@+id/img_btn_send"
+            android:layout_toRightOf="@+id/txt_btn_hot_word"
+            android:background="#00000000"
+            android:hint="在这里输入弹幕"
+            android:imeOptions="actionSend|flagNoExtractUi"
+            android:maxLength="20"
+            android:padding="5.0dip"
+            android:textColor="#ffffffff"
+            android:textColorHint="#23ffffff"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/img_btn_send"
+            android:layout_width="35.0dip"
+            android:layout_height="35.0dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10.0dip"
+            android:padding="5.0dip"
+            android:src="@drawable/btn_live_hor_send_selector" />
+    </RelativeLayout>
+</RelativeLayout>

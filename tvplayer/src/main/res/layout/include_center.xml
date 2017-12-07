@@ -1,0 +1,41 @@
+<RelativeLayout android:id="@+id/control_center"
+    android:layout_width="110dp"
+    android:layout_height="110dp"
+    android:layout_gravity="center"
+    android:background="@drawable/control_shape"
+    android:paddingBottom="8dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="8dp"
+    android:visibility="gone"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/iv_control_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/img_volume" />
+
+    <TextView
+        android:id="@+id/tv_control_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/iv_control_img"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="7dp"
+        android:textColor="#ffffff"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_control"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_control_img"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="5dp"
+        android:maxLines="1"
+        android:text="12%"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
+</RelativeLayout>

@@ -1,0 +1,57 @@
+<FrameLayout android:id="@+id/fl_loading"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#e0000000">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp">
+
+            <ImageView
+                android:id="@+id/im_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/image_about_backage" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/im_logo"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="10dp">
+
+                <com.less.tvplayer.LoadingView
+                    android:id="@+id/lv_playloading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:innerTriangleColor="#ff7800"
+                    app:innerTriangleRadius="6dp"
+                    app:isNeedBackground="false"
+                    app:outerCircleColor="#ff7800"
+                    app:outerCircleRadius="10dp" />
+                <TextView
+                    android:id="@+id/tv_loading_buffer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="35dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_toRightOf="@id/lv_playloading"
+                    android:text="直播视频连接中..."
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
+                    />
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</FrameLayout>

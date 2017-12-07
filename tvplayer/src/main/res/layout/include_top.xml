@@ -1,0 +1,60 @@
+<RelativeLayout android:id="@+id/control_top"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@color/control_bar_bg"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
+        android:src="@drawable/im_sdk_back_normal" />
+
+    <TextView
+        android:id="@+id/tv_live_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/iv_back"
+        android:textColor="#ffffff"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/iv_live_setting"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/img_live_setting" />
+
+    <ImageView
+        android:id="@+id/iv_live_gift"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="25dp"
+        android:layout_toLeftOf="@id/iv_live_setting"
+        android:src="@drawable/img_live_gift" />
+
+    <ImageView
+        android:id="@+id/iv_live_share"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="25dp"
+        android:layout_toLeftOf="@id/iv_live_gift"
+        android:src="@drawable/img_live_share" />
+
+    <ImageView
+        android:id="@+id/iv_live_follow"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="25dp"
+        android:layout_toLeftOf="@id/iv_live_share"
+        android:src="@drawable/img_live_follow" />
+</RelativeLayout>
