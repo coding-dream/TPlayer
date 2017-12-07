@@ -299,8 +299,8 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
                 float absDistanceY = Math.abs(distanceY);// distanceY < 0 从上到下
 
                 // Y方向的距离比X方向的大，即 上下 滑动
-                if (absDistanceX < absDistanceY && mode == MODE_NONE) {
-                    mode = MODE_LEFT_RIGHT;
+                if (absDistanceX < absDistanceY && mode != MODE_LEFT_RIGHT) {
+                    mode = MODE_UP_DOWN;
                     // 向上滑动
                     if (distanceY > 0) {
                         if (mOldX > mScreenWidth * 0.8) {
@@ -319,16 +319,10 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
                             changeLightness(-1);
                         }
                     }
-                } else if(absDistanceX - absDistanceY > sensitiveOffset && mode == MODE_NONE){
+                } else if(mode != MODE_UP_DOWN){
                     // X方向的距离比Y方向的大，即 左右 滑动
                     mode = MODE_LEFT_RIGHT;
-                    float offset = e2.getX() - e1.getX();
-                    // 根据移动的正负决定快进还是快退
-                    if (offset > 0) {
-                        iv_v_s_center_img.setImageResource(R.drawable.ic_video_up);
-                    } else {
-                        iv_v_s_center_img.setImageResource(R.drawable.ic_video_down);
-                    }
+                    changePlayDegress(distanceX);
                 }
                 return false;
             }
@@ -407,6 +401,28 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         mHandler.sendEmptyMessageDelayed(HIDE_CENTER_BAR, HIDE_CENTER_TIME);
     }
 
+    public void changePlayDegress(float distanceX) {
+        mVideoView.pause();
+        mHandler.removeMessages(UPDATE_LIVE_PROGRESS);
+        if (distanceX < 0) {
+            iv_v_s_center_img.setImageResource(R.drawable.ic_video_up);
+            moveTotalOffset += 1;
+            seekBar.setProgress(seekBar.getProgress() + 1);
+        } else {
+            iv_v_s_center_img.setImageResource(R.drawable.ic_video_down);
+            moveTotalOffset -= 1;
+            seekBar.setProgress(seekBar.getProgress() - 1);
+        }
+        if (moveTotalOffset > 0) {
+            tv_v_s_center_name.setText("快进");
+            tv_v_s_center_degress.setText("+ " + Math.abs(moveTotalOffset));
+        } else {
+            tv_v_s_center_name.setText("快退");
+            tv_v_s_center_degress.setText("- " + Math.abs(moveTotalOffset));
+        }
+        layout_control_v_s_center.setVisibility(View.VISIBLE);
+    }
+
     private void initVolumeWithLight() {
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mMaxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -435,6 +451,20 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         }
         switch (event.getAction()) {
             case MotionEvent.ACTION_UP:
+                if (mode == MODE_LEFT_RIGHT) {
+                    // 针对快进快退功能
+                    long duration = mVideoView.getDuration();
+                    long value = duration * seekBar.getProgress() / seekBar.getMax();
+                    mVideoView.seekTo(value);
+                    mVideoView.start();
+
+                    mHandler.removeMessages(HIDE_CENTER_BAR);
+                    mHandler.sendEmptyMessageDelayed(HIDE_CENTER_BAR, HIDE_CENTER_TIME);
+
+                    moveTotalOffset = 0;
+                    // 继续更新seekBar
+                    mHandler.sendEmptyMessageDelayed(UPDATE_LIVE_PROGRESS, 1000);
+                }
                 mode = MODE_NONE;
                 break;
             default:
