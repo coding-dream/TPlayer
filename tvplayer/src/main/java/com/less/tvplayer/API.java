@@ -16,7 +16,7 @@ public class API {
         try {
             // 模拟数据
             LiveInfo liveInfo = new LiveInfo();
-            liveInfo.setLive_url("http://yf.m.l.cztv.com/channels/lantian/channel01/360p.m3u8?k=d713e997b5ac1b24cf3714e8966a5553&t=1485264314");
+            liveInfo.setLive_url("http://220.194.236.202/12/h/p/j/p/hpjpepdtiwxnrgfqmdhlfmdkycgbnd/hc.yinyuetai.com/DF9E01601C061B7C9B0669F3CBE27426.mp4?sc=34c122c3de10498b&br=783&vid=3105087&aid=43565&area=US&vst=0");
             liveInfo.setRoom_id(id);
             liveInfo.setRoom_name("呆萌的女孩");
             loadCallback.onDataLoaded(liveInfo);

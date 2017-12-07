@@ -27,6 +27,8 @@ import io.vov.vitamio.Vitamio;
 import io.vov.vitamio.utils.ScreenResolution;
 import io.vov.vitamio.widget.VideoView;
 
+import static com.less.tvplayer.R.id.videoView;
+
 /**
  * @author deeper
  * @date 2017/12/6
@@ -43,8 +45,9 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
     private TextView tv_v_s_center_degress;
 
     /** include_fullscreen_loading.xml */
-    private LinearLayout layout_fl_loading;
+    private LinearLayout layout_ll_loading;
     private LoadingView lv_playloading;
+    private TextView tv_loading_buffer;
 
     /** include_top.xml */
     private LinearLayout layout_control_top;
@@ -55,6 +58,7 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
     /** include_bottom.xml */
     private LinearLayout layout_control_bottom;
     private ImageView iv_live_play;
+    private TextView tv_live_time;
     private SeekBar seekBar;
 
     private int mScreenWidth = 0;
@@ -99,23 +103,30 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
     public static final int HIDE_CENTER_BAR = 0x03;// 隐藏声音和亮度控制条
     public static final int HIDE_CENTER_TIME = 1000;
 
+    private static final int UPDATE_LIVE_PROGRESS = 0x04;// 定时更新进度
+
+    private int mode = MODE_NONE;
+    private static final int MODE_NONE = 1;
+    private static final int MODE_UP_DOWN = 2;
+    private static final int MODE_LEFT_RIGHT = 3;
+    /** 快进快退模式的总偏移值 */
+    private int moveTotalOffset = 0;
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                /**
-                 *  隐藏top ,bottom
-                 */
-                case HIDE_TOP_BOTTOM_BAR:
-//                    hideControlBar();
+                case UPDATE_LIVE_PROGRESS:
+                    setLiveTime();
+                    mHandler.sendEmptyMessageDelayed(UPDATE_LIVE_PROGRESS, 1000);
                     break;
-                /**
-                 *  隐藏center控件
-                 */
+                case HIDE_TOP_BOTTOM_BAR:
+                    hideTopBottomBar();
+                    break;
                 case HIDE_CENTER_BAR:
-//                    if (controlCenter != null) {
-//                        controlCenter.setVisibility(View.GONE);
-//                    }
+                    if (layout_control_v_s_center != null) {
+                        layout_control_v_s_center.setVisibility(View.GONE);
+                    }
                     break;
                 default:
                     break;
@@ -143,6 +154,10 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         tv_v_s_center_name = findViewById(R.id.tv_v_s_center_name);
         tv_v_s_center_degress = findViewById(R.id.tv_v_s_center_degress);
 
+        layout_ll_loading = findViewById(R.id.fl_loading);
+        lv_playloading = findViewById(R.id.lv_playloading);
+        tv_loading_buffer = findViewById(R.id.tv_loading_buffer);
+
         layout_control_top = findViewById(R.id.control_top);
         iv_back = findViewById(R.id.iv_back);
         tv_live_nickname = findViewById(R.id.tv_live_nickname);
@@ -150,9 +165,50 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
 
         layout_control_bottom = findViewById(R.id.control_bottom);
         iv_live_play = findViewById(R.id.iv_live_play);
+        tv_live_time = findViewById(R.id.tv_live_time);
         seekBar = findViewById(R.id.seekbar);
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // nothing to do
+            }
 
-        mVideoView = (VideoView) findViewById(R.id.videoView);
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                mVideoView.pause();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                long duration = mVideoView.getDuration();
+                long value = duration * seekBar.getProgress() / seekBar.getMax();
+                mVideoView.seekTo(value);
+                mVideoView.start();
+            }
+        });
+        iv_live_play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mVideoView.isPlaying()) {
+                    mVideoView.pause();
+                    iv_live_play.setImageResource(R.drawable.img_live_videoplay);
+                    mHandler.removeMessages(HIDE_TOP_BOTTOM_BAR);
+                    showTopBottomBar();
+                } else {
+                    mVideoView.start();
+                    iv_live_play.setImageResource(R.drawable.img_live_videopause);
+                    mHandler.sendEmptyMessageDelayed(HIDE_TOP_BOTTOM_BAR, HIDE_TOP_BOTTOM_TIME);
+                }
+            }
+        });
+
+        mVideoView = (VideoView) findViewById(videoView);
         mVideoView.setKeepScreenOn(true);
         // String id = getIntent().getExtras().getString("Room_id");
         String id = "1";
@@ -176,7 +232,7 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
                     public void onPrepared(MediaPlayer mediaPlayer) {
                         // optional need Vitamio 4.0
                         mediaPlayer.setPlaybackSpeed(1.0f);
-                        layout_fl_loading.setVisibility(View.GONE);
+                        layout_ll_loading.setVisibility(View.GONE);
                         iv_live_play.setImageResource(R.drawable.img_live_videopause);
                         mHandler.sendEmptyMessageDelayed(HIDE_TOP_BOTTOM_BAR, HIDE_TOP_BOTTOM_TIME);
                     }
@@ -203,6 +259,30 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         mVideoView.setOnBufferingUpdateListener(this);
         mVideoView.setOnErrorListener(this);
         mVideoView.setOnCompletionListener(this);
+        // 定时更新seekbar
+        mHandler.sendEmptyMessageDelayed(UPDATE_LIVE_PROGRESS,1000);
+    }
+
+    private void setLiveTime() {
+        long curTime = mVideoView.getCurrentPosition();
+        long totalTime = mVideoView.getDuration();
+        curTime = curTime / 1000;
+        totalTime = totalTime / 1000;
+
+        long curMinute = curTime / 60;
+        long curSecond = curTime % 60;
+        String _curTime = String.format("%02d:%02d", curMinute,curSecond);
+
+        long totalMiniute = totalTime / 60;
+        long totalSencond = totalTime % 60;
+        String _totalTime = String.format("%02d:%02d", totalMiniute,totalSencond);
+
+        int rate = 0;
+        if (totalTime != 0) {
+            rate = (int) ((float)curTime / totalTime * 100);
+        }
+        seekBar.setProgress(rate);
+        tv_live_time.setText(_curTime + "/" + _totalTime);
     }
 
     private void initTouchListener() {
@@ -219,7 +299,8 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
                 float absDistanceY = Math.abs(distanceY);// distanceY < 0 从上到下
 
                 // Y方向的距离比X方向的大，即 上下 滑动
-                if (absDistanceX < absDistanceY) {
+                if (absDistanceX < absDistanceY && mode == MODE_NONE) {
+                    mode = MODE_LEFT_RIGHT;
                     // 向上滑动
                     if (distanceY > 0) {
                         if (mOldX > mScreenWidth * 0.8) {
@@ -238,9 +319,16 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
                             changeLightness(-1);
                         }
                     }
-                } else if(absDistanceX - absDistanceY > sensitiveOffset){
+                } else if(absDistanceX - absDistanceY > sensitiveOffset && mode == MODE_NONE){
                     // X方向的距离比Y方向的大，即 左右 滑动
-
+                    mode = MODE_LEFT_RIGHT;
+                    float offset = e2.getX() - e1.getX();
+                    // 根据移动的正负决定快进还是快退
+                    if (offset > 0) {
+                        iv_v_s_center_img.setImageResource(R.drawable.ic_video_up);
+                    } else {
+                        iv_v_s_center_img.setImageResource(R.drawable.ic_video_down);
+                    }
                 }
                 return false;
             }
@@ -254,17 +342,31 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
             // 单击事件
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
-//                if (controlBottom.getVisibility() == View.VISIBLE) {
-//                    mHandler.removeMessages(HIDE_CONTROL_BAR);
-//                    hideControlBar();
-//                } else {
-//                    showControlBar();
-//                    mHandler.sendEmptyMessageDelayed(HIDE_CONTROL_BAR, HIDE_TIME);
-//                }
+                if (layout_control_bottom.getVisibility() == View.VISIBLE || layout_control_top.getVisibility() == View.VISIBLE) {
+                    mHandler.removeMessages(HIDE_TOP_BOTTOM_BAR);
+                    hideTopBottomBar();
+                } else {
+                    showTopBottomBar();
+                    mHandler.sendEmptyMessageDelayed(HIDE_TOP_BOTTOM_BAR, HIDE_TOP_BOTTOM_TIME);
+                }
                 return true;
             }
         };
         mGestureDetector = new GestureDetector(this, mSimpleOnGestureListener);
+    }
+
+    private void showTopBottomBar() {
+        if (layout_control_top != null && layout_control_bottom != null) {
+            layout_control_top.setVisibility(View.VISIBLE);
+            layout_control_bottom.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideTopBottomBar() {
+        if (layout_control_top != null && layout_control_bottom != null) {
+            layout_control_top.setVisibility(View.GONE);
+            layout_control_bottom.setVisibility(View.GONE);
+        }
     }
 
     private void changeVolume(int value) {
@@ -287,8 +389,8 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
 
     private void changeLightness(int value) {
         mShowLightness += value;
-        if (mShowLightness > 255) {
-            mShowLightness = 255;
+        if (mShowLightness > MAX_SHOW_LIGHTNESS) {
+            mShowLightness = MAX_SHOW_LIGHTNESS;
         } else if (mShowLightness <= 0) {
             mShowLightness = 0;
         }
@@ -296,6 +398,7 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         iv_v_s_center_img.setImageResource(R.drawable.img_light);
         tv_v_s_center_degress.setText(mShowLightness * 100 / 255 + "%");
         WindowManager.LayoutParams lp = getWindow().getAttributes();
+        // 注意这里 float 类型,/ int 则会出现精度问题.
         lp.screenBrightness = mShowLightness / 255f;
         getWindow().setAttributes(lp);
 
@@ -327,10 +430,25 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (mGestureDetector != null) {
-            mGestureDetector.onTouchEvent(event);
+        if (mGestureDetector.onTouchEvent(event)) {
+            return true;
+        }
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_UP:
+                mode = MODE_NONE;
+                break;
+            default:
+                break;
         }
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mVideoView != null) {
+            mVideoView.pause();
+        }
     }
 
     @Override
@@ -339,6 +457,8 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
             // 释放资源
             mVideoView.stopPlayback();
         }
+        // 必须! 否则会引起内存泄露风险!!!
+        mHandler.removeCallbacksAndMessages(null);
         super.onDestroy();
     }
 
@@ -363,13 +483,37 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
 
     @Override
     public boolean onInfo(MediaPlayer mp, int what, int extra) {
-
-        return false;
+        switch (what) {
+            case MediaPlayer.MEDIA_INFO_BUFFERING_START:
+                if (mVideoView.isPlaying()) {
+                    mVideoView.pause();
+                }
+                iv_live_play.setImageResource(R.drawable.img_live_videoplay);
+                mHandler.removeMessages(HIDE_TOP_BOTTOM_BAR);
+                showTopBottomBar();
+                break;
+            case MediaPlayer.MEDIA_INFO_BUFFERING_END:
+                layout_ll_loading.setVisibility(View.GONE);
+                if (!mVideoView.isPlaying()) {
+                    mVideoView.start();
+                }
+                iv_live_play.setImageResource(R.drawable.img_live_videopause);
+                mHandler.sendEmptyMessageDelayed(HIDE_TOP_BOTTOM_BAR, HIDE_TOP_BOTTOM_TIME);
+                break;
+            case MediaPlayer.MEDIA_INFO_DOWNLOAD_RATE_CHANGED:
+                // tv_net_info.setText(extra + " kb/s");
+                break;
+        }
+        return true;
     }
 
     @Override
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
-
+        layout_ll_loading.setVisibility(View.VISIBLE);
+        if (mVideoView.isPlaying()) {
+            mVideoView.pause();
+        }
+        tv_loading_buffer.setText("直播已缓冲" + percent + "%...");
     }
 
     @Override

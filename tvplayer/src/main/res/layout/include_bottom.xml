@@ -4,18 +4,27 @@
     android:layout_gravity="bottom"
     android:background="#e0222222"
     android:orientation="horizontal"
+    android:gravity="center_vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:id="@+id/iv_live_play"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="16dp"
         android:src="@drawable/img_live_videopause" />
 
-    <SeekBar
-        android:layout_weight="1"
+    <TextView
+        android:textColor="#ffffff"
+        android:text="00:00"
         android:layout_marginLeft="8dp"
+        android:id="@+id/tv_live_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <SeekBar
+        android:layout_marginLeft="8dp"
+        android:layout_weight="1"
         android:id="@+id/seekbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content" />

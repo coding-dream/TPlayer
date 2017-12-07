@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:background="@color/control_bar_bg"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -9,7 +10,7 @@
         android:id="@+id/iv_back"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="16dp"
         android:src="@drawable/im_sdk_back_normal" />
 
     <TextView
