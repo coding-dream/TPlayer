@@ -13,8 +13,14 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
@@ -22,7 +28,6 @@ import io.vov.vitamio.utils.ScreenResolution;
 import io.vov.vitamio.widget.VideoView;
 
 /**
- *
  * @author deeper
  * @date 2017/12/6
  */
@@ -30,6 +35,28 @@ import io.vov.vitamio.widget.VideoView;
 public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
     private static final String TAG = TvPlayerActivity.class.getSimpleName();
     private VideoView mVideoView;
+
+    /** include_center.xml */
+    private RelativeLayout layout_control_v_s_center;
+    private ImageView iv_v_s_center_img;
+    private TextView tv_v_s_center_name;
+    private TextView tv_v_s_center_degress;
+
+    /** include_fullscreen_loading.xml */
+    private LinearLayout layout_fl_loading;
+    private LoadingView lv_playloading;
+
+    /** include_top.xml */
+    private LinearLayout layout_control_top;
+    private ImageView iv_back;
+    private TextView tv_live_nickname;
+    private ImageView iv_live_share;
+
+    /** include_bottom.xml */
+    private LinearLayout layout_control_bottom;
+    private ImageView iv_live_play;
+    private SeekBar seekBar;
+
     private int mScreenWidth = 0;
     private int mScreenHeight = 0;
 
@@ -111,6 +138,20 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
     }
 
     private void initView() {
+        layout_control_v_s_center = findViewById(R.id.control_v_s_center);
+        iv_v_s_center_img = findViewById(R.id.iv_v_s_center_img);
+        tv_v_s_center_name = findViewById(R.id.tv_v_s_center_name);
+        tv_v_s_center_degress = findViewById(R.id.tv_v_s_center_degress);
+
+        layout_control_top = findViewById(R.id.control_top);
+        iv_back = findViewById(R.id.iv_back);
+        tv_live_nickname = findViewById(R.id.tv_live_nickname);
+        iv_live_share = findViewById(R.id.iv_live_share);
+
+        layout_control_bottom = findViewById(R.id.control_bottom);
+        iv_live_play = findViewById(R.id.iv_live_play);
+        seekBar = findViewById(R.id.seekbar);
+
         mVideoView = (VideoView) findViewById(R.id.videoView);
         mVideoView.setKeepScreenOn(true);
         // String id = getIntent().getExtras().getString("Room_id");
@@ -121,7 +162,7 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
             public void onDataLoaded(LiveInfo liveInfo) {
                 String url = liveInfo.getLive_url();
                 Uri uri = Uri.parse(url);
-//                tvLiveNickname.setText(liveInfo.getRoom_name());
+                tv_live_nickname.setText(liveInfo.getRoom_name());
                 mVideoView.setVideoURI(uri);
                 mVideoView.setBufferSize(1024 * 1024 * 2);
                 /*
@@ -134,10 +175,10 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
                     @Override
                     public void onPrepared(MediaPlayer mediaPlayer) {
                         // optional need Vitamio 4.0
-//                        mediaPlayer.setPlaybackSpeed(1.0f);
-//                        flLoading.setVisibility(View.GONE);
-//                        ivLivePlay.setImageResource(R.drawable.img_live_videopause);
-//                        mHandler.sendEmptyMessageDelayed(HIDE_CONTROL_BAR, HIDE_TIME);
+                        mediaPlayer.setPlaybackSpeed(1.0f);
+                        layout_fl_loading.setVisibility(View.GONE);
+                        iv_live_play.setImageResource(R.drawable.img_live_videopause);
+                        mHandler.sendEmptyMessageDelayed(HIDE_TOP_BOTTOM_BAR, HIDE_TOP_BOTTOM_TIME);
                     }
                 });
 
@@ -228,20 +269,20 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
 
     private void changeVolume(int value) {
         mShowVolume += value;
-        if (mShowVolume > 100) {
-            mShowVolume = 100;
+        if (mShowVolume > MAX_SHOW_VOLUME) {
+            mShowVolume = MAX_SHOW_VOLUME;
         } else if (mShowVolume < 0) {
             mShowVolume = 0;
         }
-//        tvControlName.setText("音量");
-//        ivControlImg.setImageResource(R.drawable.img_volume);
-//        tvControl.setText(mShowVolume + "%");
-//        int tagVolume = mShowVolume * mMaxVolume / 100;
-//        //tagVolume:音量绝对值
-//        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, tagVolume, 0);
-//        mHandler.removeMessages(HIDE_CENTER_CONTROL);
-//        controlCenter.setVisibility(View.VISIBLE);
-//        mHandler.sendEmptyMessageDelayed(HIDE_CENTER_CONTROL, HIDE_CONTROL_TIME);
+        tv_v_s_center_name.setText("音量");
+        iv_v_s_center_img.setImageResource(R.drawable.img_volume);
+        tv_v_s_center_degress.setText(mShowVolume + "%");
+        int tagVolume = mShowVolume * mMaxVolume / 100;
+        //tagVolume:音量绝对值
+        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, tagVolume, 0);
+        mHandler.removeMessages(HIDE_CENTER_BAR);
+        layout_control_v_s_center.setVisibility(View.VISIBLE);
+        mHandler.sendEmptyMessageDelayed(HIDE_CENTER_BAR, HIDE_CENTER_TIME);
     }
 
     private void changeLightness(int value) {
@@ -251,16 +292,16 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         } else if (mShowLightness <= 0) {
             mShowLightness = 0;
         }
-//        tvControlName.setText("亮度");
-//        ivControlImg.setImageResource(R.drawable.img_light);
-//        tvControl.setText(mShowLightness * 100 / 255 + "%");
-//        WindowManager.LayoutParams lp = getWindow().getAttributes();
-//        lp.screenBrightness = mShowLightness / 255f;
-//        getWindow().setAttributes(lp);
-//
-//        mHandler.removeMessages(HIDE_CENTER_CONTROL);
-//        controlCenter.setVisibility(View.VISIBLE);
-//        mHandler.sendEmptyMessageDelayed(HIDE_CENTER_CONTROL, HIDE_CONTROL_TIME);
+        tv_v_s_center_name.setText("亮度");
+        iv_v_s_center_img.setImageResource(R.drawable.img_light);
+        tv_v_s_center_degress.setText(mShowLightness * 100 / 255 + "%");
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.screenBrightness = mShowLightness / 255f;
+        getWindow().setAttributes(lp);
+
+        mHandler.removeMessages(HIDE_CENTER_BAR);
+        layout_control_v_s_center.setVisibility(View.VISIBLE);
+        mHandler.sendEmptyMessageDelayed(HIDE_CENTER_BAR, HIDE_CENTER_TIME);
     }
 
     private void initVolumeWithLight() {
@@ -292,6 +333,15 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         return super.onTouchEvent(event);
     }
 
+    @Override
+    protected void onDestroy() {
+        if (mVideoView != null) {
+            // 释放资源
+            mVideoView.stopPlayback();
+        }
+        super.onDestroy();
+    }
+
     /**
      * 该方法只有在Manifest设置后才会被系统回调,且Manifest没有设置情况下Activity会自动销毁.
      * 当然也可以手动调用:
@@ -313,7 +363,7 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
 
     @Override
     public boolean onInfo(MediaPlayer mp, int what, int extra) {
-        
+
         return false;
     }
 
@@ -324,12 +374,17 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
 
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
-
-        return false;
+        if (what == MediaPlayer.MEDIA_ERROR_UNKNOWN) {
+            // svProgressHUD.showErrorWithStatus("主播还在赶来的路上~~");
+        }
+        return true;
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-
+        if (mVideoView != null) {
+            // 释放资源
+            mVideoView.stopPlayback();
+        }
     }
 }
