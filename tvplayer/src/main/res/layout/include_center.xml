@@ -1,4 +1,5 @@
-<RelativeLayout android:id="@+id/control_center"
+<RelativeLayout
+    android:id="@+id/control_center"
     android:layout_width="110dp"
     android:layout_height="110dp"
     android:layout_gravity="center"

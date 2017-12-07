@@ -27,7 +27,7 @@ import io.vov.vitamio.widget.VideoView;
  * @date 2017/12/6
  */
 
-public class TvPlayerActivity extends Activity {
+public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
     private static final String TAG = TvPlayerActivity.class.getSimpleName();
     private VideoView mVideoView;
     private int mScreenWidth = 0;
@@ -158,6 +158,10 @@ public class TvPlayerActivity extends Activity {
         // initDanMu(Room_id);
         mVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_STRETCH, 0);
         initTouchListener();
+        mVideoView.setOnInfoListener(this);
+        mVideoView.setOnBufferingUpdateListener(this);
+        mVideoView.setOnErrorListener(this);
+        mVideoView.setOnCompletionListener(this);
     }
 
     private void initTouchListener() {
@@ -305,5 +309,27 @@ public class TvPlayerActivity extends Activity {
         if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             Log.d(TAG, "竖屏旋转");
         }
+    }
+
+    @Override
+    public boolean onInfo(MediaPlayer mp, int what, int extra) {
+        
+        return false;
+    }
+
+    @Override
+    public void onBufferingUpdate(MediaPlayer mp, int percent) {
+
+    }
+
+    @Override
+    public boolean onError(MediaPlayer mp, int what, int extra) {
+
+        return false;
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+
     }
 }
