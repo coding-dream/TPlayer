@@ -7,4 +7,5 @@
     <include layout="@layout/include_bottom"/>
     <include layout="@layout/include_fullscreen_loading"/>
     <include layout="@layout/include_center"/>
+    <include layout="@layout/include_ex"/>
 </FrameLayout>

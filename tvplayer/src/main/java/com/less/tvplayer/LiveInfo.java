@@ -19,6 +19,17 @@ public class LiveInfo {
         this.room_id = room_id;
     }
 
+    @Override
+    public String toString() {
+        return "LiveInfo{" +
+                "room_id='" + room_id + '\'' +
+                ", room_name='" + room_name + '\'' +
+                ", rateSwitch=" + rateSwitch +
+                ", hls_url='" + hls_url + '\'' +
+                ", live_url='" + live_url + '\'' +
+                '}';
+    }
+
     public String getRoom_name() {
         return room_name;
     }

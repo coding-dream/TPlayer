@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.less.tplayer.R;
-import com.less.tvplayer.LiveActivity;
+import com.less.tvplayer.ListLiveActivity;
 
 /**
  * @author Administrator
@@ -17,7 +17,7 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         Intent intent = new Intent();
-        intent.setClass(this, LiveActivity.class);
+        intent.setClass(this, ListLiveActivity.class);
         startActivity(intent);
     }
 

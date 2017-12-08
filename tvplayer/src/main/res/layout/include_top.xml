@@ -14,7 +14,7 @@
         android:src="@drawable/jc_back" />
 
     <TextView
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:id="@+id/tv_live_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,17 +23,12 @@
         android:textSize="14sp" />
 
     <LinearLayout
+        android:id="@+id/layout_top_menu"
         android:gravity="right"
         android:layout_weight="1"
         android:orientation="horizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/iv_live_share"
-            android:layout_marginRight="16dp"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/img_live_share" />
     </LinearLayout>
 </LinearLayout>

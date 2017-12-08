@@ -53,7 +53,7 @@ public abstract class BaseLiveActivity extends Activity implements MediaPlayer.O
     private LinearLayout layout_control_top;
     private ImageView iv_back;
     private TextView tv_live_nickname;
-    private ImageView iv_live_share;
+    private ImageView iv_live_download;
 
     /** include_bottom.xml */
     private LinearLayout layout_control_bottom;
@@ -164,12 +164,13 @@ public abstract class BaseLiveActivity extends Activity implements MediaPlayer.O
         layout_control_top = findViewById(R.id.control_top);
         iv_back = findViewById(R.id.iv_back);
         tv_live_nickname = findViewById(R.id.tv_live_nickname);
-        iv_live_share = findViewById(R.id.iv_live_share);
+        iv_live_download = findViewById(R.id.iv_live_download);
 
         layout_control_bottom = findViewById(R.id.control_bottom);
         iv_live_play = findViewById(R.id.iv_live_play);
         tv_live_time = findViewById(R.id.tv_live_time);
         seekBar = findViewById(R.id.seekbar);
+
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,8 +214,11 @@ public abstract class BaseLiveActivity extends Activity implements MediaPlayer.O
 
         mVideoView = (VideoView) findViewById(videoView);
         mVideoView.setKeepScreenOn(true);
-
+        // ========================== 控制权交给继承者 ==========================
         loadData();
+        handleLayout(R.id.layout_top_menu,R.id.control_bottom,R.id.layout_ex);
+        // ======================================================================
+
         // 注意seekBar的隐藏必须设置在loadData执行后!
         if (!isMovie()) {
             tv_live_time.setText("--/--");

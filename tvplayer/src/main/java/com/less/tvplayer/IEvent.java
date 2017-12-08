@@ -6,4 +6,5 @@ package com.less.tvplayer;
 
 public interface IEvent {
     void loadData();
+    void handleLayout(int ...ids);
 }

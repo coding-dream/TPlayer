@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:gravity="right|center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_marginRight="16dp"
+        android:id="@+id/iv_live_download"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/tv_download_selector" />
+
+    <ImageView
+        android:layout_marginRight="16dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/img_volume" />
+</LinearLayout>
