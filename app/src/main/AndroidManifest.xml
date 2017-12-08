@@ -28,25 +28,25 @@
         <activity android:name=".ui.GuideActivity" />
         <activity android:name=".test.DemoListViewActivity"/>
         <activity android:name=".ui.OtherUserHomeActivity"/>
-
+        <activity android:name=".mvp.feature.FeatureActivity"></activity>
 
         <service
             android:name=".service.CoreService"
             android:enabled="true"
             android:exported="true" />
 
-        <receiver android:name=".va.PackageReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REPLACED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+        <!-- remove va -->
+        <!--<receiver android:name=".va.PackageReceiver">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.PACKAGE_ADDED" />-->
+                <!--<action android:name="android.intent.action.PACKAGE_REPLACED" />-->
+                <!--<action android:name="android.intent.action.PACKAGE_REMOVED" />-->
 
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
+                <!--<data android:scheme="package" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+        <!--<activity android:name=".va.VaActivity" />-->
 
-        <activity android:name=".va.VaActivity" />
-        <activity android:name=".mvp.feature.FeatureActivity"></activity>
     </application>
 
 </manifest>

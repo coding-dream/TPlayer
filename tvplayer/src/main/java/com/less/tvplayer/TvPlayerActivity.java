@@ -170,7 +170,8 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                mHandler.removeCallbacksAndMessages(null);
+                TvPlayerActivity.this.finish();
             }
         });
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -187,8 +188,8 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 long duration = mVideoView.getDuration();
-                long value = duration * seekBar.getProgress() / seekBar.getMax();
-                mVideoView.seekTo(value);
+                float value = (float)duration * seekBar.getProgress() / seekBar.getMax();
+                mVideoView.seekTo((long) Math.ceil(value));
                 mVideoView.start();
             }
         });
@@ -277,11 +278,11 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         long totalSencond = totalTime % 60;
         String _totalTime = String.format("%02d:%02d", totalMiniute,totalSencond);
 
-        int rate = 0;
+        float rate = 0;
         if (totalTime != 0) {
-            rate = (int) ((float)curTime / totalTime * 100);
+            rate = (float) curTime / totalTime * 100;
         }
-        seekBar.setProgress(rate);
+        seekBar.setProgress((int) rate);
         tv_live_time.setText(_curTime + "/" + _totalTime);
     }
 
@@ -407,18 +408,16 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         if (distanceX < 0) {
             iv_v_s_center_img.setImageResource(R.drawable.ic_video_up);
             moveTotalOffset += 1;
-            seekBar.setProgress(seekBar.getProgress() + 1);
         } else {
             iv_v_s_center_img.setImageResource(R.drawable.ic_video_down);
             moveTotalOffset -= 1;
-            seekBar.setProgress(seekBar.getProgress() - 1);
         }
         if (moveTotalOffset > 0) {
             tv_v_s_center_name.setText("快进");
-            tv_v_s_center_degress.setText("+ " + Math.abs(moveTotalOffset));
+            tv_v_s_center_degress.setText("+ " + Math.abs(moveTotalOffset)  + "%");
         } else {
             tv_v_s_center_name.setText("快退");
-            tv_v_s_center_degress.setText("- " + Math.abs(moveTotalOffset));
+            tv_v_s_center_degress.setText("- " + Math.abs(moveTotalOffset)  + "%");
         }
         layout_control_v_s_center.setVisibility(View.VISIBLE);
     }
@@ -453,9 +452,10 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
             case MotionEvent.ACTION_UP:
                 if (mode == MODE_LEFT_RIGHT) {
                     // 针对快进快退功能
+                    long currentPosition = mVideoView.getCurrentPosition();
                     long duration = mVideoView.getDuration();
-                    long value = duration * seekBar.getProgress() / seekBar.getMax();
-                    mVideoView.seekTo(value);
+                    float value = currentPosition + (float) moveTotalOffset / 100 * duration;
+                    mVideoView.seekTo((long) value);
                     mVideoView.start();
 
                     mHandler.removeMessages(HIDE_CENTER_BAR);
@@ -533,6 +533,8 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
             case MediaPlayer.MEDIA_INFO_DOWNLOAD_RATE_CHANGED:
                 // tv_net_info.setText(extra + " kb/s");
                 break;
+            default:
+                break;
         }
         return true;
     }
@@ -543,7 +545,7 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         if (mVideoView.isPlaying()) {
             mVideoView.pause();
         }
-        tv_loading_buffer.setText("直播已缓冲" + percent + "%...");
+        tv_loading_buffer.setText("视频已缓冲" + percent + "%...");
     }
 
     @Override
