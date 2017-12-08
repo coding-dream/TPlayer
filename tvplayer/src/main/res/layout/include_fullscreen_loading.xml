@@ -7,15 +7,8 @@
     android:orientation="vertical"
     android:background="#05000000">
 
-    <ImageView
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/image_about_backage" />
-
     <LinearLayout
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_width="match_parent"
