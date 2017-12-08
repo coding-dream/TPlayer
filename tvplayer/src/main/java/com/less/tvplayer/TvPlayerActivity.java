@@ -170,7 +170,6 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mHandler.removeCallbacksAndMessages(null);
                 TvPlayerActivity.this.finish();
             }
         });

@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar"
         tools:replace="android:icon, android:theme">
-        <activity android:name=".test.TestActivity">
+        <activity android:name=".test.TestActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
