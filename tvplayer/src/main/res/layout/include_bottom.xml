@@ -2,32 +2,40 @@
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:layout_gravity="bottom"
-    android:background="#e0222222"
+    android:background="#99000000"
     android:orientation="horizontal"
     android:gravity="center_vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:id="@+id/iv_live_play"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="16dp"
-        android:src="@drawable/img_live_videopause" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/jc_click_play_selector" />
 
     <TextView
+        android:id="@+id/tv_live_time"
         android:textColor="#ffffff"
         android:text="00:00"
-        android:layout_marginLeft="8dp"
-        android:id="@+id/tv_live_time"
+        android:layout_marginLeft="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <SeekBar
-        android:layout_marginLeft="8dp"
-        android:layout_weight="1"
         android:id="@+id/seekbar"
+        android:layout_marginLeft="8dp"
         android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@null"
+        android:max="100"
+        android:maxHeight="4dp"
+        android:minHeight="4dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:thumb="@drawable/jc_seek_thumb"
+        android:progressDrawable="@drawable/jc_seek_progress"
+        />
     <Space
         android:layout_width="30dp"
         android:layout_height="30dp" />

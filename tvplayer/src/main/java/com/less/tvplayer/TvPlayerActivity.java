@@ -197,12 +197,12 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
             public void onClick(View v) {
                 if (mVideoView.isPlaying()) {
                     mVideoView.pause();
-                    iv_live_play.setImageResource(R.drawable.img_live_videoplay);
+                    iv_live_play.setImageResource(R.drawable.jc_click_play_selector);
                     mHandler.removeMessages(HIDE_TOP_BOTTOM_BAR);
                     showTopBottomBar();
                 } else {
                     mVideoView.start();
-                    iv_live_play.setImageResource(R.drawable.img_live_videopause);
+                    iv_live_play.setImageResource(R.drawable.jc_click_pause_selector);
                     mHandler.sendEmptyMessageDelayed(HIDE_TOP_BOTTOM_BAR, HIDE_TOP_BOTTOM_TIME);
                 }
             }
@@ -233,7 +233,7 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
                         // optional need Vitamio 4.0
                         mediaPlayer.setPlaybackSpeed(1.0f);
                         layout_ll_loading.setVisibility(View.GONE);
-                        iv_live_play.setImageResource(R.drawable.img_live_videopause);
+                        iv_live_play.setImageResource(R.drawable.jc_click_pause_selector);
                         mHandler.sendEmptyMessageDelayed(HIDE_TOP_BOTTOM_BAR, HIDE_TOP_BOTTOM_TIME);
                     }
                 });
@@ -517,7 +517,7 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
                 if (mVideoView.isPlaying()) {
                     mVideoView.pause();
                 }
-                iv_live_play.setImageResource(R.drawable.img_live_videoplay);
+                iv_live_play.setImageResource(R.drawable.jc_click_play_selector);
                 mHandler.removeMessages(HIDE_TOP_BOTTOM_BAR);
                 showTopBottomBar();
                 break;
@@ -526,7 +526,7 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
                 if (!mVideoView.isPlaying()) {
                     mVideoView.start();
                 }
-                iv_live_play.setImageResource(R.drawable.img_live_videopause);
+                iv_live_play.setImageResource(R.drawable.jc_click_pause_selector);
                 mHandler.sendEmptyMessageDelayed(HIDE_TOP_BOTTOM_BAR, HIDE_TOP_BOTTOM_TIME);
                 break;
             case MediaPlayer.MEDIA_INFO_DOWNLOAD_RATE_CHANGED:

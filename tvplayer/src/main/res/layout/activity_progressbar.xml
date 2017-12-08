@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:indeterminateDrawable="@drawable/jc_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_alignParentBottom="true"
+        android:max="100"
+        android:progressDrawable="@drawable/jc_progress" />
+
+    <ProgressBar
+        android:id="@+id/duration_progressbar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="4dp"
+        android:max="100"
+        android:progressDrawable="@drawable/jc_dialog_progress" />
+
+    <ProgressBar
+        android:id="@+id/volume_progressbar"
+        style="@style/jc_vertical_progressBar"
+        android:layout_width="4.0dip"
+        android:layout_height="81.0dip"
+        android:max="100" />
+</LinearLayout>

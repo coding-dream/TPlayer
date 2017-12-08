@@ -1,7 +1,7 @@
 <LinearLayout android:id="@+id/control_top"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="@color/control_bar_bg"
+    android:background="@drawable/jc_title_bg"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -11,7 +11,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginLeft="16dp"
-        android:src="@drawable/im_sdk_back_normal" />
+        android:src="@drawable/jc_back" />
 
     <TextView
         android:layout_weight="2"
@@ -28,6 +28,7 @@
         android:orientation="horizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/iv_live_share"
             android:layout_marginRight="16dp"
