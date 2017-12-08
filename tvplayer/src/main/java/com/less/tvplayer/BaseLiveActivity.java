@@ -34,8 +34,8 @@ import static com.less.tvplayer.R.id.videoView;
  * @date 2017/12/6
  */
 
-public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
-    private static final String TAG = TvPlayerActivity.class.getSimpleName();
+public abstract class BaseLiveActivity extends Activity implements MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, IEvent {
+    private static final String TAG = BaseLiveActivity.class.getSimpleName();
     private VideoView mVideoView;
 
     /** include_center.xml */
@@ -111,14 +111,17 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
     private static final int MODE_LEFT_RIGHT = 3;
     /** 快进快退模式的总偏移值 */
     private int moveTotalOffset = 0;
+    private boolean movie = true;
 
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case UPDATE_LIVE_PROGRESS:
-                    setLiveTime();
-                    mHandler.sendEmptyMessageDelayed(UPDATE_LIVE_PROGRESS, 1000);
+                    if (isMovie()) {
+                        setLiveTime();
+                        mHandler.sendEmptyMessageDelayed(UPDATE_LIVE_PROGRESS, 1000);
+                    }
                     break;
                 case HIDE_TOP_BOTTOM_BAR:
                     hideTopBottomBar();
@@ -170,7 +173,7 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TvPlayerActivity.this.finish();
+                BaseLiveActivity.this.finish();
             }
         });
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -210,42 +213,14 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
 
         mVideoView = (VideoView) findViewById(videoView);
         mVideoView.setKeepScreenOn(true);
-        // String id = getIntent().getExtras().getString("Room_id");
-        String id = "1";
-        // okhttp get -> id { callback TvBean } 此处和下面的代码是异步执行的.
-        API.getDataById(id, new API.LoadCallback() {
-            @Override
-            public void onDataLoaded(LiveInfo liveInfo) {
-                String url = liveInfo.getLive_url();
-                Uri uri = Uri.parse(url);
-                tv_live_nickname.setText(liveInfo.getRoom_name());
-                mVideoView.setVideoURI(uri);
-                mVideoView.setBufferSize(1024 * 1024 * 2);
-                /*
-                 * 设置视频质量。参数quality参见MediaPlayer的常量：
-                 * VIDEOQUALITY_LOW（流畅）、VIDEOQUALITY_MEDIUM（普通）、VIDEOQUALITY_HIGH（高质）。
-                 */
-                mVideoView.setVideoQuality(MediaPlayer.VIDEOQUALITY_HIGH);
-                mVideoView.requestFocus();
-                mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mediaPlayer) {
-                        // optional need Vitamio 4.0
-                        mediaPlayer.setPlaybackSpeed(1.0f);
-                        layout_ll_loading.setVisibility(View.GONE);
-                        iv_live_play.setImageResource(R.drawable.jc_click_pause_selector);
-                        mHandler.sendEmptyMessageDelayed(HIDE_TOP_BOTTOM_BAR, HIDE_TOP_BOTTOM_TIME);
-                    }
-                });
 
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                // svProgressHUD.showErrorWithStatus("主播还在赶来的路上~~");
-            }
-        });
-
+        loadData();
+        // 注意seekBar的隐藏必须设置在loadData执行后!
+        if (!isMovie()) {
+            tv_live_time.setText("--/--");
+            seekBar.setVisibility(View.INVISIBLE);
+            seekBar.setEnabled(false);
+        }
         // 获取屏幕宽度
         Pair<Integer, Integer> screenPair = ScreenResolution.getResolution(this);
         mScreenWidth = screenPair.first;
@@ -261,6 +236,29 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         mVideoView.setOnCompletionListener(this);
         // 定时更新seekbar
         mHandler.sendEmptyMessageDelayed(UPDATE_LIVE_PROGRESS,1000);
+    }
+
+    protected void loadVideo(String name,String url){
+        Uri uri = Uri.parse(url);
+        tv_live_nickname.setText(name);
+        mVideoView.setVideoURI(uri);
+        mVideoView.setBufferSize(1024 * 1024 * 2);
+                /*
+                 * 设置视频质量。参数quality参见MediaPlayer的常量：
+                 * VIDEOQUALITY_LOW（流畅）、VIDEOQUALITY_MEDIUM（普通）、VIDEOQUALITY_HIGH（高质）。
+                 */
+        mVideoView.setVideoQuality(MediaPlayer.VIDEOQUALITY_HIGH);
+        mVideoView.requestFocus();
+        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                // optional need Vitamio 4.0
+                mediaPlayer.setPlaybackSpeed(1.0f);
+                layout_ll_loading.setVisibility(View.GONE);
+                iv_live_play.setImageResource(R.drawable.jc_click_pause_selector);
+                mHandler.sendEmptyMessageDelayed(HIDE_TOP_BOTTOM_BAR, HIDE_TOP_BOTTOM_TIME);
+            }
+        });
     }
 
     private void setLiveTime() {
@@ -322,6 +320,10 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
                 } else if(mode != MODE_UP_DOWN){
                     // X方向的距离比Y方向的大，即 左右 滑动
                     mode = MODE_LEFT_RIGHT;
+                    if (!isMovie()) {
+                        // 如果是直播m3u8,不响应快进快退事件.
+                        return false;
+                    }
                     changePlayDegress(distanceX);
                 }
                 return false;
@@ -449,7 +451,7 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
         }
         switch (event.getAction()) {
             case MotionEvent.ACTION_UP:
-                if (mode == MODE_LEFT_RIGHT) {
+                if (mode == MODE_LEFT_RIGHT && isMovie()) {
                     // 针对快进快退功能
                     long currentPosition = mVideoView.getCurrentPosition();
                     long duration = mVideoView.getDuration();
@@ -561,5 +563,13 @@ public class TvPlayerActivity extends Activity implements MediaPlayer.OnInfoList
             // 释放资源
             mVideoView.stopPlayback();
         }
+    }
+
+    public void markMovie(boolean flag){
+        movie = flag;
+    }
+
+    public boolean isMovie(){
+        return movie;
     }
 }
