@@ -26,6 +26,24 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    sourceSets {
+        main {
+            java {
+                exclude '**/AppTarget.java'
+                exclude '**/MyAppRequestListener.java'
+                exclude '**/MyComponentDelegate.java'
+                exclude '**/MyPackageObserver.java'
+                exclude '**/MyPhoneInfoDelegate.java'
+                exclude '**/MyTaskDescriptionDelegate.java'
+                exclude '**/PackageReceiver.java'
+                exclude '**/PackageUtils.java'
+                exclude '**/VaActivity.java'
+                exclude '**/VApplication.java'
+            }
+        }
+    }
+
     buildTypes {
         debug {
             minifyEnabled false
@@ -125,8 +143,8 @@ dependencies {
     debugCompile project(path: ':widgets_viewpager_ex', configuration: 'debug')
     releaseCompile project(path: ':widgets_viewpager_ex', configuration: 'release')
 
-    debugCompile project(path: ':library_va', configuration: 'debug')
-    releaseCompile project(path: ':library_va', configuration: 'release')
+    // debugCompile project(path: ':library_va', configuration: 'debug')
+    // releaseCompile project(path: ':library_va', configuration: 'release')
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     // compile "org.jetbrains.anko:anko-common:$anko_version"
