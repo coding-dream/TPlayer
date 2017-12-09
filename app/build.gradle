@@ -143,6 +143,9 @@ dependencies {
     debugCompile project(path: ':widgets_viewpager_ex', configuration: 'debug')
     releaseCompile project(path: ':widgets_viewpager_ex', configuration: 'release')
 
+    debugCompile project(path: ':library_accessibility', configuration: 'debug')
+    releaseCompile project(path: ':library_accessibility', configuration: 'release')
+
     // debugCompile project(path: ':library_va', configuration: 'debug')
     // releaseCompile project(path: ':library_va', configuration: 'release')
 

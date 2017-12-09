@@ -1,5 +1,8 @@
 include ':app'
 
+include 'library_accessibility'
+project(':library_accessibility').projectDir = new File('./accessibility')
+
 include 'library_tvplayer'
 project(':library_tvplayer').projectDir = new File('./tvplayer')
 
