@@ -14,19 +14,44 @@ import java.util.List;
  */
 public class WifiProxyAccessibilityService extends AccessibilityService {
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-            AccessibilityNodeInfo accessibilityNodeInfo = getRootInActiveWindow();
-            if (accessibilityNodeInfo != null) {
-                List<AccessibilityNodeInfo> list = accessibilityNodeInfo.findAccessibilityNodeInfosByText("WLAN");
-                if (list != null && list.size() > 0) {
-                    for (AccessibilityNodeInfo n : list) {
-                        n.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+        int eventType = event.getEventType();
+        switch (eventType) {
+            case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
+                AccessibilityNodeInfo accessibilityNodeInfo = getRootInActiveWindow();
+                if (accessibilityNodeInfo != null) {
+                    // 模拟点击WLAN
+                    List<AccessibilityNodeInfo> wlan = accessibilityNodeInfo.findAccessibilityNodeInfosByText("WLAN");
+                    if (wlan != null && wlan.size() > 0) {
+                        wlan.get(0).getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                    }
+                    // 模拟点击TP-LINK_F770
+                    List<AccessibilityNodeInfo> wlan_f770 = accessibilityNodeInfo.findAccessibilityNodeInfosByText("TP-LINK_F770");
+                    if (wlan_f770 != null && wlan_f770.size() > 0) {
+                        List<AccessibilityNodeInfo> wlan_f770_linear_icon = wlan_f770.get(0).getParent().findAccessibilityNodeInfosByViewId("com.android.wifisettings:id/advance_layout");
+                        if (wlan_f770_linear_icon != null && wlan_f770_linear_icon.size() > 0) {
+                            wlan_f770_linear_icon.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                        }
+                    }
+                    // 模拟点击 手动代理
+                    List<AccessibilityNodeInfo> proxy = accessibilityNodeInfo.findAccessibilityNodeInfosByText("手动代理");
+                    if (proxy != null && proxy.size() > 0) {
+                        AccessibilityNodeInfo layout = proxy.get(0).getParent();
+                        List<AccessibilityNodeInfo> checkBox = layout.findAccessibilityNodeInfosByViewId("android:id/checkbox");
+                        if (checkBox != null && checkBox.size() > 0) {
+                            checkBox.get(0).performAction(GESTURE_SWIPE_DOWN_AND_UP);
+                        }
                     }
                 }
-            }
+                break;
+            case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
+                break;
+            case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
+                break;
+            default:
+                break;
         }
     }
 

@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':test'
 
 include 'library_accessibility'
 project(':library_accessibility').projectDir = new File('./accessibility')

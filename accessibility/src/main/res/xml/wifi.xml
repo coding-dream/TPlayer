@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:packageNames="com.less.test"
     android:accessibilityEventTypes="typeAllMask"
     android:description="@string/wifi"
     android:accessibilityFeedbackType="feedbackSpoken"
