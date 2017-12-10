@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">accessibility</string>
     <string name="wifi">自定设置Wifi调试代理</string>
+    <string name="qq">获取QQ成员</string>
 </resources>

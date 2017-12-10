@@ -41,12 +41,14 @@ public class WifiProxyAccessibilityService extends AccessibilityService {
                         AccessibilityNodeInfo layout = proxy.get(0).getParent();
                         List<AccessibilityNodeInfo> checkBox = layout.findAccessibilityNodeInfosByViewId("android:id/checkbox");
                         if (checkBox != null && checkBox.size() > 0) {
-                            checkBox.get(0).performAction(GESTURE_SWIPE_DOWN_AND_UP);
+
                         }
                     }
                 }
                 break;
             case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
+                Toast.makeText(this, "Notify", Toast.LENGTH_SHORT).show();
+                event.getSource().recycle();
                 break;
             case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
                 break;
