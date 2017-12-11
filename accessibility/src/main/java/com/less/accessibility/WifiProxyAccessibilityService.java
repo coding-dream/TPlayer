@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class WifiProxyAccessibilityService extends AccessibilityService {
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         int eventType = event.getEventType();
@@ -22,6 +22,7 @@ public class WifiProxyAccessibilityService extends AccessibilityService {
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
                 AccessibilityNodeInfo accessibilityNodeInfo = getRootInActiveWindow();
                 if (accessibilityNodeInfo != null) {
+
                     // 模拟点击WLAN
                     List<AccessibilityNodeInfo> wlan = accessibilityNodeInfo.findAccessibilityNodeInfosByText("WLAN");
                     if (wlan != null && wlan.size() > 0) {

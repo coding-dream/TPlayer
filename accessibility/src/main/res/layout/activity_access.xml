@@ -4,6 +4,11 @@
     android:layout_height="match_parent">
 
     <Button
+        android:id="@+id/btn_check"
+        android:text="检测辅助功能是否开启"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
         android:id="@+id/btn_authorized"
         android:text="授权"
         android:layout_width="wrap_content"
