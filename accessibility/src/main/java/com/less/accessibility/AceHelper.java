@@ -24,7 +24,7 @@ import java.util.List;
  * Created by deeper on 2017/12/11.
  */
 
-public class AccessibilityUtil {
+public class AceHelper {
 
     private static final String TYPE_CLASS_BUTTON = "android.widget.Button";
     private static final String TYPE_CLASS_TEXT_VIEW = "android.widget.TextView";

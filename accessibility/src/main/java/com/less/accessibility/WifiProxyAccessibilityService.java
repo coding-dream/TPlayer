@@ -7,8 +7,6 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Toast;
 
-import java.util.List;
-
 /**
  * @author Administrator
  */
@@ -18,32 +16,21 @@ public class WifiProxyAccessibilityService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         int eventType = event.getEventType();
+        CharSequence packageName = event.getPackageName();
         switch (eventType) {
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                AccessibilityNodeInfo accessibilityNodeInfo = getRootInActiveWindow();
-                if (accessibilityNodeInfo != null) {
+                AccessibilityNodeInfo rootNode = getRootInActiveWindow();
+                if (rootNode != null) {
 
-                    // 模拟点击WLAN
-                    List<AccessibilityNodeInfo> wlan = accessibilityNodeInfo.findAccessibilityNodeInfosByText("WLAN");
-                    if (wlan != null && wlan.size() > 0) {
-                        wlan.get(0).getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                    }
-                    // 模拟点击TP-LINK_F770
-                    List<AccessibilityNodeInfo> wlan_f770 = accessibilityNodeInfo.findAccessibilityNodeInfosByText("TP-LINK_F770");
-                    if (wlan_f770 != null && wlan_f770.size() > 0) {
-                        List<AccessibilityNodeInfo> wlan_f770_linear_icon = wlan_f770.get(0).getParent().findAccessibilityNodeInfosByViewId("com.android.wifisettings:id/advance_layout");
-                        if (wlan_f770_linear_icon != null && wlan_f770_linear_icon.size() > 0) {
-                            wlan_f770_linear_icon.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                        }
-                    }
-                    // 模拟点击 手动代理
-                    List<AccessibilityNodeInfo> proxy = accessibilityNodeInfo.findAccessibilityNodeInfosByText("手动代理");
-                    if (proxy != null && proxy.size() > 0) {
-                        AccessibilityNodeInfo layout = proxy.get(0).getParent();
-                        List<AccessibilityNodeInfo> checkBox = layout.findAccessibilityNodeInfosByViewId("android:id/checkbox");
-                        if (checkBox != null && checkBox.size() > 0) {
-
-                        }
+                    if (packageName.equals("com.android.settings")) {
+                        AccessibilityNodeInfo settingNode = AceHelper.findNodeByText(rootNode,"WLAN");
+                        AceHelper.performClick(settingNode);
+                        rootNode.recycle();
+                    } else if (packageName.equals("com.android.wifisettings")) {
+                        AccessibilityNodeInfo wifiNode = AceHelper.findNodeByText(rootNode, "TP-LINK_F770");
+                        AccessibilityNodeInfo wifiNodeParent = wifiNode.getParent();
+                        AccessibilityNodeInfo iconNode = AceHelper.findNodeById(wifiNodeParent, "com.android.wifisettings:id/advance_layout");
+                        AceHelper.performClick(iconNode);
                     }
                 }
                 break;

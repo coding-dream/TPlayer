@@ -21,18 +21,21 @@ public class AccessActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.btn_authorized).setOnClickListener(this);
         findViewById(R.id.btn_wifi).setOnClickListener(this);
         findViewById(R.id.btn_check).setOnClickListener(this);
+        findViewById(R.id.btn_clear).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.btn_authorized) {
-
+            AceHelper.openAccessibilityUI(this);
         } else if (id == R.id.btn_wifi) {
-
+            AceHelper.openSettingUI(this);
         } else if (id == R.id.btn_check) {
-            boolean enabled = AccessibilityUtil.checkAccessibilityEnabled(this,QQAccessibilityService.class);
+            boolean enabled = AceHelper.checkAccessibilityEnabled(this,WifiProxyAccessibilityService.class);
             Toast.makeText(this, "enabled:" + enabled, Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.btn_clear) {
+            AceHelper.openClearAppUI(this,"com.qiyi.video");
         }
     }
 }
