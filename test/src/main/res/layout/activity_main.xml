@@ -26,21 +26,39 @@
         android:layout_marginRight="8dp">
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btn_install"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button1" />
+            android:text="应用程序管理" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/btn_accesibility"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button2" />
+            android:text="辅助功能" />
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/btn_alreadyInstall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button3" />
+            android:text="已安装应用" />
+
+        <Button
+            android:id="@+id/btn_wifi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wifi代理设置" />
+
+        <Button
+            android:id="@+id/btn_developer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="开发者开关" />
+        <Button
+            android:id="@+id/btn_usb_debug"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Usb选项" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
