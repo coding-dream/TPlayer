@@ -9,7 +9,7 @@ import com.less.tplayer.base.fragment.BaseTitleFragment;
  * Created by deeper on 2017/11/22.
  */
 
-public class UserInfoFragment extends BaseTitleFragment {
+public class TabUserFragment extends BaseTitleFragment {
 
     @Override
     protected int getToolBarIconRes() {

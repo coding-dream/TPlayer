@@ -8,9 +8,9 @@
 
     <string name="loading">加载中…</string>
     <string name="loading_no_more">已加载全部</string>
-    <string name="main_tab_name_news">综合</string>
-    <string name="main_tab_name_tweet">动弹</string>
-    <string name="main_tab_name_explore">发现</string>
+    <string name="main_tab_name_news">首页</string>
+    <string name="main_tab_name_tweet">电影</string>
+    <string name="main_tab_name_explore">电视</string>
     <string name="main_tab_name_my">我的</string>
     <string name="tip_double_click_exit">再次点击退出应用</string>
 

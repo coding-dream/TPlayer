@@ -14,7 +14,7 @@ import com.less.tplayer.test.TestActivity;
  * @date 2017/11/22
  */
 
-public class DynamicTabFragment extends BaseTitleFragment{
+public class TabHomeFragment extends BaseTitleFragment{
 
     @Override
     protected int getToolBarIconRes() {
@@ -28,7 +28,7 @@ public class DynamicTabFragment extends BaseTitleFragment{
 
     @Override
     protected int getContentLayoutId() {
-        return R.layout.fragment_dynamic_tab;
+        return R.layout.fragment_home_tab;
     }
 
     @Override

@@ -100,19 +100,19 @@ public class NavFragment extends BaseFragment implements View.OnClickListener {
 
         navItemNews.bindFragment(R.drawable.tab_icon_new,
                 R.string.main_tab_name_news,
-                DynamicTabFragment.class);
+                TabHomeFragment.class);
 
         navItemTweet.bindFragment(R.drawable.tab_icon_tweet,
                 R.string.main_tab_name_tweet,
-                TweetViewPagerFragment.class);
+                TabMoviePagerFragment.class);
 
         navItemExplore.bindFragment(R.drawable.tab_icon_explore,
                 R.string.main_tab_name_explore,
-                ExploreFragment.class);
+                TabTVFragment.class);
 
         navItemMe.bindFragment(R.drawable.tab_icon_me,
                 R.string.main_tab_name_my,
-                UserInfoFragment.class);
+                TabUserFragment.class);
         navItemNews.setOnClickListener(this);
         navItemTweet.setOnClickListener(this);
         navItemExplore.setOnClickListener(this);

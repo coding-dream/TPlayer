@@ -10,7 +10,7 @@ import com.less.tplayer.interfaces.IFragmentReSelected;
  * Created by deeper on 2017/11/23.
  */
 
-public class TweetFragment extends BaseTitleFragment implements IFragmentReSelected {
+public class MovieFragment extends BaseTitleFragment implements IFragmentReSelected {
 
     public static final String CATALOG_KEY = "key";
     public static final int CATALOG_NEW = 1;

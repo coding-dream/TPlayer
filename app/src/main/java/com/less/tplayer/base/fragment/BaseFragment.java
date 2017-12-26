@@ -4,21 +4,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
-import com.less.tplayer.util.ImageLoader;
 import com.less.tplayer.util.LogUtils;
 
 import java.io.Serializable;
-
-import static android.R.attr.id;
 
 /**
  * @author Administrator
@@ -26,11 +18,11 @@ import static android.R.attr.id;
  */
 
 public abstract class BaseFragment extends Fragment {
+
     protected Context mContext;
     protected View mRoot;
     protected Bundle mBundle;
     protected LayoutInflater mInflater;
-    private RequestManager mImgLoader;
 
     /**
      * 懒加载
@@ -94,7 +86,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mImgLoader = null;
         mBundle = null;
     }
 
@@ -107,55 +98,6 @@ public abstract class BaseFragment extends Fragment {
             return null;
         }
         return (T) mBundle.getSerializable(key);
-    }
-
-    /**
-     * 获取一个图片加载管理器
-     *
-     * @return RequestManager
-     */
-    public synchronized RequestManager getImgLoader() {
-        if (mImgLoader == null) {
-            mImgLoader = Glide.with(this);
-        }
-        return mImgLoader;
-    }
-
-    protected void setImageFromNet(int viewId, String imageUrl) {
-        setImageFromNet(viewId, imageUrl, 0);
-    }
-
-    protected void setImageFromNet(int viewId, String imageUrl, int placeholder) {
-        ImageView imageView = findView(viewId);
-        setImageFromNet(imageView, imageUrl, placeholder);
-    }
-
-    protected void setImageFromNet(ImageView imageView, String imageUrl) {
-        setImageFromNet(imageView, imageUrl, 0);
-    }
-
-    protected void setImageFromNet(ImageView imageView, String imageUrl, int placeholder) {
-        ImageLoader.loadImage(getImgLoader(), imageView, imageUrl, placeholder);
-    }
-
-    protected void setText(int viewId, String text) {
-        TextView textView = findView(viewId);
-        if (TextUtils.isEmpty(text)) {
-            return;
-        }
-        textView.setText(text);
-    }
-
-    protected <T extends View> T setGone(int viewId) {
-        T view = findView(id);
-        view.setVisibility(View.GONE);
-        return view;
-    }
-
-    protected <T extends View> T setVisibility(int viewId) {
-        T view = findView(id);
-        view.setVisibility(View.VISIBLE);
-        return view;
     }
 
     /**

@@ -20,7 +20,7 @@ import java.util.List;
  * @date 2017/11/22
  */
 
-public class TweetViewPagerFragment extends BaseViewPagerFragment implements IFragmentReSelected {
+public class TabMoviePagerFragment extends BaseViewPagerFragment implements IFragmentReSelected {
 
     @Override
     protected int getToolBarIconRes() {
@@ -35,15 +35,15 @@ public class TweetViewPagerFragment extends BaseViewPagerFragment implements IFr
     @Override
     protected List<PagerInfo> getPagers() {
         List<PagerInfo> list = new LinkedList<>();
-        list.add(new PagerInfo("最新动弹",TweetFragment.class,createFragArgs(TweetFragment.CATALOG_NEW)));
-        list.add(new PagerInfo("热门动弹",TweetFragment.class,createFragArgs(TweetFragment.CATALOG_HOT)));
-        list.add(new PagerInfo("我的动弹",TweetFragment.class,createFragArgs(TweetFragment.CATALOG_MYSELF)));
+        list.add(new PagerInfo("最新动弹",MovieFragment.class,createFragArgs(MovieFragment.CATALOG_NEW)));
+        list.add(new PagerInfo("热门动弹",MovieFragment.class,createFragArgs(MovieFragment.CATALOG_HOT)));
+        list.add(new PagerInfo("我的动弹",MovieFragment.class,createFragArgs(MovieFragment.CATALOG_MYSELF)));
         return list;
     }
 
     private Bundle createFragArgs(int catalog) {
         Bundle bundle = new Bundle();
-        bundle.putInt(TweetFragment.CATALOG_KEY, catalog);
+        bundle.putInt(MovieFragment.CATALOG_KEY, catalog);
         return bundle;
     }
 
