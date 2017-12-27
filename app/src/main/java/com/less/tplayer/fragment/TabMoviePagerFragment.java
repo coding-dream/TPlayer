@@ -10,6 +10,7 @@ import com.less.tplayer.base.adapter.BaseViewPagerAdapter;
 import com.less.tplayer.base.fragment.BaseViewPagerFragment;
 import com.less.tplayer.bean.PagerInfo;
 import com.less.tplayer.interfaces.IFragmentReSelected;
+import com.less.tplayer.mvp.movie.MovieFragment;
 
 import java.util.LinkedList;
 import java.util.List;

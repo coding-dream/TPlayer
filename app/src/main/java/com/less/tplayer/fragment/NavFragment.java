@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.less.tplayer.R;
 import com.less.tplayer.base.fragment.BaseFragment;
+import com.less.tplayer.ui.PubActivity;
 import com.less.tplayer.widget.BorderShape;
 import com.less.tplayer.widget.NavButton;
 

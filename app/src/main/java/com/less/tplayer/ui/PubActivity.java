@@ -1,4 +1,4 @@
-package com.less.tplayer.fragment;
+package com.less.tplayer.ui;
 
 import android.content.Context;
 

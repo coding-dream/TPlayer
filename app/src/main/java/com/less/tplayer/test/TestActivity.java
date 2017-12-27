@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.less.accessibility.AccessActivity;
 import com.less.tplayer.R;
+import com.less.tplayer.ui.MainActivity;
 
 /**
  * @author Administrator
@@ -17,7 +17,7 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         Intent intent = new Intent();
-        intent.setClass(this, AccessActivity.class);
+        intent.setClass(this, MainActivity.class);
         startActivity(intent);
     }
 
