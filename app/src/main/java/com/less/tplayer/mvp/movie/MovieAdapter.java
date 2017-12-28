@@ -8,11 +8,13 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.less.tplayer.R;
-import com.less.tplayer.mvp.feature.data.Feature;
+import com.less.tplayer.mvp.movie.data.Movie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter {
 
-    protected List<Feature> mItems;
+    protected List<Movie> mItems;
     protected Context mContext;
     protected LayoutInflater mInflater;
 
@@ -227,7 +229,7 @@ public class MovieAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public Feature getSelectedItem() {
+    public Movie getSelectedItem() {
         if (mSelectedPosition < 0 || mSelectedPosition >= mItems.size()) {
             return null;
         }
@@ -268,13 +270,15 @@ public class MovieAdapter extends RecyclerView.Adapter {
     }
 
     protected RecyclerView.ViewHolder onCreateDefaultViewHolder(ViewGroup parent, int type){
-        return new ProjectViewHolder(mInflater.inflate(R.layout.item_list_feature, parent, false));
+        return new ProjectViewHolder(mInflater.inflate(R.layout.item_list_movie, parent, false));
     }
 
-    protected void onBindDefaultViewHolder(RecyclerView.ViewHolder holder, Feature item, int position){
+    protected void onBindDefaultViewHolder(RecyclerView.ViewHolder holder, Movie item, int position){
         ProjectViewHolder h = (ProjectViewHolder) holder;
-        h.mTextName.setText(item.getName());
-        h.mTextAge.setText(item.getAge());
+        Glide.with(mContext).load(item.getImage()).into(h.iv_icon);
+        h.tv_name.setText(item.getName());
+        h.tv_score.setText(item.getScore());
+        h.tv_actors.setText(item.getActors());
     }
 
     public final View getHeaderView() {
@@ -290,33 +294,33 @@ public class MovieAdapter extends RecyclerView.Adapter {
      *
      * @return
      */
-    public final List<Feature> getItems() {
+    public final List<Movie> getItems() {
         return mItems;
     }
 
 
-    public void addAll(final List<Feature> items) {
+    public void addAll(final List<Movie> items) {
         if (items != null) {
             this.mItems.addAll(items);
             notifyItemRangeInserted(mItems.size(), items.size());
         }
     }
 
-    public final void addItem(Feature item) {
+    public final void addItem(Movie item) {
         if (item != null) {
             this.mItems.add(item);
             notifyItemChanged(mItems.size());
         }
     }
 
-    public void addItem(int position, Feature item) {
+    public void addItem(int position, Movie item) {
         if (item != null) {
             this.mItems.add(getIndex(position), item);
             notifyItemInserted(position);
         }
     }
 
-    public void replaceItem(int position, Feature item) {
+    public void replaceItem(int position, Movie item) {
         if (item != null) {
             this.mItems.set(getIndex(position), item);
             notifyItemChanged(position);
@@ -336,7 +340,7 @@ public class MovieAdapter extends RecyclerView.Adapter {
     }
 
 
-    public final void removeItem(Feature item) {
+    public final void removeItem(Movie item) {
         if (this.mItems.contains(item)) {
             int position = mItems.indexOf(item);
             this.mItems.remove(item);
@@ -351,7 +355,7 @@ public class MovieAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public final Feature getItem(int position) {
+    public final Movie getItem(int position) {
         int p = getIndex(position);
         if (p < 0 || p >= mItems.size()) {
             return null;
@@ -359,7 +363,7 @@ public class MovieAdapter extends RecyclerView.Adapter {
         return mItems.get(getIndex(position));
     }
 
-    public final void resetItem(List<Feature> items) {
+    public final void resetItem(List<Movie> items) {
         if (items != null) {
             clear();
             addAll(items);
@@ -475,12 +479,17 @@ public class MovieAdapter extends RecyclerView.Adapter {
     }
 
     public static class ProjectViewHolder extends RecyclerView.ViewHolder {
-        TextView mTextName,mTextAge;
+        private ImageView iv_icon;
+        private TextView tv_name;
+        private TextView tv_actors;
+        private TextView tv_score;
 
         ProjectViewHolder(View itemView) {
             super(itemView);
-            mTextName = (TextView) itemView.findViewById(R.id.tv_name);
-            mTextAge = (TextView) itemView.findViewById(R.id.tv_age);
+            iv_icon = (ImageView) itemView.findViewById(R.id.iv_icon);
+            tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+            tv_score = (TextView) itemView.findViewById(R.id.tv_score);
+            tv_actors = (TextView) itemView.findViewById(R.id.tv_actors);
         }
     }
 }

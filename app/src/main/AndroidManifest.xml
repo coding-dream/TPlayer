@@ -29,6 +29,7 @@
         <activity android:name=".test.DemoListViewActivity"/>
         <activity android:name=".ui.OtherUserHomeActivity"/>
         <activity android:name=".mvp.feature.FeatureActivity"></activity>
+        <activity android:name=".ui.DetailMovieActivity"/>
 
         <service
             android:name=".service.CoreService"
@@ -47,6 +48,11 @@
         <!--</receiver>-->
         <!--<activity android:name=".va.VaActivity" />-->
 
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="${UMENG_KEY_VALUE}" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="debug" />
     </application>
-
 </manifest>

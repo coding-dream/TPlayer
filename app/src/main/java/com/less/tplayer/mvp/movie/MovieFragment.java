@@ -1,18 +1,19 @@
 package com.less.tplayer.mvp.movie;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.less.tplayer.R;
 import com.less.tplayer.base.fragment.BaseFragment;
 import com.less.tplayer.interfaces.IFragmentReSelected;
 import com.less.tplayer.mvp.common.Injection;
 import com.less.tplayer.mvp.feature.FeatureAdapter;
-import com.less.tplayer.mvp.feature.data.Feature;
+import com.less.tplayer.mvp.movie.data.Movie;
 import com.less.tplayer.mvp.movie.data.MovieRepository;
+import com.less.tplayer.ui.DetailMovieActivity;
 import com.less.tplayer.widget.RecyclerRefreshLayout;
 
 import java.util.List;
@@ -38,6 +39,7 @@ public class MovieFragment extends BaseFragment implements IFragmentReSelected,M
 
     public MovieFragment(){
         new MoviePresenter(Injection.provideRepository(MovieRepository.class), this);
+
     }
 
     @Override
@@ -75,13 +77,19 @@ public class MovieFragment extends BaseFragment implements IFragmentReSelected,M
         });
         mRecyclerView = (RecyclerView) mRoot.findViewById(R.id.recyclerView);
         mAdapter = new MovieAdapter(getContext(),FeatureAdapter.ONLY_FOOTER);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new MovieAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, long itemId) {
                 // handle click
-                Toast.makeText(mContext, "position:" + position + " itemId: " + itemId, Toast.LENGTH_SHORT).show();
+                Movie movie = mAdapter.getItem(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("movie", movie);
+                Intent intent = new Intent();
+                intent.putExtras(bundle);
+                intent.setClass(mContext, DetailMovieActivity.class);
+                startActivity(intent);
             }
         });
         mRefreshLayout.setColorSchemeResources(
@@ -111,12 +119,12 @@ public class MovieFragment extends BaseFragment implements IFragmentReSelected,M
     }
 
     @Override
-    public void showRefreshSuccess(List<Feature> datas) {
+    public void showRefreshSuccess(List<Movie> datas) {
         mAdapter.resetItem(datas);
     }
 
     @Override
-    public void showLoadMoreSuccess(List<Feature> datas) {
+    public void showLoadMoreSuccess(List<Movie> datas) {
         mAdapter.addAll(datas);
     }
 

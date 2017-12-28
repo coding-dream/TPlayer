@@ -45,7 +45,7 @@ public abstract class BaseActivity extends SwipeBackActivity{
      */
     protected abstract void initToolBar();
 
-    private void initBundle(Bundle extras) {
+    protected void initBundle(Bundle extras) {
 
     }
 

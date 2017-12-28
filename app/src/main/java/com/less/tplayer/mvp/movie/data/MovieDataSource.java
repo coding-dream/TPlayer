@@ -1,7 +1,5 @@
 package com.less.tplayer.mvp.movie.data;
 
-import com.less.tplayer.mvp.feature.data.Feature;
-
 import java.util.List;
 
 /**
@@ -12,7 +10,7 @@ public interface MovieDataSource {
 
     interface LoadCallback {
 
-        void onDataLoaded(List<Feature> datas);
+        void onDataLoaded(List<Movie> datas);
 
         void onDataNotAvailable();
     }

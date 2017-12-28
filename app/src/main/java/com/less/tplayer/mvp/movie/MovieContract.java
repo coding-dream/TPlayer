@@ -2,7 +2,7 @@ package com.less.tplayer.mvp.movie;
 
 import com.less.tplayer.mvp.base.BasePresenter;
 import com.less.tplayer.mvp.base.BaseView;
-import com.less.tplayer.mvp.feature.data.Feature;
+import com.less.tplayer.mvp.movie.data.Movie;
 
 import java.util.List;
 
@@ -17,13 +17,13 @@ public interface MovieContract {
          * 刷新成功
          * @param datas
          */
-        void showRefreshSuccess(List<Feature> datas);
+        void showRefreshSuccess(List<Movie> datas);
 
         /**
          * 加载成功
          * @param datas
          */
-        void showLoadMoreSuccess(List<Feature> datas);
+        void showLoadMoreSuccess(List<Movie> datas);
 
         /**
          * 没有更多数据

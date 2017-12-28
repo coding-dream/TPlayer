@@ -47,12 +47,12 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            manifestPlaceholders = [UMENG_KEY_VALUE: "222222222222222222"]
+            manifestPlaceholders = [UMENG_KEY_VALUE: "53cb520c56240bbd7d076ce5"]
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [UMENG_KEY_VALUE: "222222222222222222"]
+            manifestPlaceholders = [UMENG_KEY_VALUE: "53cb520c56240bbd7d076ce5"]
         }
     }
     productFlavors {
@@ -109,46 +109,34 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     debugCompile project(path: ':library_security', configuration: 'debug')
     releaseCompile project(path: ':library_security', configuration: 'release')
-
     debugCompile project(path: ':library_zxing', configuration: 'debug')
     releaseCompile project(path: ':library_zxing', configuration: 'release')
-
     // debugCompile project(path: ':library_ffmpeg', configuration: 'debug')
-    // releaseCompile project(path: ':library_ffmpeg', configuration: 'release')
 
+    // releaseCompile project(path: ':library_ffmpeg', configuration: 'release')
     debugCompile project(path: ':library_tvplayer', configuration: 'debug')
     releaseCompile project(path: ':library_tvplayer', configuration: 'release')
-
     debugCompile project(path: ':widgets_bzrefreshbtn', configuration: 'debug')
     releaseCompile project(path: ':widgets_bzrefreshbtn', configuration: 'release')
-
     debugCompile project(path: ':widgets_swipebacklayout', configuration: 'debug')
     releaseCompile project(path: ':widgets_swipebacklayout', configuration: 'release')
-
     debugCompile project(path: ':widgets_uis', configuration: 'debug')
     releaseCompile project(path: ':widgets_uis', configuration: 'release')
-
     debugCompile project(path: ':library_hook', configuration: 'debug')
     releaseCompile project(path: ':library_hook', configuration: 'release')
-
     debugCompile project(path: ':library_plugin', configuration: 'debug')
     releaseCompile project(path: ':library_plugin', configuration: 'release')
-
     debugCompile project(path: ':widgets_smart_progressbar', configuration: 'debug')
     releaseCompile project(path: ':widgets_smart_progressbar', configuration: 'release')
-
     debugCompile project(path: ':widgets_viewpager_ex', configuration: 'debug')
     releaseCompile project(path: ':widgets_viewpager_ex', configuration: 'release')
-
     debugCompile project(path: ':library_accessibility', configuration: 'debug')
     releaseCompile project(path: ':library_accessibility', configuration: 'release')
-
     // debugCompile project(path: ':library_va', configuration: 'debug')
-    // releaseCompile project(path: ':library_va', configuration: 'release')
 
+    // releaseCompile project(path: ':library_va', configuration: 'release')
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     // compile "org.jetbrains.anko:anko-common:$anko_version"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -157,6 +145,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'pub.devrel:easypermissions:0.3.0'
+    compile 'org.jsoup:jsoup:1.10.3'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.getkeepsafe.dexcount'

@@ -1,7 +1,7 @@
 package com.less.tplayer.mvp.movie;
 
 import com.less.tplayer.R;
-import com.less.tplayer.mvp.feature.data.Feature;
+import com.less.tplayer.mvp.movie.data.Movie;
 import com.less.tplayer.mvp.movie.data.MovieDataSource;
 import com.less.tplayer.mvp.movie.data.MovieRepository;
 
@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 public class MoviePresenter implements MovieContract.Presenter {
-    private static final int PAGE_SIZE = 20;
+    private static final int PAGE_SIZE = 30;
     private MovieRepository mMovieRepository;
     private MovieContract.View mView;
     private int mPage = 1;
@@ -32,7 +32,7 @@ public class MoviePresenter implements MovieContract.Presenter {
     public void doRefresh() {
         mMovieRepository.getDatasByPage(1, new MovieDataSource.LoadCallback() {
             @Override
-            public void onDataLoaded(List<Feature> datas) {
+            public void onDataLoaded(List<Movie> datas) {
                 if(datas != null){
                     mView.showRefreshSuccess(datas);
                     if (datas.size() < PAGE_SIZE) {
@@ -55,7 +55,7 @@ public class MoviePresenter implements MovieContract.Presenter {
     public void doLoadMore() {
         mMovieRepository.getDatasByPage(mPage, new MovieDataSource.LoadCallback() {
             @Override
-            public void onDataLoaded(List<Feature> datas) {
+            public void onDataLoaded(List<Movie> datas) {
                 if(datas != null){
                     mView.showLoadMoreSuccess(datas);
                     if (datas.size() < PAGE_SIZE) {

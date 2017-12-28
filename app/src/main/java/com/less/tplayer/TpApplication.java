@@ -9,6 +9,8 @@ import com.less.tplayer.util.ReadState;
 import com.less.tplayer.util.ReadStateHelper;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author Administrator
@@ -17,6 +19,7 @@ public class TpApplication extends Application {
     public static final int PAGE_SIZE = 20;// 默认分页大小
     private static final String CONFIG_READ_STATE_PRE = "CONFIG_READ_STATE_PRE_";
     private static TpApplication instance;
+    private static ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     public void onCreate() {
@@ -68,5 +71,9 @@ public class TpApplication extends Application {
             }
         }
         return null;
+    }
+
+    public static ExecutorService getExecutorService() {
+        return executorService;
     }
 }
