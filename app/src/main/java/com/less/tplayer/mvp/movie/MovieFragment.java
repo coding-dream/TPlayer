@@ -102,7 +102,7 @@ public class MovieFragment extends BaseFragment implements IFragmentReSelected,M
 
     @Override
     public void callReSelect() {
-        Toast.makeText(mContext, "重复选中", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

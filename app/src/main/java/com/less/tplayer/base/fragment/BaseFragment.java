@@ -29,6 +29,10 @@ public abstract class BaseFragment extends Fragment {
      */
     private boolean init = false;
 
+    private boolean viewInit = false;
+
+    private boolean visibleToUser = false;
+
     /**
      * 该方法只在ViewPager中有效
      * @param isVisibleToUser
@@ -36,10 +40,19 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser && !init) {
+        visibleToUser = isVisibleToUser;
+        if (isVisibleToUser && !init && viewInit) {
             lazyLoadData();
             init = true;
         }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewInit = true;
+        // 修复setUserVisibleHint调用时机比onViewCreated还早的issue,所以这里主动再调用一次.
+        setUserVisibleHint(visibleToUser);
     }
 
     @Override
