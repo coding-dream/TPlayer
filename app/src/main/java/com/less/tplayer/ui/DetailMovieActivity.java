@@ -14,12 +14,14 @@ import com.less.tplayer.R;
 import com.less.tplayer.base.activity.BaseActivity;
 import com.less.tplayer.interfaces.AndroidInterface;
 import com.less.tplayer.mvp.movie.data.Movie;
+import com.less.tplayer.util.HttpConnUtils;
 import com.less.tplayer.util.LogUtils;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 /**
  *
@@ -101,16 +103,22 @@ public class DetailMovieActivity extends BaseActivity {
         try {
             // url = "http://www.java1234.com";
             if (url.startsWith("http://v.361keji.com/play.php?play=")) {
-                URL _url = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) _url.openConnection();
-                connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36");
-                connection.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                connection.setRequestMethod("GET");
-                connection.setConnectTimeout(1000 * 30);
-                connection.setReadTimeout(1000 * 30);
-                response = new WebResourceResponse(connection.getContentType(), connection.getHeaderField("encoding"), connection.getInputStream());
-            } else {
-                InputStream inputStream = new ByteArrayInputStream();
+                byte[] datas = HttpConnUtils.getDefault().sendRequest(url);
+                String html = new String(datas);
+                Document document = Jsoup.parse(html);
+                document.select("header[class=header]").remove();
+                document.select("div[class=asst asst-post_header]").remove();
+                document.select("div[class=sidebar]").remove();
+                document.select("div[class=article-actions clearfix]").remove();
+                document.select("div[class=widget widget-textasst]").remove();
+                document.select("footer[class=footer]").remove();
+
+                InputStream in = new ByteArrayInputStream(document.outerHtml().getBytes());
+                response = new WebResourceResponse("text/html","utf-8",in);
+            } else if (url.startsWith("http://xxad.js")) {
+                String data = new String("hello");
+                InputStream inputStream = new ByteArrayInputStream(data.getBytes());
+                response = new WebResourceResponse("text/html", "utf-8", inputStream);
             }
         } catch (Exception e) {
             e.printStackTrace();
