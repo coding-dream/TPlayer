@@ -50,7 +50,6 @@ public class ApiHttpClient implements IHttpMethod {
     private static final String TAG = ApiHttpClient.class.getSimpleName();
     private static final int TIMEOUT = 20;
     private static final String KEY_APP_UNIQUE_ID = "appUniqueID";
-    public static final String HOST = "http://www.jianshu.com";
     private Handler mDelivery = new Handler(Looper.getMainLooper());
     private OkHttpClient okHttp;
 
@@ -97,7 +96,6 @@ public class ApiHttpClient implements IHttpMethod {
         Map<String, String> headers = new HashMap<>();
 
         headers.put("Accept-Language", Locale.getDefault().toString());
-        headers.put("Host", HOST);
         headers.put("Connection", "Keep-Alive");
         headers.put("User-Agent",getUserAgent());
         return headers;
@@ -105,14 +103,16 @@ public class ApiHttpClient implements IHttpMethod {
 
     @Override
     public void get(String url, Map<String,String> params,HttpCallback httpCallback){
-        Uri.Builder builder = Uri.parse(url).buildUpon();
-        Set<String> keys = params.keySet();
-        Iterator<String> iterator = keys.iterator();
-        while (iterator.hasNext()) {
-            String key = iterator.next();
-            builder.appendQueryParameter(key, params.get(key));
+        if (params != null) {
+            Uri.Builder builder = Uri.parse(url).buildUpon();
+            Set<String> keys = params.keySet();
+            Iterator<String> iterator = keys.iterator();
+            while (iterator.hasNext()) {
+                String key = iterator.next();
+                builder.appendQueryParameter(key, params.get(key));
+            }
+            url = builder.build().toString();
         }
-        url = builder.build().toString();
         Request request = new Request.Builder()
                 .get()
                 .url(url)

@@ -39,7 +39,6 @@ public class MovieFragment extends BaseFragment implements IFragmentReSelected,M
 
     public MovieFragment(){
         new MoviePresenter(Injection.provideRepository(MovieRepository.class), this);
-
     }
 
     @Override

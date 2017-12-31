@@ -146,6 +146,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'pub.devrel:easypermissions:0.3.0'
     compile 'org.jsoup:jsoup:1.10.3'
+    compile 'com.just.agentweb:agentweb:3.0.0-rc'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.getkeepsafe.dexcount'

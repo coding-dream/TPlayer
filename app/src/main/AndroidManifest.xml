@@ -29,7 +29,9 @@
         <activity android:name=".test.DemoListViewActivity"/>
         <activity android:name=".ui.OtherUserHomeActivity"/>
         <activity android:name=".mvp.feature.FeatureActivity"></activity>
-        <activity android:name=".ui.DetailMovieActivity"/>
+        <activity android:name=".ui.DetailMovieActivity"
+            android:hardwareAccelerated="true"
+            android:configChanges="orientation|screenSize"/>
 
         <service
             android:name=".service.CoreService"
