@@ -25,17 +25,13 @@ import java.util.List;
 public class MovieFragment extends BaseFragment implements IFragmentReSelected,MovieContract.View {
 
     public static final String CATALOG_KEY = "key";
-    public static final int CATALOG_NEW = 1;
-    public static final int CATALOG_HOT = 2;
-    public static final int CATALOG_MYSELF = 3;
-
-    private int type;
 
     private MovieContract.Presenter mPresenter;
 
     protected RecyclerRefreshLayout mRefreshLayout;
     protected RecyclerView mRecyclerView;
     protected MovieAdapter mAdapter;
+    private String type;
 
     public MovieFragment(){
         new MoviePresenter(Injection.provideRepository(MovieRepository.class), this);
@@ -104,7 +100,10 @@ public class MovieFragment extends BaseFragment implements IFragmentReSelected,M
     @Override
     protected void initBundle(Bundle bundle) {
         type = getBundleSerializable(CATALOG_KEY);
-        System.out.println("type is " + type);
+    }
+
+    public String getType() {
+        return type;
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.less.tplayer.interfaces.AndroidInterface;
 import com.less.tplayer.mvp.movie.data.Movie;
 import com.less.tplayer.util.HttpConnUtils;
 import com.less.tplayer.util.LogUtils;
+import com.less.tplayer.util.UrlFilters;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -24,7 +25,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
- *
  * @author deeper
  * @date 2017/12/28
  */
@@ -33,6 +33,7 @@ public class DetailMovieActivity extends BaseActivity {
     private Movie movie;
     private LinearLayout mLinearLayout;
     private AgentWeb mAgentWeb;
+    private UrlFilters urlFilters = UrlFilters.create();
 
     @Override
     protected void initToolBar() {
@@ -59,7 +60,7 @@ public class DetailMovieActivity extends BaseActivity {
     @Override
     protected void initData() {
         super.initData();
-        WebViewClient webChromeClient = new WebViewClient() {
+        WebViewClient webViewClient = new WebViewClient() {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -69,8 +70,9 @@ public class DetailMovieActivity extends BaseActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                String jsCode = "window.ainterface.callAndroid('hello java')";
-                view.loadUrl("javascript:" + jsCode);
+                // String jsCode = "window.ainterface.callAndroid('hello java')";
+                // String adCode = "function hideDiv(){document.querySelector('div[div7926=div625]').style.display='none';} hideDiv();";
+                // view.loadUrl("javascript:" + adCode);
             }
 
             @Override
@@ -79,7 +81,6 @@ public class DetailMovieActivity extends BaseActivity {
                 return getResponse(url);
             }
         };
-
         mAgentWeb = AgentWeb.with(this)//传入Activity or Fragment
                 .setAgentWebParent(mLinearLayout, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
                 .useDefaultIndicator()// 使用默认进度条
@@ -90,7 +91,7 @@ public class DetailMovieActivity extends BaseActivity {
                         LogUtils.d("title " + title);
                     }
                 })
-                .setWebViewClient(webChromeClient)
+                .setWebViewClient(webViewClient)
                 .createAgentWeb()
                 .ready()
                 .go(movie.getDetailUrl());
@@ -107,16 +108,21 @@ public class DetailMovieActivity extends BaseActivity {
                 String html = new String(datas);
                 Document document = Jsoup.parse(html);
                 document.select("header[class=header]").remove();
+                document.prepend("<p style='margin:16px;'>温馨提示: 请手动选择播放列表！</p>");
                 document.select("div[class=asst asst-post_header]").remove();
                 document.select("div[class=sidebar]").remove();
                 document.select("div[class=article-actions clearfix]").remove();
                 document.select("div[class=widget widget-textasst]").remove();
+                document.select("h3[class=single-strong]").remove();
                 document.select("footer[class=footer]").remove();
 
                 InputStream in = new ByteArrayInputStream(document.outerHtml().getBytes());
                 response = new WebResourceResponse("text/html","utf-8",in);
-            } else if (url.startsWith("http://xxad.js")) {
-                String data = new String("hello");
+            }else if(url.equals("http://v.361keji.com/images/jiazai.png") || url.equals("http://v.361keji.com/images/1280jiazai.png")){
+                InputStream inputStream = getAssets().open("loading.gif");
+                response = new WebResourceResponse("text/html", "utf-8", inputStream);
+            } else if(urlFilters.contains(url)){
+                String data = new String("");
                 InputStream inputStream = new ByteArrayInputStream(data.getBytes());
                 response = new WebResourceResponse("text/html", "utf-8", inputStream);
             }

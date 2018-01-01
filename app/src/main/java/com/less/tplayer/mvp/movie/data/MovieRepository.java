@@ -35,12 +35,12 @@ public class MovieRepository implements MovieDataSource {
     }
 
     @Override
-    public void getDatasByPage(final int page, final LoadCallback callback) {
+    public void getDatasByPage(final String category, final int page, final LoadCallback callback) {
         TpApplication.getExecutorService().execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    String url = "http://v.361keji.com/movie.php?m=http://www.360kan.com/dianying/list.php?cat=all%26pageno=" + page;
+                    String url = "http://v.361keji.com/movie.php?m=http://www.360kan.com/dianying/list.php?cat=" + category + "%26pageno=" + page;
                     Document document = Jsoup.parse(new URL(url), 6000);
                     Elements elements = document.select("div[class=s-tab-main]").select("ul[class=list g-clear]").select("li[class=item]");
                     final List<Movie> list = new ArrayList<Movie>();

@@ -15,5 +15,5 @@ public interface MovieDataSource {
         void onDataNotAvailable();
     }
 
-    void getDatasByPage(int page, LoadCallback callback);
+    void getDatasByPage(String type,int page, LoadCallback callback);
 }

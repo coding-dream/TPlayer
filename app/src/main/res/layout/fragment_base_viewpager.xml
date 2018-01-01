@@ -11,8 +11,8 @@
         android:layout_height="32dp"
         android:background="#F6F6F6"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@color/actionbar_background"
-        app:tabMode="fixed"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabMode="scrollable"
         app:tabSelectedTextColor="?attr/colorPrimary"
         app:tabTextColor="@color/project_listitem_someinfo" />
 

@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
  * @author Administrator
  */
 public class TpApplication extends Application {
-    public static final int PAGE_SIZE = 20;// 默认分页大小
+    public static final int PAGE_SIZE = 20;
     private static final String CONFIG_READ_STATE_PRE = "CONFIG_READ_STATE_PRE_";
     private static TpApplication instance;
     private static ExecutorService executorService = Executors.newSingleThreadExecutor();

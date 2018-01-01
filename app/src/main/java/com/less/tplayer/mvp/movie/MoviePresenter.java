@@ -30,7 +30,9 @@ public class MoviePresenter implements MovieContract.Presenter {
 
     @Override
     public void doRefresh() {
-        mMovieRepository.getDatasByPage(1, new MovieDataSource.LoadCallback() {
+        MovieFragment movieFragment = (MovieFragment) mView;
+        String type = movieFragment.getType();
+        mMovieRepository.getDatasByPage(type,1, new MovieDataSource.LoadCallback() {
             @Override
             public void onDataLoaded(List<Movie> datas) {
                 if(datas != null){
@@ -53,7 +55,9 @@ public class MoviePresenter implements MovieContract.Presenter {
 
     @Override
     public void doLoadMore() {
-        mMovieRepository.getDatasByPage(mPage, new MovieDataSource.LoadCallback() {
+        MovieFragment movieFragment = (MovieFragment) mView;
+        String type = movieFragment.getType();
+        mMovieRepository.getDatasByPage(type,mPage, new MovieDataSource.LoadCallback() {
             @Override
             public void onDataLoaded(List<Movie> datas) {
                 if(datas != null){

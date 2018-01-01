@@ -7,7 +7,7 @@ package com.less.tplayer.mvp.movie.data;
 public class MovieRemoteDataSource implements MovieDataSource {
 
     @Override
-    public void getDatasByPage(int page, LoadCallback callback) {
+    public void getDatasByPage(String type,int page, LoadCallback callback) {
 
     }
 }

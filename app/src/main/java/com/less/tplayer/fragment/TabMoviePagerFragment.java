@@ -11,12 +11,13 @@ import com.less.tplayer.base.fragment.BaseViewPagerFragment;
 import com.less.tplayer.bean.PagerInfo;
 import com.less.tplayer.interfaces.IFragmentReSelected;
 import com.less.tplayer.mvp.movie.MovieFragment;
+import com.less.tplayer.util.MovieConfig;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
- *
  * @author deeper
  * @date 2017/11/22
  */
@@ -36,15 +37,18 @@ public class TabMoviePagerFragment extends BaseViewPagerFragment implements IFra
     @Override
     protected List<PagerInfo> getPagers() {
         List<PagerInfo> list = new LinkedList<>();
-        list.add(new PagerInfo("最新动弹",MovieFragment.class,createFragArgs(MovieFragment.CATALOG_NEW)));
-        list.add(new PagerInfo("热门动弹",MovieFragment.class,createFragArgs(MovieFragment.CATALOG_HOT)));
-        list.add(new PagerInfo("我的动弹",MovieFragment.class,createFragArgs(MovieFragment.CATALOG_MYSELF)));
+
+        MovieConfig movieConfig = MovieConfig.create();
+        Map<String,String> catMap = movieConfig.getCatMap();
+        for (Map.Entry<String, String> entry : catMap.entrySet()) {
+            list.add(new PagerInfo(entry.getValue(),MovieFragment.class,createFragArgs(entry.getKey())));
+        }
         return list;
     }
 
-    private Bundle createFragArgs(int catalog) {
+    private Bundle createFragArgs(String catalog) {
         Bundle bundle = new Bundle();
-        bundle.putInt(MovieFragment.CATALOG_KEY, catalog);
+        bundle.putString(MovieFragment.CATALOG_KEY, catalog);
         return bundle;
     }
 
