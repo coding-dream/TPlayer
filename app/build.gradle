@@ -6,6 +6,15 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
 
+    // 优化编译improve_speed
+    if (project.hasProperty('devBuild')) {
+        splits.abi.enable = false
+        splits.density.enable = false
+        ext.enableCrashlytics = false
+        ext.alwaysUpdateBuildId = false
+        aaptOptions.cruncherEnabled = false
+    }
+
     signingConfigs {
         debug {
 
