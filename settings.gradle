@@ -1,5 +1,8 @@
 include ':app', ':test'
 
+include 'library_jselenium'
+project(':library_jselenium').projectDir = new File('./JSelenium')
+
 include 'library_accessibility'
 project(':library_accessibility').projectDir = new File('./accessibility')
 
