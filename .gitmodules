@@ -1,6 +1,9 @@
 [submodule "widgets"]
 	path = widgets
-	url = git@github.com:wangli0/widgets.git
+	url = git@github.com:coding-dream/widgets.git
 [submodule "ASpidder"]
 	path = ASpidder
-url=git@github.com:wangli0/ASpider.git
+    url=git@github.com:coding-dream/ASpider.git
+[submodule "JSelenium"]
+	path = JSelenium
+	url = git@github.com:coding-dream/JSelenium.git
