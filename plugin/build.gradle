@@ -39,6 +39,7 @@ task abuildJar(type: Jar, dependsOn: ['compileReleaseJavaWithJavac']) {
         e.printStackTrace()
     }
 }
+
 task abuildCMD {
     // 方式一
     // String cmd = 'ls -a' // 即可以用java的String，又可以用def声明。
