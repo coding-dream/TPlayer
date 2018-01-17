@@ -152,6 +152,7 @@ public class ApiHttpClient implements IHttpMethod {
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(mediaType, json);
         Request request = new Request.Builder()
+                .url(url)
                 .post(requestBody)
                 .build();
         Call call = okHttp.newCall(request);
