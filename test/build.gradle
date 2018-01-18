@@ -1,8 +1,19 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
+
+    // 优化编译improve_speed
+    if (project.hasProperty('devBuild')) {
+        splits.abi.enable = false
+        splits.density.enable = false
+        ext.enableCrashlytics = false
+        ext.alwaysUpdateBuildId = false
+        aaptOptions.cruncherEnabled = false
+    }
 
     defaultConfig {
         applicationId "com.less.test"
@@ -34,4 +45,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
