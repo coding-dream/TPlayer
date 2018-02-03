@@ -1,5 +1,9 @@
 package com.less.test;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,6 +22,7 @@ public class SpiderActivity extends AppCompatActivity implements View.OnClickLis
     private SimpleSpider simpleSpider;
     private ListView listview;
     private EditText et_input;
+    private EditText et_start_url;
     private HtmlAdapter htmlAdapter;
 
     @Override
@@ -25,18 +30,36 @@ public class SpiderActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spider);
         listview = (ListView) findViewById(R.id.listview);
+        et_start_url = (EditText) findViewById(R.id.et_start_url);
         et_input = (EditText) findViewById(R.id.et_input);
         simpleSpider = new SimpleSpider(App.getContext(), startUrl);
         findViewById(R.id.btn_start).setOnClickListener(this);
         findViewById(R.id.btn_stop).setOnClickListener(this);
         findViewById(R.id.btn_count).setOnClickListener(this);
         findViewById(R.id.btn_list).setOnClickListener(this);
+        findViewById(R.id.btn_add_urls).setOnClickListener(this);
         htmlAdapter = new HtmlAdapter(this);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Html html = (Html) htmlAdapter.getItem(position);
-                Toast.makeText(SpiderActivity.this, html.getUrl(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(SpiderActivity.this, HtmlActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("html", html);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Html html = (Html) htmlAdapter.getItem(position);
+                ClipboardManager cbm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("myLabel", html.getUrl());
+                cbm.setPrimaryClip(clipData);
+                Toast.makeText(SpiderActivity.this, "复制成功", Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
         listview.setAdapter(htmlAdapter);
@@ -62,6 +85,10 @@ public class SpiderActivity extends AppCompatActivity implements View.OnClickLis
                 List<Html> list = simpleSpider.search(input);
                 htmlAdapter.clear();
                 htmlAdapter.addAll(list);
+                break;
+            case R.id.btn_add_urls:
+                String url = et_start_url.getText().toString();
+                simpleSpider.urls(url);
                 break;
             default:
                 break;

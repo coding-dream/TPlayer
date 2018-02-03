@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_wifi).setOnClickListener(this);
         findViewById(R.id.btn_usb_debug).setOnClickListener(this);
         findViewById(R.id.btn_aspider).setOnClickListener(this);
+        findViewById(R.id.btn_aspider_setting).setOnClickListener(this);
     }
 
     @Override
@@ -61,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (id == R.id.btn_aspider) {
             Intent intent = new Intent();
             intent.setClass(this, SpiderActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.btn_aspider_setting) {
+            Intent intent = new Intent();
+            intent.setClass(this, SpiderSettingActivity.class);
             startActivity(intent);
         }
     }

@@ -64,5 +64,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Aspider测试" />
+        <Button
+            android:id="@+id/btn_aspider_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="爬虫参数" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -43,8 +43,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile project(':library_aspider')
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.just.agentweb:agentweb:3.0.0-rc'
     testCompile 'junit:junit:4.12'
-    compile project(':library_aspider')
 }

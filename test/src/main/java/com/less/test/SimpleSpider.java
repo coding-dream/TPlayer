@@ -81,4 +81,8 @@ public class SimpleSpider {
         List<Html> list =  htmlDao.search(text);
         return list;
     }
+
+    public void urls(String...urls){
+        aSpider.urls(urls);
+    }
 }
