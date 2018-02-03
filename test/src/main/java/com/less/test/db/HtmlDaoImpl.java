@@ -37,11 +37,12 @@ public class HtmlDaoImpl implements HtmlDao {
     }
 
     @Override
-    public List list() {
+    public List search(String text) {
+        String query = "%" + text + "%";
+        String sql = String.format("select * from " + TABLE_NAME + " where html like '%s'", query);
         List<Html> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from "
-                        + TABLE_NAME ,null);
+        Cursor cursor = db.rawQuery(sql,null);
         while (cursor.moveToNext()) {
             Html html = new Html();
             html.setUrl(cursor.getString(cursor.getColumnIndex("url")));

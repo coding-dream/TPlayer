@@ -12,7 +12,7 @@ public interface HtmlDao {
 
     void save(Html html);
 
-    List list();
+    List search(String text);
 
     int count();
 

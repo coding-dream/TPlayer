@@ -13,6 +13,7 @@ import com.less.test.db.HtmlDaoImpl;
 import com.less.test.util.HTMLFilter;
 import com.less.test.util.HtmlChooser;
 
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -74,5 +75,10 @@ public class SimpleSpider {
 
     public int count(){
         return htmlDao.count();
+    }
+
+    public List<Html> search(String text) {
+        List<Html> list =  htmlDao.search(text);
+        return list;
     }
 }
