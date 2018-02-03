@@ -18,7 +18,6 @@ import java.util.List;
 
 public class SpiderActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String startUrl = "http://www.java1234.com";
     private SimpleSpider simpleSpider;
     private ListView listview;
     private EditText et_input;
@@ -32,7 +31,7 @@ public class SpiderActivity extends AppCompatActivity implements View.OnClickLis
         listview = (ListView) findViewById(R.id.listview);
         et_start_url = (EditText) findViewById(R.id.et_start_url);
         et_input = (EditText) findViewById(R.id.et_input);
-        simpleSpider = new SimpleSpider(App.getContext(), startUrl);
+        simpleSpider = new SimpleSpider(App.getContext());
         findViewById(R.id.btn_start).setOnClickListener(this);
         findViewById(R.id.btn_stop).setOnClickListener(this);
         findViewById(R.id.btn_count).setOnClickListener(this);
@@ -70,7 +69,12 @@ public class SpiderActivity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.btn_start:
                 Toast.makeText(SpiderActivity.this, "start", Toast.LENGTH_SHORT).show();
-                simpleSpider.start();
+                String startUrl = et_start_url.getText().toString();
+                if (startUrl.trim().equals("")) {
+                    Toast.makeText(this, "input can't null", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                simpleSpider.start(startUrl);
                 break;
             case R.id.btn_stop:
                 Toast.makeText(SpiderActivity.this, "stop", Toast.LENGTH_SHORT).show();

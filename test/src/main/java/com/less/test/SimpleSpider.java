@@ -26,7 +26,7 @@ public class SimpleSpider {
     private HtmlChooser htmlChooser = new HtmlChooser();
     private HtmlDao htmlDao;
 
-    public SimpleSpider(Context context, String startUrl) {
+    public SimpleSpider(Context context) {
         htmlDao = new HtmlDaoImpl(context);
 
         aSpider = ASpider.create()
@@ -61,12 +61,12 @@ public class SimpleSpider {
                     }
                 })
                 .sleepTime(0)
-                .retrySleepTime(0)
-                .urls(startUrl);
+                .retrySleepTime(0);
     }
 
-    public void start() {
-       aSpider.runAsync();
+    public void start(String url) {
+        aSpider.urls(url);
+        aSpider.runAsync();
     }
 
     public void stop() {
