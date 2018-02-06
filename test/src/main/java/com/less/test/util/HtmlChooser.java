@@ -1,5 +1,7 @@
 package com.less.test.util;
 
+import android.util.Log;
+
 import com.less.aspider.util.L;
 import com.less.test.AppConfig;
 
@@ -10,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class HtmlChooser {
+	private String TAG = this.getClass().getSimpleName();
 
 	File file = new File(AppConfig.FILE_CHOOSER);
 
@@ -25,6 +28,7 @@ public class HtmlChooser {
 	private void init() {
 		try {
 			lines = FileUtils.readLines(file, "UTF-8");
+			Log.d(TAG, "lines: " + lines);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

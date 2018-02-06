@@ -50,12 +50,13 @@ public class SimpleSpider {
                         }
                     }
                 })
-                .thread(3)
+                .thread(50)
                 .addPipeline(new Pipeline() {
                     @Override
                     public void process(Map<String, Object> fields) {
                         for (Map.Entry<String, Object> entry : fields.entrySet()) {
                             Html html = (Html) entry.getValue();
+                            Log.d(TAG, html.getHtml());
                             htmlDao.save(html);
                         }
                     }

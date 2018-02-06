@@ -12,6 +12,10 @@ import android.view.View;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private int times = 0;
+
+    private String TAG = this.getClass().getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_usb_debug).setOnClickListener(this);
         findViewById(R.id.btn_aspider).setOnClickListener(this);
         findViewById(R.id.btn_aspider_setting).setOnClickListener(this);
+        findViewById(R.id.btn_pass1).setOnClickListener(this);
+        findViewById(R.id.btn_pass2).setOnClickListener(this);
     }
 
     @Override
@@ -60,13 +66,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else if (id == R.id.btn_aspider) {
-            Intent intent = new Intent();
-            intent.setClass(this, SpiderActivity.class);
-            startActivity(intent);
+            if (times > 7) {
+                Intent intent = new Intent();
+                intent.setClass(this, SpiderActivity.class);
+                startActivity(intent);
+            }
         } else if (id == R.id.btn_aspider_setting) {
-            Intent intent = new Intent();
-            intent.setClass(this, SpiderSettingActivity.class);
-            startActivity(intent);
+            if (times > 7) {
+                Intent intent = new Intent();
+                intent.setClass(this, SpiderSettingActivity.class);
+                startActivity(intent);
+            }
+        } else if (id == R.id.btn_pass1) {
+            if (times % 2 == 0) {
+                times ++;
+            }
+        } else if (id == R.id.btn_pass2) {
+            if (times % 2 != 0) {
+                times ++;
+            }
         }
     }
 }
