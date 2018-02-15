@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.dtr.zxing.activity.CaptureActivity;
 import com.less.tplayer.R;
-import com.less.tplayer.ui.MainActivity;
 
 /**
  * @author Administrator
@@ -17,7 +17,7 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         Intent intent = new Intent();
-        intent.setClass(this, MainActivity.class);
+        intent.setClass(this, CaptureActivity.class);
         startActivity(intent);
     }
 
